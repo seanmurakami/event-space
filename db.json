@@ -1,0 +1,13 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "name": null,
+      "description": null,
+      "date": null,
+      "lodging": null,
+      "activities": null,
+      "todos": []
+    }
+  ]
+}
