@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'evergreen-ui'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <h1>Hello World</h1>
+      <Button>Hello World</Button>
     )
   }
 }
