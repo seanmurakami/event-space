@@ -18,8 +18,8 @@ export default class CreateEvent extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Card className="shadow w-50 p-2 mx-auto p-3">
+      <div className="mx-3 d-flex justify-content-center">
+        <Card className="shadow col-xl-6 col-lg-7 col-md-10 p-4">
           <h3 className="text-center">Create An Event!</h3>
           <Form onSubmit={ this.userInput }>
             <FormGroup>
