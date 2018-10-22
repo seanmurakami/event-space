@@ -4,14 +4,24 @@ import { Form, FormGroup, Label, Input, Card, Button } from 'reactstrap'
 export default class CreateEvent extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.userInput = this.userInput.bind(this)
+  }
+  userInput(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const userData = {
+      eventName: formData.get('event-name'),
+      eventLocation: formData.get('event-location')
+    }
+    e.target.reset()
+    this.props.updateEvent(userData)
   }
   render() {
     return (
       <div>
         <Card className="shadow w-50 p-2 mx-auto p-3">
           <h3 className="text-center">Create An Event!</h3>
-          <Form>
+          <Form onSubmit={ this.userInput }>
             <FormGroup>
               <Label>Event Name:</Label>
               <Input name="event-name" placeholder="Input event name" />

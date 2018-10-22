@@ -5,13 +5,20 @@ import CreateEvent from './create-event'
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      eventName: null,
+      eventLocation: null
+    }
+    this.updateEvent = this.updateEvent.bind(this)
+  }
+  updateEvent({ eventName, eventLocation }) {
+    this.setState({ eventName, eventLocation })
   }
   render() {
     return (
       <Fragment>
         <Navbar />
-        <CreateEvent />
+        <CreateEvent updateEvent={ this.updateEvent }/>
       </Fragment>
     )
   }
