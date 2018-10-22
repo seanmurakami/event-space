@@ -1,5 +1,6 @@
-import React from 'react'
-import { Button } from 'evergreen-ui'
+import React, { Fragment } from 'react'
+import Navbar from './navbar'
+import CreateEvent from './create-event'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -8,7 +9,10 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <Button>Hello World</Button>
+      <Fragment>
+        <Navbar />
+        <CreateEvent />
+      </Fragment>
     )
   }
 }
