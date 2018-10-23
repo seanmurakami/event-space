@@ -16,7 +16,11 @@ export default class ShowCalendar extends React.Component {
   }
   onChange(date) {
     if (Array.isArray(date)) {
-      this.setState({ date, start: date[0].toDateString(), end: date[1].toDateString() })
+      this.setState({
+        date,
+        start: date[0].toDateString(),
+        end: date[1].toDateString()
+      })
     }
     else {
       this.setState({ date })
