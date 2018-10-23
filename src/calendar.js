@@ -8,8 +8,8 @@ export default class ShowCalendar extends React.Component {
     const date = new Date()
     this.state = {
       date,
-      start: date.toDateString(),
-      end: date.toDateString()
+      startDate: date.toDateString(),
+      endDate: date.toDateString()
     }
     this.onChange = this.onChange.bind(this)
     this.eventDate = this.eventDate.bind(this)
@@ -18,8 +18,8 @@ export default class ShowCalendar extends React.Component {
     if (Array.isArray(date)) {
       this.setState({
         date,
-        start: date[0].toDateString(),
-        end: date[1].toDateString()
+        startDate: date[0].toDateString(),
+        endDate: date[1].toDateString()
       })
     }
     else {
@@ -30,8 +30,8 @@ export default class ShowCalendar extends React.Component {
     e.preventDefault()
     const formData = new FormData(e.target)
     const dates = {
-      start: formData.get('event-start'),
-      end: formData.get('event-end')
+      startDate: formData.get('event-start'),
+      endDate: formData.get('event-end')
     }
     this.props.eventDate(dates)
   }
@@ -46,14 +46,14 @@ export default class ShowCalendar extends React.Component {
               <Input
                 readOnly
                 name="event-start"
-                value={ this.state.start }/>
+                value={ this.state.startDate }/>
             </div>
             <div className="col">
               <Label className="col-form-label">End Date:</Label>
               <Input
                 readOnly
                 name="event-end"
-                value={ this.state.end }/>
+                value={ this.state.endDate }/>
             </div>
           </FormGroup>
           <Calendar

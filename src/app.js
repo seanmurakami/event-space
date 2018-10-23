@@ -5,6 +5,7 @@ import hash from './hash'
 import { Card } from 'reactstrap'
 import ShowCalendar from './calendar'
 import Description from './description'
+import Lodging from './lodging'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,19 +16,22 @@ export default class App extends React.Component {
       eventName: null,
       eventLocation: null,
       eventDescription: null,
-      start: null,
-      end: null
+      startDate: null,
+      endDate: null
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
   }
   renderApp() {
     const { view } = this.state
+    if (view.params.step === 'description') {
+      return (<Description update={ this.updateEvent } />)
+    }
     if (view.params.step === 'date') {
       return (<ShowCalendar eventDate={ this.updateEvent }/>)
     }
-    if (view.params.step === 'description') {
-      return (<Description update={ this.updateEvent } />)
+    if (view.params.step === 'lodging') {
+      return (<Lodging />)
     }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
@@ -38,7 +42,8 @@ export default class App extends React.Component {
     entries.forEach(([key, value]) => {
       this.setState({ [key]: value })
     })
-    const hashScreen = !this.state.eventName ? 'create?step=description' : 'create?step=date'
+    const hashScreen = this.state.eventName === null ? 'create?step=description'
+      : this.state.eventDescription === null ? 'create?step=date' : 'create?step=lodging'
     location.hash = hashScreen
   }
   componentDidMount() {
