@@ -7,11 +7,12 @@ export default class ShowCalendar extends React.Component {
     super(props)
     const date = new Date()
     this.state = {
-      date: date,
+      date,
       start: date.toDateString(),
       end: date.toDateString()
     }
     this.onChange = this.onChange.bind(this)
+    this.eventDate = this.eventDate.bind(this)
   }
   onChange(date) {
     if (Array.isArray(date)) {
@@ -21,24 +22,33 @@ export default class ShowCalendar extends React.Component {
       this.setState({ date })
     }
   }
+  eventDate(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const dates = {
+      start: formData.get('event-start'),
+      end: formData.get('event-end')
+    }
+    this.props.eventDate(dates)
+  }
   render() {
     return (
       <Fragment>
         <h3 className="text-center">Set the Date For Your Event!</h3>
-        <Form autoComplete="off">
+        <Form autoComplete="off" onSubmit={ this.eventDate }>
           <FormGroup className="row w-75 mx-auto">
             <div className="col">
               <Label className="col-form-label">Start Date:</Label>
               <Input
                 readOnly
-                name="event-name"
+                name="event-start"
                 value={ this.state.start }/>
             </div>
             <div className="col">
               <Label className="col-form-label">End Date:</Label>
               <Input
                 readOnly
-                name="event-location"
+                name="event-end"
                 value={ this.state.end }/>
             </div>
           </FormGroup>
@@ -50,7 +60,7 @@ export default class ShowCalendar extends React.Component {
             className="my-3 mx-auto shadow"/>
           <div className="d-flex justify-content-between">
             <Button href="#" color="primary">Previous</Button>
-            <Button href="#create?step=description" color="primary">Continue</Button>
+            <Button color="primary">Continue</Button>
           </div>
         </Form>
       </Fragment>

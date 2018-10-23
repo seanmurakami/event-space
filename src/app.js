@@ -12,7 +12,9 @@ export default class App extends React.Component {
     this.state = {
       view: { path, params },
       eventName: null,
-      eventLocation: null
+      eventLocation: null,
+      start: null,
+      end: null
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -20,15 +22,19 @@ export default class App extends React.Component {
   renderApp() {
     const { view } = this.state
     if (view.path === 'create') {
-      return (<ShowCalendar />)
+      return (<ShowCalendar eventDate={ this.updateEvent }/>)
     }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
   }
-  updateEvent({ eventName, eventLocation }) {
-    this.setState({ eventName, eventLocation })
-    location.hash = 'create'
+  updateEvent(userInput) {
+    const entries = Object.entries(userInput)
+    entries.forEach(([key, value]) => {
+      this.setState({ [key]: value })
+    })
+    const hashScreen = !this.state.eventName ? 'create?step=date' : 'create?step=description'
+    location.hash = hashScreen
   }
   componentDidMount() {
     window.addEventListener('hashchange', () => {
