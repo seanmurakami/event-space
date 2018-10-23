@@ -4,6 +4,7 @@ import CreateEvent from './create-event'
 import hash from './hash'
 import { Card } from 'reactstrap'
 import ShowCalendar from './calendar'
+import Description from './description'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class App extends React.Component {
       view: { path, params },
       eventName: null,
       eventLocation: null,
+      eventDescription: null,
       start: null,
       end: null
     }
@@ -21,8 +23,11 @@ export default class App extends React.Component {
   }
   renderApp() {
     const { view } = this.state
-    if (view.path === 'create') {
+    if (view.params.step === 'date') {
       return (<ShowCalendar eventDate={ this.updateEvent }/>)
+    }
+    if (view.params.step === 'description') {
+      return (<Description update={ this.updateEvent } />)
     }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
@@ -33,7 +38,7 @@ export default class App extends React.Component {
     entries.forEach(([key, value]) => {
       this.setState({ [key]: value })
     })
-    const hashScreen = !this.state.eventName ? 'create?step=date' : 'create?step=description'
+    const hashScreen = !this.state.eventName ? 'create?step=description' : 'create?step=date'
     location.hash = hashScreen
   }
   componentDidMount() {
