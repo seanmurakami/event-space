@@ -1,19 +1,40 @@
 import React, { Fragment } from 'react'
 import Navbar from './navbar'
 import CreateEvent from './create-event'
+import hash from './hash'
 import { Card } from 'reactstrap'
+import ShowCalendar from './calendar'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
+    const { path, params } = hash.parse(location.hash)
     this.state = {
+      view: { path, params },
       eventName: null,
       eventLocation: null
     }
     this.updateEvent = this.updateEvent.bind(this)
+    this.renderApp = this.renderApp.bind(this)
+  }
+  renderApp() {
+    const { view } = this.state
+    if (view.path === 'create') {
+      return (<ShowCalendar />)
+    }
+    else {
+      return (<CreateEvent updateEvent={ this.updateEvent }/>)
+    }
   }
   updateEvent({ eventName, eventLocation }) {
     this.setState({ eventName, eventLocation })
+    location.hash = 'create'
+  }
+  componentDidMount() {
+    window.addEventListener('hashchange', () => {
+      const { path, params } = hash.parse(location.hash)
+      this.setState({view: { path, params }})
+    })
   }
   render() {
     return (
@@ -21,7 +42,7 @@ export default class App extends React.Component {
         <Navbar />
         <div className="mx-3 d-flex justify-content-center">
           <Card className="shadow col-xl-6 col-lg-7 col-md-10 p-4">
-            <CreateEvent updateEvent={ this.updateEvent }/>
+            { this.renderApp() }
           </Card>
         </div>
       </Fragment>

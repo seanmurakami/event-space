@@ -1,26 +1,23 @@
 import React, { Fragment } from 'react'
+import Calendar from 'react-calendar'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
-export default class CreateEvent extends React.Component {
+export default class ShowCalendar extends React.Component {
   constructor(props) {
     super(props)
-    this.userInput = this.userInput.bind(this)
-  }
-  userInput(e) {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const userData = {
-      eventName: formData.get('event-name'),
-      eventLocation: formData.get('event-location')
+    this.state = {
+      date: new Date()
     }
-    e.target.reset()
-    this.props.updateEvent(userData)
+    this.onChange = this.onChange.bind(this)
+  }
+  onChange(date) {
+    this.setState({ date })
   }
   render() {
     return (
       <Fragment>
-        <h3 className="text-center">Create An Event!</h3>
-        <Form onSubmit={ this.userInput }>
+        <h3 className="text-center">Set the Date For Your Event!</h3>
+        <Form>
           <FormGroup>
             <Label>Event Name:</Label>
             <Input name="event-name" placeholder="Input event name" />
@@ -29,8 +26,9 @@ export default class CreateEvent extends React.Component {
             <Label>Event Location:</Label>
             <Input name="event-location" placeholder="Input event location" />
           </FormGroup>
+          <Calendar onChange={ this.onChange } value={ this.state.date } className="my-3 mx-auto"/>
           <div className="d-flex justify-content-center">
-            <Button className="w-50" color="primary">Continue</Button>
+            <Button href="#create?step=date" className="w-50" color="primary">Continue</Button>
           </div>
         </Form>
       </Fragment>
