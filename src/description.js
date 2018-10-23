@@ -2,14 +2,22 @@ import React, {Fragment} from 'react'
 import { Form, FormGroup, Label, Button } from 'reactstrap'
 
 export default function Description(props) {
+  function updateDescription(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const userDescription = {
+      eventDescription: formData.get('event-description')
+    }
+    props.update(userDescription)
+  }
   return (
     <Fragment>
       <h3 className="text-center">Make a Description For Your Event!</h3>
-      <Form>
+      <Form onSubmit={ updateDescription }>
         <FormGroup>
           <Label>Description:</Label>
           <textarea
-            name="event-name"
+            name="event-description"
             rows="5"
             className="form-control"
             placeholder="Enter a description for your event: " />
