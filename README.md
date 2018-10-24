@@ -1,5 +1,5 @@
 # EventSpace
-A full stack JavaScript application for millenials who want to crowdsource/organize their outings
+A full stack JavaScript application for millennials who want to crowdsource/organize their outings
 
 ## Technologies
 - React.js
