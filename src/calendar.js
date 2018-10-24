@@ -63,7 +63,7 @@ export default class ShowCalendar extends React.Component {
             value={ this.state.date }
             className="my-3 mx-auto shadow"/>
           <div className="d-flex justify-content-between">
-            <Button href="#" color="primary">Previous</Button>
+            <Button href="#create?step=description" color="primary">Previous</Button>
             <Button color="primary">Continue</Button>
           </div>
         </Form>

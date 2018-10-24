@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Navbar from './navbar'
 import CreateEvent from './create-event'
 import hash from './hash'
@@ -17,7 +17,8 @@ export default class App extends React.Component {
       eventLocation: null,
       eventDescription: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      lodging: null
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -31,7 +32,7 @@ export default class App extends React.Component {
       return (<ShowCalendar eventDate={ this.updateEvent }/>)
     }
     if (view.params.step === 'lodging') {
-      return (<Lodging />)
+      return (<Lodging update={ this.updateEvent }/>)
     }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
@@ -53,15 +54,33 @@ export default class App extends React.Component {
     })
   }
   render() {
+    const scenery = require('./img/pexels-photo-297642.jpeg')
+    const styles = {
+      root: {
+        backgroundImage: `url(${scenery})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        zIndex: '-10'
+      },
+      overlay: {
+        background: 'linear-gradient(rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 15%)',
+        zIndex: '-5'
+      },
+      position: {
+        marginTop: '4rem'
+      }
+    }
     return (
-      <Fragment>
-        <Navbar />
-        <div className="mx-3 d-flex justify-content-center">
-          <Card className="shadow col-xl-6 col-lg-7 col-md-10 p-4">
-            { this.renderApp() }
-          </Card>
+      <div className="fixed-top w-100 h-100" style={ styles.root }>
+        <div className="position-absolute h-100 w-100" style={ styles.overlay }>
+          <Navbar />
+          <div style={ styles.position } className="mx-3 d-flex justify-content-center">
+            <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
+              { this.renderApp() }
+            </Card>
+          </div>
         </div>
-      </Fragment>
+      </div>
     )
   }
 }
