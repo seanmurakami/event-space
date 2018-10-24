@@ -23,6 +23,7 @@ export default class Activities extends React.Component {
     const userData = {}
     userData[userInput] = this.state.activities
     this.props.update(userData)
+    this.setState({activities: []})
   }
   render() {
     const { header, label, placeholder } = this.props
