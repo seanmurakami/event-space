@@ -19,8 +19,9 @@ export default class App extends React.Component {
       eventDescription: null,
       startDate: null,
       endDate: null,
-      lodging: null,
-      activities: null
+      lodges: null,
+      activities: null,
+      food: null
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -37,7 +38,21 @@ export default class App extends React.Component {
       return (<Lodging update={ this.updateEvent }/>)
     }
     if (view.params.step === 'activities') {
-      return (<Activities update={ this.updateEvent }/>)
+      return (<Activities
+        name="activities"
+        header="Add Events/Activities"
+        label="Event/Activity"
+        placeholder="e.g. Walk the Great Wall of China"
+        update={ this.updateEvent }
+      />)
+    }
+    if (view.params.step === 'food') {
+      return (<Activities
+        name="food"
+        header="Create a list of restaurants!"
+        label="Restaurant"
+        placeholder="e.g. Burger King"
+        update={ this.updateEvent }/>)
     }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
@@ -50,7 +65,8 @@ export default class App extends React.Component {
     })
     const hashScreen = this.state.eventName === null ? 'create?step=description'
       : this.state.eventDescription === null ? 'create?step=date'
-        : this.state.startDate === null ? 'create?step=lodging' : 'create?step=activities'
+        : this.state.startDate === null ? 'create?step=lodging'
+          : this.state.lodges === null ? 'create?step=activities' : 'create?step=food'
     location.hash = hashScreen
   }
   componentDidMount() {

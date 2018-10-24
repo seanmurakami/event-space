@@ -19,17 +19,21 @@ export default class Activities extends React.Component {
     e.target.reset()
   }
   updateApp() {
-    this.props.update(this.state)
+    const userInput = this.props.name
+    const userData = {}
+    userData[userInput] = this.state.activities
+    this.props.update(userData)
   }
   render() {
+    const { header, label, placeholder } = this.props
     return (
       <Fragment>
-        <h3 className="text-center mb-3">Add Events/Activities!</h3>
+        <h3 className="text-center mb-3">{ header }</h3>
         <Form onSubmit={ this.updateActivities } autoComplete="off">
           <FormGroup row>
-            <Label md={3}>Event/Activity:</Label>
+            <Label md={3}>{ label }</Label>
             <Col md={9}>
-              <Input name="activity" placeholder="e.g. Walk the Great Wall of China" />
+              <Input name="activity" placeholder={ placeholder } />
             </Col>
             <Button color="primary" className="my-3 mx-auto w-50">add</Button>
           </FormGroup>
@@ -38,7 +42,7 @@ export default class Activities extends React.Component {
             <Table className="border w-75 mx-auto">
               <thead>
                 <tr>
-                  <th>Activity</th>
+                  <th>{ label }</th>
                 </tr>
               </thead>
               <tbody>
