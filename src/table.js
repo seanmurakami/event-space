@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Table } from 'reactstrap'
 
 export default function UpdateTable(props) {
@@ -13,7 +13,9 @@ export default function UpdateTable(props) {
     )
   })
   return (
-    <Table>
+    <Fragment>
+      { props.lodging.length !== 0 &&
+    <Table className="border">
       <thead>
         <tr>
           <th>#</th>
@@ -26,5 +28,7 @@ export default function UpdateTable(props) {
         { items }
       </tbody>
     </Table>
+      }
+    </Fragment>
   )
 }
