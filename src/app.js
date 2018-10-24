@@ -63,7 +63,7 @@ export default class App extends React.Component {
         zIndex: '-10'
       },
       overlay: {
-        background: 'linear-gradient(rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 15%)',
+        background: 'linear-gradient(rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 18%)',
         zIndex: '-5'
       },
       position: {
@@ -72,7 +72,7 @@ export default class App extends React.Component {
     }
     return (
       <div className="fixed-top w-100 h-100" style={ styles.root }>
-        <div className="position-absolute h-100 w-100" style={ styles.overlay }>
+        <div className="position-absolute w-100" style={ styles.overlay }>
           <Navbar />
           <div style={ styles.position } className="mx-3 d-flex justify-content-center">
             <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
