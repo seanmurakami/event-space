@@ -57,7 +57,7 @@ export default class Lodging extends React.Component {
         </Form>
         <div className="d-flex justify-content-between">
           <Button href="#create?step=date" color="primary">Previous</Button>
-          <Button onClick={ this.updateApp } name="continue" color="primary">Continue</Button>
+          <Button onClick={ this.updateApp } color="primary">Continue</Button>
         </div>
       </Fragment>
     )

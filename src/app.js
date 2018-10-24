@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import Navbar from './navbar'
 import CreateEvent from './create-event'
 import hash from './hash'
@@ -6,6 +6,7 @@ import { Card } from 'reactstrap'
 import ShowCalendar from './calendar'
 import Description from './description'
 import Lodging from './lodging'
+import Activities from './activities'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -34,6 +35,9 @@ export default class App extends React.Component {
     if (view.params.step === 'lodging') {
       return (<Lodging update={ this.updateEvent }/>)
     }
+    if (view.params.step === 'activities') {
+      return (<Activities/>)
+    }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
@@ -44,7 +48,8 @@ export default class App extends React.Component {
       this.setState({ [key]: value })
     })
     const hashScreen = this.state.eventName === null ? 'create?step=description'
-      : this.state.eventDescription === null ? 'create?step=date' : 'create?step=lodging'
+      : this.state.eventDescription === null ? 'create?step=date'
+        : this.state.startDate === null ? 'create?step=lodging' : 'create?step=activities'
     location.hash = hashScreen
   }
   componentDidMount() {
@@ -54,33 +59,15 @@ export default class App extends React.Component {
     })
   }
   render() {
-    const scenery = require('./img/pexels-photo-297642.jpeg')
-    const styles = {
-      root: {
-        backgroundImage: `url(${scenery})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        zIndex: '-10'
-      },
-      overlay: {
-        background: 'linear-gradient(rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 18%)',
-        zIndex: '-5'
-      },
-      position: {
-        marginTop: '4rem'
-      }
-    }
     return (
-      <div className="fixed-top w-100 h-100" style={ styles.root }>
-        <div className="position-absolute w-100" style={ styles.overlay }>
-          <Navbar />
-          <div style={ styles.position } className="mx-3 d-flex justify-content-center">
-            <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
-              { this.renderApp() }
-            </Card>
-          </div>
+      <Fragment>
+        <Navbar />
+        <div className="mx-3 d-flex justify-content-center">
+          <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
+            { this.renderApp() }
+          </Card>
         </div>
-      </div>
+      </Fragment>
     )
   }
 }
