@@ -8,6 +8,7 @@ export default class Activities extends React.Component {
       activities: []
     }
     this.updateActivities = this.updateActivities.bind(this)
+    this.updateApp = this.updateApp.bind(this)
   }
   updateActivities(e) {
     e.preventDefault()
@@ -16,6 +17,9 @@ export default class Activities extends React.Component {
     const activities = [...this.state.activities, activity]
     this.setState({ activities })
     e.target.reset()
+  }
+  updateApp() {
+    this.props.update(this.state)
   }
   render() {
     return (
@@ -52,7 +56,7 @@ export default class Activities extends React.Component {
         </Form>
         <div className="d-flex justify-content-between">
           <Button href="#create?step=lodging" color="primary">Previous</Button>
-          <Button name="continue" color="primary">Continue</Button>
+          <Button onClick={ this.updateApp } name="continue" color="primary">Continue</Button>
         </div>
       </Fragment>
     )

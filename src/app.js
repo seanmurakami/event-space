@@ -19,7 +19,8 @@ export default class App extends React.Component {
       eventDescription: null,
       startDate: null,
       endDate: null,
-      lodging: null
+      lodging: null,
+      activities: null
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -36,7 +37,7 @@ export default class App extends React.Component {
       return (<Lodging update={ this.updateEvent }/>)
     }
     if (view.params.step === 'activities') {
-      return (<Activities/>)
+      return (<Activities update={ this.updateEvent }/>)
     }
     else {
       return (<CreateEvent updateEvent={ this.updateEvent }/>)
