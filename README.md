@@ -4,6 +4,7 @@ A full stack JavaScript application for millennials who want to crowdsource/orga
 ## Technologies
 - React.js
 - Node.js
+- Express.js
 - JSON.server
 - HTML5
 - CSS3
