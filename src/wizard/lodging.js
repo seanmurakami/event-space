@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-import { Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Col } from 'reactstrap'
 import UpdateTable from './table'
+import ButtonGroup from './button-group'
+import { Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Col } from 'reactstrap'
 
 export default class Lodging extends React.Component {
   constructor(props) {
@@ -55,10 +56,7 @@ export default class Lodging extends React.Component {
           </FormGroup>
           <UpdateTable lodging={ this.state.lodges }/>
         </Form>
-        <div className="d-flex justify-content-between">
-          <Button href="#create?step=date" color="primary">Previous</Button>
-          <Button onClick={ this.updateApp } color="primary">Continue</Button>
-        </div>
+        <ButtonGroup params="create?step=date" updateUserInfo={ this.updateApp }/>
       </Fragment>
     )
   }

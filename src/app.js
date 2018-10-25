@@ -33,6 +33,7 @@ export default class App extends React.Component {
           header="Add Events/Activities"
           label="Event/Activity"
           placeholder="e.g. Walk the Great Wall of China"
+          location="lodging"
           update={ this.updateEvent }/>)
       case 'food' :
         return (<CreateList
@@ -40,6 +41,7 @@ export default class App extends React.Component {
           header="Create a list of restaurants!"
           label="Restaurant"
           placeholder="e.g. Burger King"
+          location="activities"
           update={ this.updateEvent }/>)
       default :
         return (<CreateEvent updateEvent={ this.updateEvent }/>)

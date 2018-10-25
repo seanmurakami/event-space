@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import Calendar from 'react-calendar'
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import ButtonGroup from './button-group'
+import { Form, FormGroup, Label, Input } from 'reactstrap'
 
 export default class ShowCalendar extends React.Component {
   constructor(props) {
@@ -62,10 +63,7 @@ export default class ShowCalendar extends React.Component {
             onChange={ this.onChange }
             value={ this.state.date }
             className="my-3 mx-auto shadow"/>
-          <div className="d-flex justify-content-between">
-            <Button href="#create?step=description" color="primary">Previous</Button>
-            <Button color="primary">Continue</Button>
-          </div>
+          <ButtonGroup params="create?step=description" updateUserInfo={ this.eventDate }/>
         </Form>
       </Fragment>
     )

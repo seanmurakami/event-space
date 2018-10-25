@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import ButtonGroup from './button-group'
 import { Form, FormGroup, Label, Input, Button, Table, Col } from 'reactstrap'
 
 export default class CreateList extends React.Component {
@@ -60,10 +61,7 @@ export default class CreateList extends React.Component {
             }
           </Fragment>
         </Form>
-        <div className="d-flex justify-content-between">
-          <Button href="#create?step=lodging" color="primary">Previous</Button>
-          <Button onClick={ this.updateApp } color="primary">Continue</Button>
-        </div>
+        <ButtonGroup params={`create?step=${this.props.location}`} updateUserInfo={ this.updateApp } />
       </Fragment>
     )
   }
