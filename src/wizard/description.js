@@ -23,7 +23,7 @@ export default function Description(props) {
             className="form-control"
             placeholder="Enter a description for your event: " />
         </FormGroup>
-        <ButtonGroup params="" updateUserInfo={ updateUserInfo }/>
+        <ButtonGroup params=""/>
       </Form>
     </Fragment>
   )

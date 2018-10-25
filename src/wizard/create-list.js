@@ -36,13 +36,17 @@ export default class CreateList extends React.Component {
           <FormGroup row>
             <Label md={3}>{ label }</Label>
             <Col md={9}>
-              <Input name="activity" placeholder={ placeholder } />
+              <div className="input-group">
+                <Input name="activity" placeholder={ placeholder } />
+                <div className="input-group-append">
+                  <Button color="link">+</Button>
+                </div>
+              </div>
             </Col>
-            <Button color="primary" className="my-3 mx-auto w-50">add</Button>
           </FormGroup>
           <Fragment>
             { this.state.activities.length !== 0 &&
-            <Table className="border w-75 mx-auto">
+            <Table className="border mx-auto">
               <thead>
                 <tr>
                   <th>{ label }</th>

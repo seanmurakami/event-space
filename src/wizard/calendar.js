@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
-import Calendar from 'react-calendar'
 import ButtonGroup from './button-group'
-import { Form, FormGroup, Label, Input } from 'reactstrap'
+import { Form, FormGroup, Row, Label, Input, Col } from 'reactstrap'
 
 export default class ShowCalendar extends React.Component {
   constructor(props) {
@@ -41,29 +40,27 @@ export default class ShowCalendar extends React.Component {
       <Fragment>
         <h3 className="text-center">Set the Date For Your Event!</h3>
         <Form autoComplete="off" onSubmit={ this.eventDate }>
-          <FormGroup className="row w-75 mx-auto">
-            <div className="col">
-              <Label className="col-form-label">Start Date:</Label>
-              <Input
-                readOnly
-                name="event-start"
-                value={ this.state.startDate }/>
-            </div>
-            <div className="col">
-              <Label className="col-form-label">End Date:</Label>
-              <Input
-                readOnly
-                name="event-end"
-                value={ this.state.endDate }/>
-            </div>
-          </FormGroup>
-          <Calendar
-            selectRange
-            calendarType="US"
-            onChange={ this.onChange }
-            value={ this.state.date }
-            className="my-3 mx-auto shadow"/>
-          <ButtonGroup params="create?step=description" updateUserInfo={ this.eventDate }/>
+          <Row form>
+            <Col sm={6}>
+              <FormGroup>
+                <Label>Start Date:</Label>
+                <Input
+                  readOnly
+                  name="event-start"
+                  value={ this.state.startDate }/>
+              </FormGroup>
+            </Col>
+            <Col sm={6}>
+              <FormGroup>
+                <Label>End Date:</Label>
+                <Input
+                  readOnly
+                  name="event-end"
+                  value={ this.state.endDate }/>
+              </FormGroup>
+            </Col>
+          </Row>
+          <ButtonGroup params="create?step=description"/>
         </Form>
       </Fragment>
     )

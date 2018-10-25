@@ -61,7 +61,7 @@ export default class App extends React.Component {
     return (
       <Fragment>
         <Navbar />
-        <div className="mx-3 d-flex justify-content-center">
+        <div className="mx-3 d-flex justify-content-center mb-4">
           <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
             { this.renderApp() }
           </Card>

@@ -53,8 +53,8 @@ export default class Lodging extends React.Component {
               </InputGroup>
             </Col>
             <Button color="primary" className="mx-auto w-50">add</Button>
+            <UpdateTable className="mx-auto" lodging={ this.state.lodges }/>
           </FormGroup>
-          <UpdateTable lodging={ this.state.lodges }/>
         </Form>
         <ButtonGroup params="create?step=date" updateUserInfo={ this.updateApp }/>
       </Fragment>
