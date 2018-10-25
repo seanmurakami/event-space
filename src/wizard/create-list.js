@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Form, FormGroup, Label, Input, Button, Table, Col } from 'reactstrap'
 
-export default class Activities extends React.Component {
+export default class CreateList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -20,9 +20,10 @@ export default class Activities extends React.Component {
   }
   updateApp() {
     const userInput = this.props.name
+    const nextScreen = this.props.name === 'activities' ? 'food' : 'confirmation'
     const userData = {}
     userData[userInput] = this.state.activities
-    this.props.update(userData)
+    this.props.update(userData, nextScreen)
     this.setState({activities: []})
   }
   render() {
@@ -61,7 +62,7 @@ export default class Activities extends React.Component {
         </Form>
         <div className="d-flex justify-content-between">
           <Button href="#create?step=lodging" color="primary">Previous</Button>
-          <Button onClick={ this.updateApp } name="continue" color="primary">Continue</Button>
+          <Button onClick={ this.updateApp } color="primary">Continue</Button>
         </div>
       </Fragment>
     )

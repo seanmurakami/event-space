@@ -1,73 +1,53 @@
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react'
 import Navbar from './navbar'
-import CreateEvent from './create-event'
+import CreateEvent from './wizard/create-event'
 import hash from './hash'
 import { Card } from 'reactstrap'
-import ShowCalendar from './calendar'
-import Description from './description'
-import Lodging from './lodging'
-import Activities from './activities'
+import ShowCalendar from './wizard/calendar'
+import Description from './wizard/description'
+import Lodging from './wizard/lodging'
+import CreateList from './wizard/create-list'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     const { path, params } = hash.parse(location.hash)
     this.state = {
-      view: { path, params },
-      eventName: null,
-      eventLocation: null,
-      eventDescription: null,
-      startDate: null,
-      endDate: null,
-      lodges: null,
-      activities: null,
-      food: null
+      view: { path, params }
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
   }
   renderApp() {
     const { view } = this.state
-    if (view.params.step === 'description') {
-      return (<Description update={ this.updateEvent } />)
-    }
-    if (view.params.step === 'date') {
-      return (<ShowCalendar eventDate={ this.updateEvent }/>)
-    }
-    if (view.params.step === 'lodging') {
-      return (<Lodging update={ this.updateEvent }/>)
-    }
-    if (view.params.step === 'activities') {
-      return (<Activities
-        name="activities"
-        header="Add Events/Activities"
-        label="Event/Activity"
-        placeholder="e.g. Walk the Great Wall of China"
-        update={ this.updateEvent }
-      />)
-    }
-    if (view.params.step === 'food') {
-      return (<Activities
-        name="food"
-        header="Create a list of restaurants!"
-        label="Restaurant"
-        placeholder="e.g. Burger King"
-        update={ this.updateEvent }/>)
-    }
-    else {
-      return (<CreateEvent updateEvent={ this.updateEvent }/>)
+    switch (view.params.step) {
+      case 'description' :
+        return (<Description update={ this.updateEvent } />)
+      case 'date' :
+        return (<ShowCalendar eventDate={ this.updateEvent }/>)
+      case 'lodging' :
+        return (<Lodging update={ this.updateEvent }/>)
+      case 'activities' :
+        return (<CreateList
+          name="activities"
+          header="Add Events/Activities"
+          label="Event/Activity"
+          placeholder="e.g. Walk the Great Wall of China"
+          update={ this.updateEvent }/>)
+      case 'food' :
+        return (<CreateList
+          name="food"
+          header="Create a list of restaurants!"
+          label="Restaurant"
+          placeholder="e.g. Burger King"
+          update={ this.updateEvent }/>)
+      default :
+        return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
   }
-  updateEvent(userInput) {
-    const entries = Object.entries(userInput)
-    entries.forEach(([key, value]) => {
-      this.setState({ [key]: value })
-    })
-    const hashScreen = this.state.eventName === null ? 'create?step=description'
-      : this.state.eventDescription === null ? 'create?step=date'
-        : this.state.startDate === null ? 'create?step=lodging'
-          : this.state.lodges === null ? 'create?step=activities' : 'create?step=food'
-    location.hash = hashScreen
+  updateEvent(userInput, param) {
+    this.setState(userInput)
+    location.hash = `create?step=${param}`
   }
   componentDidMount() {
     window.addEventListener('hashchange', () => {

@@ -24,7 +24,7 @@ export default class Lodging extends React.Component {
     e.target.reset()
   }
   updateApp() {
-    this.props.update(this.state)
+    this.props.update(this.state, 'activities')
   }
   render() {
     return (

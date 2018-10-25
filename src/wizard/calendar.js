@@ -33,7 +33,7 @@ export default class ShowCalendar extends React.Component {
       startDate: formData.get('event-start'),
       endDate: formData.get('event-end')
     }
-    this.props.eventDate(dates)
+    this.props.eventDate(dates, 'lodging')
   }
   render() {
     return (

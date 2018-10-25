@@ -8,7 +8,7 @@ export default function Description(props) {
     const userDescription = {
       eventDescription: formData.get('event-description')
     }
-    props.update(userDescription)
+    props.update(userDescription, 'date')
   }
   return (
     <Fragment>
