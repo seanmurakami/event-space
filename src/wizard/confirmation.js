@@ -4,7 +4,13 @@ import { Button, Row, Col, Table } from 'reactstrap'
 export default class Confirmation extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      userInformation: this.props.eventInformation
+    }
+    this.submitEvent = this.submitEvent.bind(this)
+  }
+  submitEvent() {
+    this.props.update(this.state.userInformation)
   }
   render() {
     const { eventLocation, eventName, eventDescription, startDate, endDate, lodges, activities, food } = this.props.eventInformation
@@ -14,15 +20,15 @@ export default class Confirmation extends React.Component {
           <h1>{ eventName }</h1>
           <h5>{ eventLocation }</h5>
         </div>
-        <Row>
+        <div>
           <h5>Description:</h5>
           <p>{!!eventDescription !== false && eventDescription }</p>
-        </Row>
-        <Row>
+        </div>
+        <div>
           <h5>When:</h5>
           <p>{`Start Date: ${startDate.months}/${startDate.date}/${startDate.years}`}</p>
           <p>{`End Date: ${endDate.months}/${endDate.date}/${endDate.years}`}</p>
-        </Row>
+        </div>
         <h5>Lodging</h5>
         <Row>
           {
@@ -84,7 +90,7 @@ export default class Confirmation extends React.Component {
             </Table>
           </Col>
         </Row>
-        <Button color="primary">Confirm</Button>
+        <Button onClick={ this.submitEvent } color="primary">Confirm</Button>
       </Fragment>
     )
   }
