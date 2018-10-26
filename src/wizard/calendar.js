@@ -32,9 +32,9 @@ export default class ShowCalendar extends React.Component {
     return (
       <Fragment>
         <h3 className="text-center">Set the Date For Your Event!</h3>
-        <Form onSubmit={ this.eventDate }>
-          <div className="d-flex justify-content-center">
-            <Row>
+        <Form onSubmit={ this.eventDate } autoComplete="off">
+          <div className="d-flex justify-content-center mt-2 mb-3">
+            <Row className="border p-2 rounded">
               <Col>
                 <Label className="mr-1">Start Date:</Label>
                 <DatePicker
