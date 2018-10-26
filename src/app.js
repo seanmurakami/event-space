@@ -9,12 +9,19 @@ import Lodging from './wizard/lodging'
 import CreateList from './wizard/create-list'
 import Confirmation from './wizard/confirmation'
 
+const styles = {
+  width: {
+    maxWidth: '52rem'
+  }
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     const { path, params } = hash.parse(location.hash)
     this.state = {
-      view: { path, params }
+      view: { path, params },
+      userInfo: {}
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -46,14 +53,15 @@ export default class App extends React.Component {
           update={ this.updateEvent }/>)
       case 'confirmation' :
         return (
-          <Confirmation />
+          <Confirmation state={ this.state.userInfo }/>
         )
       default :
         return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
   }
   updateEvent(userInput, param) {
-    this.setState(userInput)
+    const userInfo = Object.assign(this.state.userInfo, userInput)
+    this.setState({userInfo})
     location.hash = `create?step=${param}`
   }
   componentDidMount() {
@@ -66,8 +74,8 @@ export default class App extends React.Component {
     return (
       <Fragment>
         <Navbar />
-        <div className="mx-3 mw-75 d-flex justify-content-center mb-4">
-          <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
+        <div className="mx-3 d-flex justify-content-center mb-4">
+          <Card style={ styles.width } className="shadow rounded w-100 p-4">
             { this.renderApp() }
           </Card>
         </div>
