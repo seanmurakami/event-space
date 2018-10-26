@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import ButtonGroup from './button-group'
+import ButtonGroup from '../util/button-group'
 import { Form, FormGroup, Label } from 'reactstrap'
 
 export default function Description(props) {

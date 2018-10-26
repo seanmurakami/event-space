@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
 import Navbar from './navbar'
 import CreateEvent from './wizard/create-event'
-import hash from './hash'
+import hash from './util/hash'
 import { Card } from 'reactstrap'
 import ShowCalendar from './wizard/calendar'
 import Description from './wizard/description'
 import Lodging from './wizard/lodging'
 import CreateList from './wizard/create-list'
+import Confirmation from './wizard/confirmation'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,6 +44,10 @@ export default class App extends React.Component {
           placeholder="e.g. Burger King"
           location="activities"
           update={ this.updateEvent }/>)
+      case 'confirmation' :
+        return (
+          <Confirmation />
+        )
       default :
         return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
@@ -61,7 +66,7 @@ export default class App extends React.Component {
     return (
       <Fragment>
         <Navbar />
-        <div className="mx-3 d-flex justify-content-center mb-4">
+        <div className="mx-3 mw-75 d-flex justify-content-center mb-4">
           <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
             { this.renderApp() }
           </Card>
