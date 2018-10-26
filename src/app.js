@@ -21,7 +21,7 @@ export default class App extends React.Component {
     const { path, params } = hash.parse(location.hash)
     this.state = {
       view: { path, params },
-      userInfo: {}
+      eventInformation: {}
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -53,15 +53,15 @@ export default class App extends React.Component {
           update={ this.updateEvent }/>)
       case 'confirmation' :
         return (
-          <Confirmation state={ this.state.userInfo }/>
+          <Confirmation eventInformation={ this.state.eventInformation }/>
         )
       default :
         return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
   }
   updateEvent(userInput, param) {
-    const userInfo = Object.assign(this.state.userInfo, userInput)
-    this.setState({userInfo})
+    const eventInformation = Object.assign(this.state.eventInformation, userInput)
+    this.setState({eventInformation})
     location.hash = `create?step=${param}`
   }
   componentDidMount() {
