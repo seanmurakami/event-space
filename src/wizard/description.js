@@ -1,19 +1,20 @@
 import React, {Fragment} from 'react'
-import { Form, FormGroup, Label, Button } from 'reactstrap'
+import ButtonGroup from './button-group'
+import { Form, FormGroup, Label } from 'reactstrap'
 
 export default function Description(props) {
-  function updateDescription(e) {
+  function updateUserInfo(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
     const userDescription = {
       eventDescription: formData.get('event-description')
     }
-    props.update(userDescription)
+    props.update(userDescription, 'date')
   }
   return (
     <Fragment>
       <h3 className="text-center">Make a Description For Your Event!</h3>
-      <Form onSubmit={ updateDescription }>
+      <Form onSubmit={ updateUserInfo }>
         <FormGroup>
           <Label>Description:</Label>
           <textarea
@@ -22,10 +23,7 @@ export default function Description(props) {
             className="form-control"
             placeholder="Enter a description for your event: " />
         </FormGroup>
-        <div className="d-flex justify-content-between">
-          <Button href="#" color="primary">Previous</Button>
-          <Button color="primary">Continue</Button>
-        </div>
+        <ButtonGroup params=""/>
       </Form>
     </Fragment>
   )

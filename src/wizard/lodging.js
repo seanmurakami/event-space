@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-import { Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Col } from 'reactstrap'
 import UpdateTable from './table'
+import ButtonGroup from './button-group'
+import { Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Col } from 'reactstrap'
 
 export default class Lodging extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class Lodging extends React.Component {
     e.target.reset()
   }
   updateApp() {
-    this.props.update(this.state)
+    this.props.update(this.state, 'activities')
   }
   render() {
     return (
@@ -52,13 +53,10 @@ export default class Lodging extends React.Component {
               </InputGroup>
             </Col>
             <Button color="primary" className="mx-auto w-50">add</Button>
+            <UpdateTable className="mx-auto" lodging={ this.state.lodges }/>
           </FormGroup>
-          <UpdateTable lodging={ this.state.lodges }/>
         </Form>
-        <div className="d-flex justify-content-between">
-          <Button href="#create?step=date" color="primary">Previous</Button>
-          <Button onClick={ this.updateApp } name="continue" color="primary">Continue</Button>
-        </div>
+        <ButtonGroup params="create?step=date" updateUserInfo={ this.updateApp }/>
       </Fragment>
     )
   }

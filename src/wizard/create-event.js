@@ -13,7 +13,7 @@ export default class CreateEvent extends React.Component {
       eventName: formData.get('event-name'),
       eventLocation: formData.get('event-location')
     }
-    this.props.updateEvent(userData)
+    this.props.updateEvent(userData, 'description')
   }
   render() {
     return (
