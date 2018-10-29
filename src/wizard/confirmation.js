@@ -47,7 +47,7 @@ export default class Confirmation extends React.Component {
             })
           }
         </Row>
-        <Row>
+        <Row className="mb-2">
           <Col>
             <h5>Food</h5>
             <ConfirmationList items={ food } />
