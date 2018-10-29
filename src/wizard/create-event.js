@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
 export default class CreateEvent extends React.Component {
   constructor(props) {
@@ -32,22 +32,6 @@ export default class CreateEvent extends React.Component {
             <Button className="w-50" color="primary">Continue</Button>
           </div>
         </Form>
-        <Row className="mt-3">
-          <Col md={6} key={1}>
-            <div className="bg bg-light border rounded p-2 mb-2">
-              <p>{`Type: Hotel`}</p>
-              <p>{`Address: 12809 Lexington Ave`}</p>
-              <p>{`Cost: $89`}</p>
-            </div>
-          </Col>
-          <Col md={6} key={2}>
-            <div className="border rounded p-2">
-              <p>{`Type: Airbnb`}</p>
-              <p>{`Address: 123 Address Place`}</p>
-              <p>{`Cost: $129`}</p>
-            </div>
-          </Col>
-        </Row>
       </Fragment>
     )
   }

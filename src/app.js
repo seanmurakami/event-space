@@ -88,7 +88,7 @@ export default class App extends React.Component {
       <Fragment>
         <Navbar />
         <div className="mx-3 d-flex justify-content-center mb-4">
-          <Card style={ styles.width } className="shadow rounded w-100 p-4">
+          <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
             { this.renderApp() }
           </Card>
         </div>

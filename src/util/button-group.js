@@ -5,7 +5,7 @@ export default function ButtonGroup(props) {
   return (
     <Fragment>
       <div className="d-none d-sm-flex justify-content-between">
-        <Button href={`#${props.params}`} outline color="primary">Previous</Button>
+        <Button href={`#${props.params}`} color="secondary">Previous</Button>
         <Button onClick={ props.updateUserInfo } color="primary">Continue</Button>
       </div>
       <div className="d-flex d-sm-none justify-content-between align-items-center">

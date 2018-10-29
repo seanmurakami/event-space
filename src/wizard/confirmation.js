@@ -17,7 +17,7 @@ export default class Confirmation extends React.Component {
     const { eventLocation, eventName, eventDescription, startDate, endDate, lodges, activities, food } = this.props.eventInformation
     return (
       <Fragment>
-        <div className="text-center mb-2">
+        <div className="text-center bg bg-light mb-2">
           <h1>{ eventName }</h1>
           <h5>{ eventLocation }</h5>
         </div>
@@ -37,10 +37,10 @@ export default class Confirmation extends React.Component {
             lodges.map((lodge, index) => {
               return (
                 <Col md={6} key={index}>
-                  <div className="border rounded p-2">
-                    <p>{`Type: ${lodge.locationType}`}</p>
-                    <p>{`Address: ${lodge.locationAddress}`}</p>
-                    <p>{`Cost: $${lodge.locationCost}`}</p>
+                  <div className="border rounded pt-3 pl-3 mb-2">
+                    <p><strong>Type: </strong>{lodge.locationType}</p>
+                    <p><strong>Address: </strong>{lodge.locationAddress}</p>
+                    <p><strong>Cost: $</strong>{lodge.locationCost}</p>
                   </div>
                 </Col>
               )
