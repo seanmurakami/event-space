@@ -1,22 +1,32 @@
 import React, { Fragment } from 'react'
 import Navbar from './navbar'
 import CreateEvent from './wizard/create-event'
-import hash from './hash'
+import hash from './util/hash'
 import { Card } from 'reactstrap'
 import ShowCalendar from './wizard/calendar'
 import Description from './wizard/description'
 import Lodging from './wizard/lodging'
 import CreateList from './wizard/create-list'
+import Confirmation from './wizard/confirmation'
+
+const styles = {
+  width: {
+    maxWidth: '52rem'
+  }
+}
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     const { path, params } = hash.parse(location.hash)
     this.state = {
-      view: { path, params }
+      view: { path, params },
+      eventInformation: {},
+      events: []
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
+    this.addEvent = this.addEvent.bind(this)
   }
   renderApp() {
     const { view } = this.state
@@ -43,12 +53,28 @@ export default class App extends React.Component {
           placeholder="e.g. Burger King"
           location="activities"
           update={ this.updateEvent }/>)
+      case 'confirmation' :
+        return (
+          <Confirmation eventInformation={ this.state.eventInformation } update={ this.addEvent }/>
+        )
       default :
         return (<CreateEvent updateEvent={ this.updateEvent }/>)
     }
   }
+  addEvent(event) {
+    return fetch('/events', {
+      method: 'POST',
+      body: JSON.stringify(event),
+      headers: {'Content-Type': 'application/json'}
+    })
+      .then(res => res.json())
+      .then(newEvent => this.setState({
+        events: [...this.state.events, newEvent]
+      }))
+  }
   updateEvent(userInput, param) {
-    this.setState(userInput)
+    const eventInformation = Object.assign(this.state.eventInformation, userInput)
+    this.setState({eventInformation})
     location.hash = `create?step=${param}`
   }
   componentDidMount() {
@@ -62,7 +88,7 @@ export default class App extends React.Component {
       <Fragment>
         <Navbar />
         <div className="mx-3 d-flex justify-content-center mb-4">
-          <Card className="shadow rounded col-xl-6 col-lg-7 col-md-10 p-4">
+          <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
             { this.renderApp() }
           </Card>
         </div>

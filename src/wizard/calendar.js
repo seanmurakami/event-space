@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import ButtonGroup from './button-group'
+import ButtonGroup from '../util/button-group'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { Form, Row, Label, Col } from 'reactstrap'
@@ -20,6 +20,7 @@ export default class ShowCalendar extends React.Component {
     e.preventDefault()
     const userInfo = Object.assign({}, this.state)
     const updateDates = Object.values(userInfo).map(moment => moment.toObject())
+    updateDates.map(item => item.months++)
     this.props.eventDate({startDate: updateDates[0], endDate: updateDates[1]}, 'lodging')
   }
   changeStart(date) {
