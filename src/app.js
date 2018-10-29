@@ -65,7 +65,8 @@ export default class App extends React.Component {
     return fetch('/events', {
       method: 'POST',
       body: JSON.stringify(event),
-      headers: {'Content-Type': 'application/json'}})
+      headers: {'Content-Type': 'application/json'}
+    })
       .then(res => res.json())
       .then(newEvent => this.setState({
         events: [...this.state.events, newEvent]

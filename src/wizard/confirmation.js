@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import { Button, Row, Col, Table } from 'reactstrap'
+import { Button, Row, Col } from 'reactstrap'
+import ConfirmationList from '../util/confirmation-list'
 
 export default class Confirmation extends React.Component {
   constructor(props) {
@@ -30,15 +31,17 @@ export default class Confirmation extends React.Component {
           <p>{`End Date: ${endDate.months}/${endDate.date}/${endDate.years}`}</p>
         </div>
         <h5>Lodging</h5>
-        <Row>
+        <Row className="mb-2">
           {
             Object.keys(lodges).length !== 0 &&
             lodges.map((lodge, index) => {
               return (
                 <Col md={6} key={index}>
-                  <p>{`Type: ${lodge.locationType}`}</p>
-                  <p>{`Address: ${lodge.locationAddress}`}</p>
-                  <p>{`Cost: $${lodge.locationCost}`}</p>
+                  <div className="border rounded p-2">
+                    <p>{`Type: ${lodge.locationType}`}</p>
+                    <p>{`Address: ${lodge.locationAddress}`}</p>
+                    <p>{`Cost: $${lodge.locationCost}`}</p>
+                  </div>
                 </Col>
               )
             })
@@ -47,50 +50,14 @@ export default class Confirmation extends React.Component {
         <Row>
           <Col>
             <h5>Food</h5>
-            <Table className="mt-2 border">
-              <thead>
-                <tr>
-                  <th>Food</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  food.length !== 0 &&
-                  food.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{ item }</td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </Table>
+            <ConfirmationList items={ food } />
           </Col>
           <Col md={6}>
             <h5>Activities</h5>
-            <Table className="border">
-              <thead>
-                <tr>
-                  <th>Activity</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  activities.length !== 0 &&
-                  activities.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{ item }</td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </Table>
+            <ConfirmationList items={ activities } />
           </Col>
         </Row>
-        <Button onClick={ this.submitEvent } color="primary">Confirm</Button>
+        <Button onClick={ this.submitEvent } color="primary">Submit Event!</Button>
       </Fragment>
     )
   }
