@@ -12,7 +12,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jpeg$/,
+        test: /\.jpg$/,
         use: 'url-loader'
       },
       {

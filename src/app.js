@@ -8,6 +8,7 @@ import Description from './wizard/description'
 import Lodging from './wizard/lodging'
 import CreateList from './wizard/create-list'
 import Confirmation from './wizard/confirmation'
+import Homepage from './homepage'
 
 const styles = {
   width: {
@@ -70,7 +71,8 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(newEvent => this.setState({
         events: [...this.state.events, newEvent]
-      }))
+      })
+      )
   }
   updateEvent(userInput, param) {
     const eventInformation = Object.assign(this.state.eventInformation, userInput)
@@ -84,15 +86,25 @@ export default class App extends React.Component {
     })
   }
   render() {
-    return (
-      <Fragment>
-        <Navbar />
-        <div className="mx-3 d-flex justify-content-center mb-4">
-          <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
-            { this.renderApp() }
-          </Card>
-        </div>
-      </Fragment>
-    )
+    if (this.state.events.length === 0) {
+      return (
+        <Fragment>
+          <Navbar />
+          <div className="mx-3 d-flex justify-content-center mb-4">
+            <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
+              { this.renderApp() }
+            </Card>
+          </div>
+        </Fragment>
+      )
+    }
+    else {
+      return (
+        <Fragment>
+          <Navbar />
+          <Homepage />
+        </Fragment>
+      )
+    }
   }
 }
