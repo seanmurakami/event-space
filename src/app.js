@@ -32,7 +32,7 @@ export default class App extends React.Component {
     this.renderApp = this.renderApp.bind(this)
     this.addEvent = this.addEvent.bind(this)
   }
-  renderApp() {
+  renderWizard() {
     const { view } = this.state
     switch (view.params.step) {
       case 'description' :
@@ -99,7 +99,7 @@ export default class App extends React.Component {
           <Navbar />
           <div className="d-flex justify-content-center mx-3 mb-4">
             <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
-              { this.renderApp() }
+              { this.renderWizard() }
             </Card>
           </div>
         </Fragment>
