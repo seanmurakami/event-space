@@ -25,7 +25,7 @@ export default function Homepage(props) {
                       <CardText className="border rounded p-1 bg bg-light">{item.endDate}</CardText>
                     </Col>
                   </Row>
-                  <Button color="primary px-5">Details</Button>
+                  <Button href={`#details?event=${item.id}`} color="primary px-5">Details</Button>
                 </CardBody>
               </Card>
             </Col>
