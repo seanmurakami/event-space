@@ -83,7 +83,7 @@ export default class App extends React.Component {
   }
   updateDetails(eventID) {
     const selectedEvent = this.state.events.filter(item => item.id === parseInt(eventID, 10))
-    this.setState({selectedEvent})
+    this.setState({selectedEvent: selectedEvent[0]})
   }
   addEvent(event) {
     location.hash = '#'
