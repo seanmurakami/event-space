@@ -9,6 +9,7 @@ import CreateList from './wizard/create-list'
 import Confirmation from './wizard/confirmation'
 import Homepage from './homepage'
 import Loading from './util/loading'
+import Details from './details'
 import { Card, Row } from 'reactstrap'
 
 const styles = {
@@ -29,7 +30,7 @@ export default class App extends React.Component {
       loading: true
     }
     this.updateEvent = this.updateEvent.bind(this)
-    this.renderApp = this.renderApp.bind(this)
+    this.renderWizard = this.renderWizard.bind(this)
     this.addEvent = this.addEvent.bind(this)
   }
   renderWizard() {
@@ -63,6 +64,19 @@ export default class App extends React.Component {
         )
       default :
         return this.state.loading ? <Loading /> : <CreateEvent updateEvent={ this.updateEvent }/>
+    }
+  }
+  renderHomepage() {
+    const { view } = this.state
+    switch (view.path) {
+      case 'details' :
+        return (<Details />)
+      default :
+        return (
+          <Row className="mx-auto">
+            <Homepage events={this.state.events}/>
+          </Row>
+        )
     }
   }
   addEvent(event) {
@@ -109,9 +123,7 @@ export default class App extends React.Component {
       return (
         <Fragment>
           <Navbar />
-          <Row className="mx-auto">
-            <Homepage events={this.state.events}/>
-          </Row>
+          { this.renderHomepage() }
         </Fragment>
       )
     }
