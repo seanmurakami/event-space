@@ -27,8 +27,8 @@ export default class Confirmation extends React.Component {
         </div>
         <div>
           <h5>When:</h5>
-          <p>{`Start Date: ${startDate.months}/${startDate.date}/${startDate.years}`}</p>
-          <p>{`End Date: ${endDate.months}/${endDate.date}/${endDate.years}`}</p>
+          <p>{`Start Date: ${startDate}`}</p>
+          <p>{`End Date: ${endDate}`}</p>
         </div>
         <h5>Lodging</h5>
         <Row className="mb-2">

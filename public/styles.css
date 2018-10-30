@@ -12,5 +12,5 @@ body {
     ),
     url(pexels-photo-297642.jpeg);
   background-position: center;
-  background-size: cover;
+  background-repeat: no-repeat;
 }

@@ -9,15 +9,12 @@ import CreateList from './wizard/create-list'
 import Confirmation from './wizard/confirmation'
 import Homepage from './homepage'
 import Loading from './util/loading'
-import { Card } from 'reactstrap'
+import { Card, Row } from 'reactstrap'
 
 const styles = {
   width: {
     maxWidth: '36rem',
     opacity: '0.91'
-  },
-  cover: {
-    maxWidth: '52rem'
   }
 }
 
@@ -112,9 +109,9 @@ export default class App extends React.Component {
       return (
         <Fragment>
           <Navbar />
-          <div className="mx-auto" style={ styles.cover }>
+          <Row className="mx-auto">
             <Homepage events={this.state.events}/>
-          </div>
+          </Row>
         </Fragment>
       )
     }
