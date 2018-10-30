@@ -2,16 +2,21 @@ import React, { Fragment } from 'react'
 import Navbar from './navbar'
 import CreateEvent from './wizard/create-event'
 import hash from './util/hash'
-import { Card } from 'reactstrap'
 import ShowCalendar from './wizard/calendar'
 import Description from './wizard/description'
 import Lodging from './wizard/lodging'
 import CreateList from './wizard/create-list'
 import Confirmation from './wizard/confirmation'
 import Homepage from './homepage'
+import Loading from './util/loading'
+import { Card } from 'reactstrap'
 
 const styles = {
   width: {
+    maxWidth: '36rem',
+    opacity: '0.91'
+  },
+  cover: {
     maxWidth: '52rem'
   }
 }
@@ -23,7 +28,8 @@ export default class App extends React.Component {
     this.state = {
       view: { path, params },
       eventInformation: {},
-      events: []
+      events: [],
+      loading: true
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderApp = this.renderApp.bind(this)
@@ -59,10 +65,11 @@ export default class App extends React.Component {
           <Confirmation eventInformation={ this.state.eventInformation } update={ this.addEvent }/>
         )
       default :
-        return (<CreateEvent updateEvent={ this.updateEvent }/>)
+        return this.state.loading ? <Loading /> : <CreateEvent updateEvent={ this.updateEvent }/>
     }
   }
   addEvent(event) {
+    location.hash = '#'
     return fetch('/events', {
       method: 'POST',
       body: JSON.stringify(event),
@@ -80,6 +87,9 @@ export default class App extends React.Component {
     location.hash = `create?step=${param}`
   }
   componentDidMount() {
+    fetch('/events')
+      .then(res => res.json())
+      .then(events => this.setState({events, loading: false}))
     window.addEventListener('hashchange', () => {
       const { path, params } = hash.parse(location.hash)
       this.setState({view: { path, params }})
@@ -90,7 +100,7 @@ export default class App extends React.Component {
       return (
         <Fragment>
           <Navbar />
-          <div className="mx-3 d-flex justify-content-center mb-4">
+          <div className="d-flex justify-content-center mx-3 mb-4">
             <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
               { this.renderApp() }
             </Card>
@@ -102,7 +112,9 @@ export default class App extends React.Component {
       return (
         <Fragment>
           <Navbar />
-          <Homepage />
+          <div className="mx-auto" style={ styles.cover }>
+            <Homepage events={this.state.events}/>
+          </div>
         </Fragment>
       )
     }

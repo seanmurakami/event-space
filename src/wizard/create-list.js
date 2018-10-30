@@ -31,7 +31,7 @@ export default class CreateList extends React.Component {
     const { header, label, placeholder } = this.props
     return (
       <Fragment>
-        <h3 className="text-center mb-3">{ header }</h3>
+        <h3 className="font-weight-light text-center mb-3">{ header }</h3>
         <Form onSubmit={ this.updateActivities } autoComplete="off">
           <FormGroup row>
             <Label md={3}>{ label }</Label>

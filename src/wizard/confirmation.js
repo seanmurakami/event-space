@@ -17,7 +17,7 @@ export default class Confirmation extends React.Component {
     const { eventLocation, eventName, eventDescription, startDate, endDate, lodges, activities, food } = this.props.eventInformation
     return (
       <Fragment>
-        <div className="text-center bg bg-light mb-2">
+        <div className="text-center bg bg-light font-weight-light mb-2">
           <h1>{ eventName }</h1>
           <h5>{ eventLocation }</h5>
         </div>
