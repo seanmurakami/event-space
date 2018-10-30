@@ -2,6 +2,10 @@ import React, {Fragment} from 'react'
 import { Button, Card, CardBody, CardSubtitle, CardText, Row, Col } from 'reactstrap'
 
 export default function Homepage(props) {
+  function updateState(e) {
+    const { id } = e.target
+    props.updateDetails(id)
+  }
   return (
     <Fragment>
       {
@@ -25,7 +29,7 @@ export default function Homepage(props) {
                       <CardText className="border rounded p-1 bg bg-light">{item.endDate}</CardText>
                     </Col>
                   </Row>
-                  <Button href={`#details?event=${item.id}`} color="primary px-5">Details</Button>
+                  <Button href={`#details?event=${item.id}`} id={item.id} onClick={updateState} color="primary px-5">Details</Button>
                 </CardBody>
               </Card>
             </Col>

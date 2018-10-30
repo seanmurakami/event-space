@@ -27,11 +27,13 @@ export default class App extends React.Component {
       view: { path, params },
       eventInformation: {},
       events: [],
-      loading: true
+      loading: true,
+      selectedEvent: null
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderWizard = this.renderWizard.bind(this)
     this.addEvent = this.addEvent.bind(this)
+    this.updateDetails = this.updateDetails.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -70,14 +72,18 @@ export default class App extends React.Component {
     const { view } = this.state
     switch (view.path) {
       case 'details' :
-        return (<Details />)
+        return (<Details selectedEvent={ this.state.selectedEvent }/>)
       default :
         return (
           <Row className="mx-auto">
-            <Homepage events={this.state.events}/>
+            <Homepage updateDetails={ this.updateDetails } events={this.state.events}/>
           </Row>
         )
     }
+  }
+  updateDetails(eventID) {
+    const selectedEvent = this.state.events.filter(item => item.id === parseInt(eventID, 10))
+    this.setState({selectedEvent})
   }
   addEvent(event) {
     location.hash = '#'
