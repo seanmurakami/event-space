@@ -30,22 +30,22 @@ export default class Lodging extends React.Component {
   render() {
     return (
       <Fragment>
-        <h3 className="text-center mb-3">Select a Place to Stay!</h3>
+        <h3 className="font-weight-light text-center mb-3">Select a Place to Stay!</h3>
         <Form onSubmit={ this.addLodge } autoComplete="off">
           <FormGroup row>
-            <Label md={3}>Location/Type:</Label>
+            <Label md={3}>Location/Type</Label>
             <Col md={9}>
               <Input name="event-type" placeholder="e.g. AirBnb, Hotel, etc." />
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label md={3}>Address:</Label>
+            <Label md={3}>Address</Label>
             <Col md={9}>
               <Input name="event-address" placeholder="e.g. 123 Address St" />
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label md={3}>Cost:</Label>
+            <Label md={3}>Cost</Label>
             <Col md={9} className="mb-3">
               <InputGroup>
                 <InputGroupAddon addonType="prepend">$</InputGroupAddon>

@@ -13,10 +13,10 @@ export default function Description(props) {
   }
   return (
     <Fragment>
-      <h3 className="text-center">Make a Description For Your Event!</h3>
+      <h3 className="font-weight-light text-center">Make a Description For Your Event!</h3>
       <Form onSubmit={ updateUserInfo }>
         <FormGroup>
-          <Label>Description:</Label>
+          <Label>Description</Label>
           <textarea
             name="event-description"
             rows="5"

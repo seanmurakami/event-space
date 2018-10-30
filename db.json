@@ -1,3 +1,43 @@
 {
-  "events": []
+  "events": [
+    {
+      "eventName": "My trip to Hawaii",
+      "eventLocation": "Hawaii, HI",
+      "eventDescription": "Hello there\r\n",
+      "startDate": {
+        "years": 2018,
+        "months": 10,
+        "date": 29,
+        "hours": 13,
+        "minutes": 0,
+        "seconds": 37,
+        "milliseconds": 65
+      },
+      "endDate": {
+        "years": 2018,
+        "months": 10,
+        "date": 31,
+        "hours": 13,
+        "minutes": 0,
+        "seconds": 37,
+        "milliseconds": 0
+      },
+      "lodges": [
+        {
+          "locationType": "Hotel",
+          "locationAddress": "123 Address Street",
+          "locationCost": "393"
+        }
+      ],
+      "activities": [
+        "Walk",
+        "Hike",
+        "Climb"
+      ],
+      "food": [
+        "Burger King"
+      ],
+      "id": 1
+    }
+  ]
 }
