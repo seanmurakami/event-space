@@ -4,7 +4,11 @@ import { Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
 
 const styles = {
   width: {
-    maxWidth: '60rem'
+    maxWidth: '50rem',
+    opacity: '0.9'
+  },
+  description: {
+    maxWidth: '38rem'
   }
 }
 
@@ -14,37 +18,40 @@ export default class Details extends React.Component {
     this.state = {}
   }
   render() {
-    const { eventName, eventLocation, startDate, endDate, lodges, activities, food } = this.props.selectedEvent
+    const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food } = this.props.selectedEvent
     return (
-      <div className="mx-2">
-        <Card className="container px-0" style={ styles.width }>
+      <div className="mx-2 mb-5">
+        <Card className="container font-weight-light text-center px-0" style={ styles.width }>
           <CardHeader>
-            <CardText tag="h1">{ eventName }</CardText>
-            <CardText>{ eventLocation }</CardText>
+            <CardText className="font-weight-light" tag="h1">{ eventName }</CardText>
+            <CardText><i className="fas fa-location-arrow mr-2"></i>{ eventLocation }</CardText>
           </CardHeader>
           <CardBody>
-            <h4>When</h4>
+            <CardText className="mx-auto" style={ styles.description }>{ eventDescription }</CardText>
+            <CardText tag="h4"><i className="fas fa-calendar-alt mr-2"></i>When</CardText>
             <Row className="d-flex justify-content-center mx-auto mb-3">
-              <Col className="col-sm-auto" xs={6}>
+              <Col className="col-md-auto" xs={6}>
                 <CardText className="mb-0">Start Date</CardText>
-                <CardText className="border rounded p-1 bg bg-light">{ startDate }</CardText>
+                <CardText className="border rounded p-2 bg bg-light">{ startDate }</CardText>
               </Col>
-              <Col className="col-sm-auto" xs={6}>
+              <Col className="col-md-auto" xs={6}>
                 <CardText className="mb-0">End Date</CardText>
-                <CardText className="border rounded p-1 bg bg-light">{ endDate }</CardText>
+                <CardText className="border rounded p-2 bg bg-light">{ endDate }</CardText>
               </Col>
             </Row>
-            <h4>Lodging</h4>
+            <CardText tag="h4"><i className="fas fa-home mr-2"></i>Lodging</CardText>
             <Row className="mb-2">
               {
                 lodges.map((lodge, index) => {
                   return (
-                    <Col key={index} className="mb-2" md={6}>
+                    <Col key={index} className="mb-2" sm={6}>
                       <Card>
                         <CardHeader>{ lodge.locationAddress }</CardHeader>
                         <CardBody>
-                          <CardText className="text-success">{`$${lodge.locationCost}`}</CardText>
-                          <CardText>{ lodge.locationType }</CardText>
+                          <Row className="d-flex justify-content-around">
+                            <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}</CardText>
+                            <CardText className="mb-0">{`Type: ${lodge.locationType}`}</CardText>
+                          </Row>
                         </CardBody>
                       </Card>
                     </Col>
@@ -53,12 +60,12 @@ export default class Details extends React.Component {
               }
             </Row>
             <Row>
-              <Col md={6}>
-                <h4>Food</h4>
+              <Col sm={6}>
+                <CardText tag="h4"><i className="fas fa-utensils mr-2"></i>Food</CardText>
                 <ConfirmationList items={ food } />
               </Col>
-              <Col md={6}>
-                <h4>Activities</h4>
+              <Col sm={6}>
+                <CardText tag="h4"><i className="fas fa-hiking mr-2"></i>Activities</CardText>
                 <ConfirmationList items={ activities } />
               </Col>
             </Row>

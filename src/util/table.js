@@ -14,7 +14,7 @@ export default function UpdateTable(props) {
   return (
     <Fragment>
       { props.lodging.length !== 0 &&
-    <Table className="mt-2 border">
+    <Table className="mt-2 border text-center">
       <thead>
         <tr>
           <th>Type</th>

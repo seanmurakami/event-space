@@ -57,7 +57,7 @@ export default class Confirmation extends React.Component {
             <ConfirmationList items={ activities } />
           </Col>
         </Row>
-        <Button onClick={ this.submitEvent } color="primary">Submit Event!</Button>
+        <Button onClick={ this.submitEvent } color="info">Submit Event!</Button>
       </Fragment>
     )
   }

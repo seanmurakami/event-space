@@ -14,7 +14,7 @@ import { Card, Row } from 'reactstrap'
 
 const styles = {
   width: {
-    maxWidth: '36rem',
+    maxWidth: '44rem',
     opacity: '0.91'
   }
 }
@@ -106,7 +106,10 @@ export default class App extends React.Component {
   componentDidMount() {
     fetch('/events')
       .then(res => res.json())
-      .then(events => this.setState({events, loading: false}))
+      .then(events => {
+        const selectedEvent = events.filter(item => item.id === parseInt(this.state.view.params.event, 10) || null)
+        this.setState({events, loading: false, selectedEvent: selectedEvent[0]})
+      })
     window.addEventListener('hashchange', () => {
       const { path, params } = hash.parse(location.hash)
       this.setState({view: { path, params }})
