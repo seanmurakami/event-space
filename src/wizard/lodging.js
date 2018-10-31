@@ -52,7 +52,7 @@ export default class Lodging extends React.Component {
                 <Input name="event-cost" placeholder="e.g. $489" />
               </InputGroup>
             </Col>
-            <Button color="primary" className="mx-auto w-50">add</Button>
+            <Button color="info" className="mx-auto w-50">add</Button>
             <UpdateTable className="mx-auto" lodging={ this.state.lodges }/>
           </FormGroup>
         </Form>

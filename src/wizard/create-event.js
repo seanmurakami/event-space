@@ -29,7 +29,7 @@ export default class CreateEvent extends React.Component {
             <Input name="event-location" placeholder="Input event location" />
           </FormGroup>
           <div className="d-flex justify-content-center">
-            <Button className="w-50" color="primary">Continue</Button>
+            <Button className="w-50" color="info">Continue</Button>
           </div>
         </Form>
       </Fragment>

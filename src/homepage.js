@@ -1,31 +1,44 @@
 import React, {Fragment} from 'react'
-import { Button, Card, CardBody, CardSubtitle, CardText, Row, Col } from 'reactstrap'
+import { Button, Card, CardBody, CardText, Row, Col } from 'reactstrap'
+
+const styles = {
+  width: {
+    maxWidth: '29em'
+  },
+  opacity: {
+    opacity: '0.9'
+  }
+}
 
 export default function Homepage(props) {
+  function updateState(e) {
+    const { id } = e.target
+    props.updateDetails(id)
+  }
   return (
     <Fragment>
       {
         props.events.map((item, index) => {
           return (
             <Col key={index} md={6}>
-              <Card className="mb-3 shadow text-center">
+              <Card style={ styles.opacity } className="mb-3 text-center font-weight-light">
                 <CardBody>
                   <div className="bg bg-light border rounded py-3 px-2 mb-3">
-                    <h2 className="font-weight-light">{item.eventName}</h2>
-                    <CardSubtitle>{item.eventLocation}</CardSubtitle>
+                    <h3 className="font-weight-light">{item.eventName}</h3>
+                    <CardText className="font-weight-light"><i className="fas fa-location-arrow mr-2"></i>{item.eventLocation}</CardText>
                   </div>
-                  <CardText>{item.eventDescription}</CardText>
+                  <CardText style={ styles.width } className="mx-auto">{item.eventDescription}</CardText>
                   <Row className="d-flex justify-content-center mx-auto mb-3">
                     <Col className="col-sm-auto" xs={6}>
-                      <CardText className="mb-0">Start Date</CardText>
+                      <CardText className="mb-1">Start Date</CardText>
                       <CardText className="border rounded p-1 bg bg-light">{item.startDate}</CardText>
                     </Col>
                     <Col className="col-sm-auto" xs={6}>
-                      <CardText className="mb-0">End Date</CardText>
+                      <CardText className="mb-1">End Date</CardText>
                       <CardText className="border rounded p-1 bg bg-light">{item.endDate}</CardText>
                     </Col>
                   </Row>
-                  <Button color="primary px-5">Details</Button>
+                  <Button href={`#details?event=${item.id}`} id={item.id} onClick={updateState} color="info px-5">Details</Button>
                 </CardBody>
               </Card>
             </Col>
