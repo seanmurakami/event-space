@@ -89,7 +89,7 @@ export default class App extends React.Component {
     location.hash = '#'
     return fetch('/events', {
       method: 'POST',
-      body: JSON.stringify(event),
+      body: JSON.stringify(Object.assign(event, {data: {}})),
       headers: {'Content-Type': 'application/json'}
     })
       .then(res => res.json())

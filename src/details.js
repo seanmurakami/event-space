@@ -1,5 +1,6 @@
 import React from 'react'
 import ConfirmationList from './util/confirmation-list'
+import Poll from './poll'
 import { Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
 
 const styles = {
@@ -40,7 +41,7 @@ export default class Details extends React.Component {
               </Col>
             </Row>
             <CardText tag="h4"><i className="fas fa-home mr-2"></i>Lodging</CardText>
-            <Row className="mb-2">
+            <Row className="mb-2 d-flex justify-content-center">
               {
                 lodges.map((lodge, index) => {
                   return (
@@ -68,6 +69,9 @@ export default class Details extends React.Component {
                 <CardText tag="h4"><i className="fas fa-hiking mr-2"></i>Activities</CardText>
                 <ConfirmationList items={ activities } />
               </Col>
+            </Row>
+            <Row>
+              <Poll/>
             </Row>
           </CardBody>
         </Card>
