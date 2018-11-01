@@ -2,17 +2,14 @@
   "name": "my-project",
   "private": true,
   "version": "1.0.0",
-  "engines": {
-    "node": "10.12.0"
-  },
-  "description": "My project.",
+  "description": "My cool project.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "build": "webpack",
     "dev": "webpack-dev-server",
-    "watch": "npm-run-all --parallel start dev",
-    "postinstall": "webpack"
+    "watch": "npm-run-all --parallel start dev"
   },
   "keywords": [],
   "author": "",
