@@ -1,6 +1,5 @@
 {
   "name": "my-project",
-  "private": true,
   "version": "1.0.0",
   "description": "My cool project.",
   "engines": {
