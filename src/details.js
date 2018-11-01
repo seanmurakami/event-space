@@ -69,6 +69,7 @@ export default class Details extends React.Component {
                 <ConfirmationList items={ activities } />
               </Col>
             </Row>
+            <i className="fas fa-trash-alt fa-lg float-right mt-2 text-secondary"></i>
           </CardBody>
         </Card>
       </div>

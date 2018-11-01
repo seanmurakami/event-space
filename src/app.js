@@ -77,7 +77,7 @@ export default class App extends React.Component {
         return (<Details selectedEvent={ this.state.selectedEvent }/>)
       default :
         return (
-          <Row className="mx-auto">
+          <Row className="d-flex justify-content-center mx-auto">
             <Homepage updateDetails={ this.updateDetails } events={this.state.events}/>
           </Row>
         )

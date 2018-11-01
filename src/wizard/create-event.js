@@ -19,7 +19,7 @@ export default class CreateEvent extends React.Component {
     return (
       <Fragment>
         <h3 className="font-weight-light text-center">Create An Event!</h3>
-        <Form onSubmit={ this.userInput }>
+        <Form autoComplete="off" onSubmit={ this.userInput }>
           <FormGroup>
             <Label>Event Name</Label>
             <Input name="event-name" placeholder="Input event name" />
