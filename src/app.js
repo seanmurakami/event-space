@@ -35,6 +35,7 @@ export default class App extends React.Component {
     this.renderWizard = this.renderWizard.bind(this)
     this.addEvent = this.addEvent.bind(this)
     this.updateDetails = this.updateDetails.bind(this)
+    this.newEvent = this.newEvent.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -95,7 +96,8 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(newEvent => this.setState({
-        events: [...this.state.events, newEvent]
+        events: [...this.state.events, newEvent],
+        newEvent: false
       })
       )
   }
@@ -103,6 +105,9 @@ export default class App extends React.Component {
     const eventInformation = Object.assign(this.state.eventInformation, userInput)
     this.setState({eventInformation})
     location.hash = `create?step=${param}`
+  }
+  newEvent() {
+    this.setState({newEvent: true})
   }
   componentDidMount() {
     fetch('/events')
@@ -117,7 +122,7 @@ export default class App extends React.Component {
     })
   }
   render() {
-    if (this.state.events.length === 0) {
+    if (this.state.newEvent || this.state.events.length === 0) {
       return (
         <Fragment>
           <EventsNavbar />
@@ -132,7 +137,7 @@ export default class App extends React.Component {
     else {
       return (
         <Fragment>
-          <EventsNavbar />
+          <EventsNavbar update={ this.newEvent }/>
           { this.renderHomepage() }
         </Fragment>
       )
