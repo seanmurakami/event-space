@@ -21,7 +21,7 @@ export default class Poll extends React.Component {
           label: '# of Votes',
           data: [0, 0, 0, 0, 0, 0],
           backgroundColor: [
-            'rgba(255, 99, 132, 1)',
+            '#17a2b8',
             'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
             'rgba(75, 192, 192, 1)',

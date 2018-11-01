@@ -39,6 +39,7 @@ export default class Details extends React.Component {
       data: this.state.pollItems
     }
     this.props.poll(content, this.props.selectedEvent.id)
+    this.toggle()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, data } = this.props.selectedEvent
@@ -93,7 +94,10 @@ export default class Details extends React.Component {
               </Col>
             </Row>
             <Row className="mb-2">
-              <Poll data={ data }/>
+              {
+                data.length !== 0 &&
+                <Poll data={ data }/>
+              }
             </Row>
             <Row className="d-flex justify-content-between mx-2">
               <Button href="#">Exit</Button>
