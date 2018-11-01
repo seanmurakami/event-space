@@ -16,10 +16,10 @@ export default class Poll extends React.Component {
     this.chart = new Chart(ctx, {
       type: 'horizontalBar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+        labels: this.props.data,
         datasets: [{
           label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          data: [0, 0, 0, 0, 0, 0],
           backgroundColor: [
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
@@ -33,9 +33,11 @@ export default class Poll extends React.Component {
       },
       options: {
         scales: {
-          yAxes: [{
+          xAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              stepSize: 1,
+              suggestedMax: 5
             }
           }]
         }

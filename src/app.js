@@ -34,6 +34,7 @@ export default class App extends React.Component {
     this.renderWizard = this.renderWizard.bind(this)
     this.addEvent = this.addEvent.bind(this)
     this.updateDetails = this.updateDetails.bind(this)
+    this.updatePollData = this.updatePollData.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -72,7 +73,7 @@ export default class App extends React.Component {
     const { view } = this.state
     switch (view.path) {
       case 'details' :
-        return (<Details selectedEvent={ this.state.selectedEvent }/>)
+        return (<Details poll={ this.updatePollData } selectedEvent={ this.state.selectedEvent }/>)
       default :
         return (
           <Row className="mx-auto">
@@ -102,6 +103,21 @@ export default class App extends React.Component {
     const eventInformation = Object.assign(this.state.eventInformation, userInput)
     this.setState({eventInformation})
     location.hash = `create?step=${param}`
+  }
+  updatePollData(pollData, id) {
+    return fetch('/events/' + id, {
+      method: 'PATCH',
+      body: JSON.stringify(pollData),
+      headers: {'Content-Type': 'application/json'}
+    })
+      .then(res => res.json())
+      .then(item => {
+        const { events } = this.state
+        const newEvents = [...events]
+        const eventIndex = newEvents.findIndex(element => element.id === item.id)
+        newEvents.splice(eventIndex, 1, item)
+        return this.setState({events: newEvents})
+      })
   }
   componentDidMount() {
     fetch('/events')
