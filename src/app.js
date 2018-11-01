@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Navbar from './navbar'
+import EventsNavbar from './navbar'
 import CreateEvent from './wizard/create-event'
 import hash from './util/hash'
 import ShowCalendar from './wizard/calendar'
@@ -28,7 +28,8 @@ export default class App extends React.Component {
       eventInformation: {},
       events: [],
       loading: true,
-      selectedEvent: null
+      selectedEvent: null,
+      newEvent: false
     }
     this.updateEvent = this.updateEvent.bind(this)
     this.renderWizard = this.renderWizard.bind(this)
@@ -119,7 +120,7 @@ export default class App extends React.Component {
     if (this.state.events.length === 0) {
       return (
         <Fragment>
-          <Navbar />
+          <EventsNavbar />
           <div className="d-flex justify-content-center mx-3 mb-4">
             <Card style={ styles.width } className="shadow rounded bg bg-light w-100 p-4">
               { this.renderWizard() }
@@ -131,7 +132,7 @@ export default class App extends React.Component {
     else {
       return (
         <Fragment>
-          <Navbar />
+          <EventsNavbar />
           { this.renderHomepage() }
         </Fragment>
       )
