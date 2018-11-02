@@ -1,5 +1,6 @@
 import React from 'react'
 import ConfirmationList from './util/confirmation-list'
+import DeleteEvent from './modal-delete'
 import { Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
 
 const styles = {
@@ -18,7 +19,7 @@ export default class Details extends React.Component {
     this.state = {}
   }
   render() {
-    const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food } = this.props.selectedEvent
+    const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
       <div className="mx-2 mb-5">
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
@@ -69,7 +70,7 @@ export default class Details extends React.Component {
                 <ConfirmationList items={ activities } />
               </Col>
             </Row>
-            <i className="fas fa-trash-alt fa-lg float-right mt-2 text-secondary"></i>
+            <DeleteEvent id={id}/>
           </CardBody>
         </Card>
       </div>
