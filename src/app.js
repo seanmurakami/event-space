@@ -76,11 +76,12 @@ export default class App extends React.Component {
     const { view } = this.state
     switch (view.path) {
       case 'details' :
-        return (<Details
-          selectedEvent={ this.state.selectedEvent }
-          deleteEvent={ this.deleteEvent }
-          addLike={ this.addLike }
-        />)
+        return (
+          <Details
+            selectedEvent={ this.state.selectedEvent }
+            deleteEvent={ this.deleteEvent }
+            addLike={ this.addLike }
+          />)
       default :
         return (
           <Row className="d-flex justify-content-center mx-auto">
@@ -90,8 +91,8 @@ export default class App extends React.Component {
     }
   }
   updateDetails(eventID) {
-    const selectedEvent = this.state.events.filter(item => item.id === parseInt(eventID, 10))
-    this.setState({selectedEvent: selectedEvent[0]})
+    const [selectedEvent] = this.state.events.filter(item => item.id === parseInt(eventID, 10))
+    this.setState({selectedEvent})
   }
   addEvent(event) {
     location.hash = '#'
@@ -149,8 +150,8 @@ export default class App extends React.Component {
     fetch('/events')
       .then(res => res.json())
       .then(events => {
-        const selectedEvent = events.filter(item => item.id === parseInt(this.state.view.params.event, 10) || null)
-        this.setState({events, loading: false, selectedEvent: selectedEvent[0]})
+        const [selectedEvent] = events.filter(item => item.id === parseInt(this.state.view.params.event, 10) || null)
+        this.setState({events, selectedEvent, loading: false})
       })
     window.addEventListener('hashchange', () => {
       const { path, params } = hash.parse(location.hash)
