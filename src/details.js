@@ -60,6 +60,7 @@ export default class Details extends React.Component {
             <Row className="mb-2">
               {
                 lodges.map((lodge, index) => {
+                  const likeStatus = lodge.like === 0 ? 'text-secondary' : 'text-info'
                   return (
                     <Col key={index} className="mb-2" sm={6}>
                       <Card>
@@ -67,7 +68,7 @@ export default class Details extends React.Component {
                           <Badge color="secondary">{ lodge.like }</Badge>
                           { lodge.locationAddress }
                           <i id={lodge.locationAddress}
-                            className="fas fa-thumbs-up text-secondary"
+                            className={`fas fa-thumbs-up ${likeStatus}`}
                             onClick={ this.addLike }>
                           </i>
                         </CardHeader>
