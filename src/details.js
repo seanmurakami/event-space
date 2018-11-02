@@ -17,6 +17,11 @@ export default class Details extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.removeEvent = this.removeEvent.bind(this)
+  }
+  removeEvent(e) {
+    const id = e.target.id
+    this.props.deleteEvent(id)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -70,7 +75,7 @@ export default class Details extends React.Component {
                 <ConfirmationList items={ activities } />
               </Col>
             </Row>
-            <DeleteEvent id={id}/>
+            <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
           </CardBody>
         </Card>
       </div>

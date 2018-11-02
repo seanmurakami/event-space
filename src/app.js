@@ -36,6 +36,7 @@ export default class App extends React.Component {
     this.addEvent = this.addEvent.bind(this)
     this.updateDetails = this.updateDetails.bind(this)
     this.newEvent = this.newEvent.bind(this)
+    this.deleteEvent = this.deleteEvent.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -74,7 +75,7 @@ export default class App extends React.Component {
     const { view } = this.state
     switch (view.path) {
       case 'details' :
-        return (<Details selectedEvent={ this.state.selectedEvent }/>)
+        return (<Details selectedEvent={ this.state.selectedEvent } deleteEvent={ this.deleteEvent }/>)
       default :
         return (
           <Row className="d-flex justify-content-center mx-auto">
@@ -105,6 +106,21 @@ export default class App extends React.Component {
     const eventInformation = Object.assign(this.state.eventInformation, userInput)
     this.setState({eventInformation})
     location.hash = `create?step=${param}`
+  }
+  deleteEvent(id) {
+    location.hash = '#'
+    return fetch(`/events/${id}`, {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    })
+      .then(res => res.json())
+      .then(() => {
+        const { events } = this.state
+        const newEvents = [...events]
+        const eventIndex = newEvents.findIndex(item => item.id === parseInt(id, 10))
+        newEvents.splice(eventIndex, 1)
+        return this.setState({events: newEvents})
+      })
   }
   newEvent() {
     this.setState({newEvent: true})
