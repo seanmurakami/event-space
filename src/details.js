@@ -45,14 +45,18 @@ export default class Details extends React.Component {
                 <CardText className="border rounded p-2 bg bg-light">{ endDate }</CardText>
               </Col>
             </Row>
-            <CardText tag="h4"><i className="fas fa-home mr-2"></i>Lodging</CardText>
+            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging</CardText>
             <Row className="mb-2">
               {
                 lodges.map((lodge, index) => {
                   return (
                     <Col key={index} className="mb-2" sm={6}>
                       <Card>
-                        <CardHeader className="d-flex align-items-center justify-content-center">{ lodge.locationAddress }<Badge className="ml-1" color="info">2</Badge></CardHeader>
+                        <CardHeader className="d-flex align-items-center justify-content-between">
+                          <Badge color="secondary">0</Badge>
+                          { lodge.locationAddress }
+                          <i className="fas fa-thumbs-up text-secondary"></i>
+                        </CardHeader>
                         <CardBody>
                           <Row className="d-flex justify-content-around">
                             <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}</CardText>
