@@ -25,8 +25,12 @@ export default class Details extends React.Component {
     this.props.deleteEvent(id)
   }
   addLike(e) {
-    const { id } = this.props.selectedEvent
+    const { id, lodges } = this.props.selectedEvent
     const address = e.target.id
+    const updateLodge = [...lodges]
+    updateLodge.map(lodge => {
+      return lodge.locationAddress === address ? lodge.like++ : lodge
+    })
     this.props.addLike(id, address)
   }
   render() {
