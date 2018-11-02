@@ -1,7 +1,7 @@
 import React from 'react'
 import ConfirmationList from './util/confirmation-list'
 import DeleteEvent from './modal-delete'
-import { Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
+import { Badge, Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
 
 const styles = {
   width: {
@@ -52,7 +52,7 @@ export default class Details extends React.Component {
                   return (
                     <Col key={index} className="mb-2" sm={6}>
                       <Card>
-                        <CardHeader>{ lodge.locationAddress }</CardHeader>
+                        <CardHeader className="d-flex align-items-center justify-content-center">{ lodge.locationAddress }<Badge className="ml-1" color="info">2</Badge></CardHeader>
                         <CardBody>
                           <Row className="d-flex justify-content-around">
                             <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}</CardText>
