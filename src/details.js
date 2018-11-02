@@ -1,7 +1,7 @@
 import React from 'react'
 import ConfirmationList from './util/confirmation-list'
 import DeleteEvent from './modal-delete'
-import { Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
+import { Badge, Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
 
 const styles = {
   width: {
@@ -18,10 +18,21 @@ export default class Details extends React.Component {
     super(props)
     this.state = {}
     this.removeEvent = this.removeEvent.bind(this)
+    this.addLike = this.addLike.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
     this.props.deleteEvent(id)
+  }
+  addLike(e) {
+    const { id, lodges } = this.props.selectedEvent
+    const address = e.target.id
+    const copyLodge = [...lodges]
+    copyLodge.map(lodge => {
+      return lodge.locationAddress === address ? lodge.like++ : lodge
+    })
+    const newLodges = Object.assign({}, {lodges: copyLodge})
+    this.props.addLike(id, newLodges)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -45,14 +56,22 @@ export default class Details extends React.Component {
                 <CardText className="border rounded p-2 bg bg-light">{ endDate }</CardText>
               </Col>
             </Row>
-            <CardText tag="h4"><i className="fas fa-home mr-2"></i>Lodging</CardText>
+            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging</CardText>
             <Row className="mb-2">
               {
                 lodges.map((lodge, index) => {
+                  const likeStatus = lodge.like === 0 ? 'text-secondary' : 'text-info'
                   return (
                     <Col key={index} className="mb-2" sm={6}>
                       <Card>
-                        <CardHeader>{ lodge.locationAddress }</CardHeader>
+                        <CardHeader className="d-flex align-items-center justify-content-between">
+                          <Badge color="secondary">{ lodge.like }</Badge>
+                          { lodge.locationAddress }
+                          <i id={lodge.locationAddress}
+                            className={`fas fa-thumbs-up ${likeStatus}`}
+                            onClick={ this.addLike }>
+                          </i>
+                        </CardHeader>
                         <CardBody>
                           <Row className="d-flex justify-content-around">
                             <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}</CardText>

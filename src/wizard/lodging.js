@@ -18,7 +18,8 @@ export default class Lodging extends React.Component {
     const userInfo = {
       locationType: formData.get('event-type'),
       locationAddress: formData.get('event-address'),
-      locationCost: formData.get('event-cost')
+      locationCost: formData.get('event-cost'),
+      like: 0
     }
     const lodges = [...this.state.lodges, userInfo]
     this.setState({ lodges })
