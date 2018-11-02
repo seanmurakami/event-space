@@ -37,6 +37,7 @@ export default class App extends React.Component {
     this.updateDetails = this.updateDetails.bind(this)
     this.newEvent = this.newEvent.bind(this)
     this.deleteEvent = this.deleteEvent.bind(this)
+    this.addLike = this.addLike.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -75,7 +76,11 @@ export default class App extends React.Component {
     const { view } = this.state
     switch (view.path) {
       case 'details' :
-        return (<Details selectedEvent={ this.state.selectedEvent } deleteEvent={ this.deleteEvent }/>)
+        return (<Details
+          selectedEvent={ this.state.selectedEvent }
+          deleteEvent={ this.deleteEvent }
+          addLike={ this.addLike }
+        />)
       default :
         return (
           <Row className="d-flex justify-content-center mx-auto">
@@ -124,6 +129,21 @@ export default class App extends React.Component {
   }
   newEvent() {
     this.setState({newEvent: true})
+  }
+  addLike(id, updatedLodges) {
+    return fetch(`/events/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updatedLodges),
+      headers: {'Content-Type': 'application/json'}
+    })
+      .then(res => res.json())
+      .then(item => {
+        const { events } = this.state
+        const newEvents = [...events]
+        const eventIndex = newEvents.findIndex(element => element.id === item.id)
+        newEvents.splice(eventIndex, 1, item)
+        return this.setState({events: newEvents})
+      })
   }
   componentDidMount() {
     fetch('/events')

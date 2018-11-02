@@ -27,11 +27,12 @@ export default class Details extends React.Component {
   addLike(e) {
     const { id, lodges } = this.props.selectedEvent
     const address = e.target.id
-    const updateLodge = [...lodges]
-    updateLodge.map(lodge => {
+    const copyLodge = [...lodges]
+    copyLodge.map(lodge => {
       return lodge.locationAddress === address ? lodge.like++ : lodge
     })
-    this.props.addLike(id, address)
+    const newLodges = Object.assign({}, {lodges: copyLodge})
+    this.props.addLike(id, newLodges)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -63,7 +64,7 @@ export default class Details extends React.Component {
                     <Col key={index} className="mb-2" sm={6}>
                       <Card>
                         <CardHeader className="d-flex align-items-center justify-content-between">
-                          <Badge color="secondary">0</Badge>
+                          <Badge color="secondary">{ lodge.like }</Badge>
                           { lodge.locationAddress }
                           <i id={lodge.locationAddress}
                             className="fas fa-thumbs-up text-secondary"
