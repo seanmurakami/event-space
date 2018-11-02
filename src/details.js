@@ -18,10 +18,16 @@ export default class Details extends React.Component {
     super(props)
     this.state = {}
     this.removeEvent = this.removeEvent.bind(this)
+    this.addLike = this.addLike.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
     this.props.deleteEvent(id)
+  }
+  addLike(e) {
+    const { id } = this.props.selectedEvent
+    const address = e.target.id
+    this.props.addLike(id, address)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -55,7 +61,10 @@ export default class Details extends React.Component {
                         <CardHeader className="d-flex align-items-center justify-content-between">
                           <Badge color="secondary">0</Badge>
                           { lodge.locationAddress }
-                          <i className="fas fa-thumbs-up text-secondary"></i>
+                          <i id={lodge.locationAddress}
+                            className="fas fa-thumbs-up text-secondary"
+                            onClick={ this.addLike }>
+                          </i>
                         </CardHeader>
                         <CardBody>
                           <Row className="d-flex justify-content-around">
