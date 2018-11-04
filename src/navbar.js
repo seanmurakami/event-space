@@ -16,7 +16,7 @@ export default function EventsNavbar(props) {
       <NavbarBrand style={ styles.link } href="#"><h2 className="text-light font-weight-light"><i className="far fa-map mr-2"></i>EventSpace</h2></NavbarBrand>
       <Nav>
         <NavItem style={ styles.link }>
-          <NavLink onClick={ props.update } href="#create" className="text-light">
+          <NavLink onClick={ props.update } href="#create" className="d-none d-sm-inline-block text-light">
             Create Event
           </NavLink>
         </NavItem>
