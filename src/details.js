@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Card, CardHeader, CardText, CardBody, Row, Col, Table } from 'reactstrap'
+import { Badge, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table } from 'reactstrap'
 
 const styles = {
   width: {
@@ -18,15 +18,23 @@ const styles = {
 export default class Details extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      dropDown: false
+    }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
     this.removeListActivity = this.removeListActivity.bind(this)
     this.removeListFood = this.removeListFood.bind(this)
+    this.toggle = this.toggle.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
     this.props.deleteEvent(id)
+  }
+  toggle() {
+    this.setState(prevState => ({
+      dropDown: !prevState.dropDown
+    }))
   }
   addLike(e) {
     const { id, lodges } = this.props.selectedEvent
@@ -98,6 +106,9 @@ export default class Details extends React.Component {
                             <CardText className="mb-0">{`Type: ${lodge.locationType}`}</CardText>
                           </Row>
                         </CardBody>
+                        <CardFooter>
+                          <i className="fas fa-minus-circle text-secondary float-right"></i>
+                        </CardFooter>
                       </Card>
                     </Col>
                   )
@@ -106,14 +117,14 @@ export default class Details extends React.Component {
             </Row>
             <Row>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2"></i>Food</CardText>
+                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food</CardText>
                 <Table className="border">
                   <tbody>
                     {
                       food.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">
+                            <td className="d-flex align-items-center justify-content-center">
                               { item.value }
                               <i
                                 id={ item.id }
@@ -129,14 +140,14 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2"></i>Activities</CardText>
+                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities</CardText>
                 <Table className="border">
                   <tbody>
                     {
                       activities.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">
+                            <td className="d-flex align-items-center justify-content-center">
                               { item.value }
                               <i
                                 id={ item.id }
