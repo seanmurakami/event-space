@@ -2,11 +2,6 @@ import React, { Fragment } from 'react'
 import ButtonGroup from '../util/button-group'
 import { Form, FormGroup, Label, Input, Button, Table, Col } from 'reactstrap'
 
-const styles = {
-  width: {
-    maxWidth: '24em'
-  }
-}
 export default class CreateList extends React.Component {
   constructor(props) {
     super(props)
@@ -51,7 +46,7 @@ export default class CreateList extends React.Component {
           </FormGroup>
           <Fragment>
             { this.state.activities.length !== 0 &&
-            <Table style={ styles.width } className="border mx-auto">
+            <Table className="border mx-auto">
               <thead>
                 <tr>
                   <th>{ label }</th>
