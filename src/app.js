@@ -144,7 +144,7 @@ export default class App extends React.Component {
         const newEvents = [...events]
         const eventIndex = newEvents.findIndex(element => element.id === item.id)
         newEvents.splice(eventIndex, 1, item)
-        return this.setState({events: newEvents})
+        return this.setState({events: newEvents, selectedEvent: item})
       })
   }
   componentDidMount() {

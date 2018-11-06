@@ -21,7 +21,8 @@ export default class Details extends React.Component {
     this.state = {}
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
-    this.removeListItem = this.removeListItem.bind(this)
+    this.removeListActivity = this.removeListActivity.bind(this)
+    this.removeListFood = this.removeListFood.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
@@ -37,12 +38,20 @@ export default class Details extends React.Component {
     const newLodges = Object.assign({}, {lodges: copyLodge})
     this.props.addLike(id, newLodges)
   }
-  removeListItem(e) {
+  removeListActivity(e) {
     const { id, activities } = this.props.selectedEvent
     const oldList = [...activities]
     const listID = parseInt(e.target.id, 10)
     const filteredList = oldList.filter(item => listID !== item.id)
     const newList = Object.assign({}, {activities: filteredList})
+    this.props.updateList(id, newList)
+  }
+  removeListFood(e) {
+    const { id, food } = this.props.selectedEvent
+    const oldList = [...food]
+    const listID = parseInt(e.target.id, 10)
+    const filteredList = oldList.filter(item => listID !== item.id)
+    const newList = Object.assign({}, {food: filteredList})
     this.props.updateList(id, newList)
   }
   render() {
@@ -109,7 +118,7 @@ export default class Details extends React.Component {
                               <i
                                 id={ item.id }
                                 style={ styles.icon }
-                                onClick={ this.removeListItem }
+                                onClick={ this.removeListFood }
                                 className="fas fa-times text-secondary position-absolute"></i>
                             </td>
                           </tr>
@@ -132,7 +141,7 @@ export default class Details extends React.Component {
                               <i
                                 id={ item.id }
                                 style={ styles.icon }
-                                onClick={ this.removeListItem }
+                                onClick={ this.removeListActivity }
                                 className="fas fa-times text-secondary position-absolute"></i>
                             </td>
                           </tr>
