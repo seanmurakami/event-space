@@ -9,7 +9,7 @@ export default function ConfirmationList(props) {
           props.items.map((item, index) => {
             return (
               <tr key={index}>
-                <td className="d-flex align-items-center">{ item }</td>
+                <td className="d-flex align-items-center">{ item.value }</td>
               </tr>
             )
           })

@@ -99,7 +99,7 @@ export default class Details extends React.Component {
                       food.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">{ item }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
+                            <td className="d-flex align-items-center">{ item.value }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
                           </tr>
                         )
                       })
@@ -115,7 +115,7 @@ export default class Details extends React.Component {
                       activities.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">{ item }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
+                            <td className="d-flex align-items-center">{ item.value }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
                           </tr>
                         )
                       })
