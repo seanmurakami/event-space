@@ -6,6 +6,7 @@ A full stack JavaScript application for millennials who want to crowdsource/orga
 - Node.js
 - Express.js
 - JSON.server
+- Webpack
 - HTML5
 - CSS3
 - JavaScript
