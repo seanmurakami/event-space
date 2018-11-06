@@ -25,16 +25,11 @@ export default class Details extends React.Component {
     this.addLike = this.addLike.bind(this)
     this.removeListActivity = this.removeListActivity.bind(this)
     this.removeListFood = this.removeListFood.bind(this)
-    this.toggle = this.toggle.bind(this)
+    this.removeLodge = this.removeLodge.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
     this.props.deleteEvent(id)
-  }
-  toggle() {
-    this.setState(prevState => ({
-      dropDown: !prevState.dropDown
-    }))
   }
   addLike(e) {
     const { id, lodges } = this.props.selectedEvent
@@ -44,7 +39,7 @@ export default class Details extends React.Component {
       return lodge.locationAddress === address ? lodge.like++ : lodge
     })
     const newLodges = Object.assign({}, {lodges: copyLodge})
-    this.props.addLike(id, newLodges)
+    this.props.patchEvent(id, newLodges)
   }
   removeListActivity(e) {
     const { id, activities } = this.props.selectedEvent
@@ -52,7 +47,7 @@ export default class Details extends React.Component {
     const listID = parseInt(e.target.id, 10)
     const filteredList = oldList.filter(item => listID !== item.id)
     const newList = Object.assign({}, {activities: filteredList})
-    this.props.updateList(id, newList)
+    this.props.patchEvent(id, newList)
   }
   removeListFood(e) {
     const { id, food } = this.props.selectedEvent
@@ -60,7 +55,15 @@ export default class Details extends React.Component {
     const listID = parseInt(e.target.id, 10)
     const filteredList = oldList.filter(item => listID !== item.id)
     const newList = Object.assign({}, {food: filteredList})
-    this.props.updateList(id, newList)
+    this.props.patchEvent(id, newList)
+  }
+  removeLodge(e) {
+    const { id, lodges } = this.props.selectedEvent
+    const oldLodges = [...lodges]
+    const lodgeID = parseInt(e.target.id, 10)
+    const filteredLodges = oldLodges.filter(lodge => lodgeID !== lodge.id)
+    const newLodges = Object.assign({}, {lodges: filteredLodges})
+    this.props.patchEvent(id, newLodges)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -107,7 +110,7 @@ export default class Details extends React.Component {
                           </Row>
                         </CardBody>
                         <CardFooter>
-                          <i id={ lodge.id } className="fas fa-minus-circle text-secondary float-right"></i>
+                          <i id={ lodge.id } onClick={ this.removeLodge } className="fas fa-minus-circle text-secondary float-right"></i>
                         </CardFooter>
                       </Card>
                     </Col>

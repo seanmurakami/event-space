@@ -37,7 +37,7 @@ export default class App extends React.Component {
     this.updateDetails = this.updateDetails.bind(this)
     this.newEvent = this.newEvent.bind(this)
     this.deleteEvent = this.deleteEvent.bind(this)
-    this.addLike = this.addLike.bind(this)
+    this.patchEvent = this.patchEvent.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -80,8 +80,7 @@ export default class App extends React.Component {
           <Details
             selectedEvent={ this.state.selectedEvent }
             deleteEvent={ this.deleteEvent }
-            addLike={ this.addLike }
-            updateList={ this.addLike }
+            patchEvent={ this.patchEvent }
           />)
       default :
         return (
@@ -132,7 +131,7 @@ export default class App extends React.Component {
   newEvent() {
     this.setState({newEvent: true})
   }
-  addLike(id, updatedLodges) {
+  patchEvent(id, updatedLodges) {
     return fetch(`/events/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(updatedLodges),
