@@ -81,6 +81,7 @@ export default class App extends React.Component {
             selectedEvent={ this.state.selectedEvent }
             deleteEvent={ this.deleteEvent }
             addLike={ this.addLike }
+            updateList={ this.addLike }
           />)
       default :
         return (

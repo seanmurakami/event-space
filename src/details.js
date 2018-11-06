@@ -37,8 +37,13 @@ export default class Details extends React.Component {
     const newLodges = Object.assign({}, {lodges: copyLodge})
     this.props.addLike(id, newLodges)
   }
-  removeListItem() {
-    console.log('hello')
+  removeListItem(e) {
+    const { id, activities } = this.props.selectedEvent
+    const oldList = [...activities]
+    const listID = parseInt(e.target.id, 10)
+    const filteredList = oldList.filter(item => listID !== item.id)
+    const newList = Object.assign({}, {activities: filteredList})
+    this.props.updateList(id, newList)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -99,7 +104,14 @@ export default class Details extends React.Component {
                       food.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">{ item.value }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
+                            <td className="d-flex align-items-center">
+                              { item.value }
+                              <i
+                                id={ item.id }
+                                style={ styles.icon }
+                                onClick={ this.removeListItem }
+                                className="fas fa-times text-secondary position-absolute"></i>
+                            </td>
                           </tr>
                         )
                       })
@@ -115,7 +127,14 @@ export default class Details extends React.Component {
                       activities.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">{ item.value }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
+                            <td className="d-flex align-items-center">
+                              { item.value }
+                              <i
+                                id={ item.id }
+                                style={ styles.icon }
+                                onClick={ this.removeListItem }
+                                className="fas fa-times text-secondary position-absolute"></i>
+                            </td>
                           </tr>
                         )
                       })
