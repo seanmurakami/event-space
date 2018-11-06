@@ -107,7 +107,7 @@ export default class Details extends React.Component {
                           </Row>
                         </CardBody>
                         <CardFooter>
-                          <i className="fas fa-minus-circle text-secondary float-right"></i>
+                          <i id={ lodge.id } className="fas fa-minus-circle text-secondary float-right"></i>
                         </CardFooter>
                       </Card>
                     </Col>
