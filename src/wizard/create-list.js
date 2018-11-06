@@ -6,7 +6,8 @@ export default class CreateList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      activities: []
+      activities: [],
+      id: 1
     }
     this.updateActivities = this.updateActivities.bind(this)
     this.updateApp = this.updateApp.bind(this)
@@ -14,9 +15,12 @@ export default class CreateList extends React.Component {
   updateActivities(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const activity = formData.get('activity')
+    const activity = {
+      value: formData.get('activity'),
+      id: this.state.id
+    }
     const activities = [...this.state.activities, activity]
-    this.setState({ activities })
+    this.setState({ activities, id: this.state.id + 1 })
     e.target.reset()
   }
   updateApp() {
@@ -56,7 +60,7 @@ export default class CreateList extends React.Component {
                 { this.state.activities.map((activity, index) => {
                   return (
                     <tr key={index}>
-                      <td>{ activity }</td>
+                      <td>{ activity.value }</td>
                     </tr>
                   )
                 })}
