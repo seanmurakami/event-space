@@ -1,7 +1,6 @@
 import React from 'react'
-import ConfirmationList from './util/confirmation-list'
 import DeleteEvent from './modal-delete'
-import { Badge, Card, CardHeader, CardText, CardBody, Row, Col } from 'reactstrap'
+import { Badge, Card, CardHeader, CardText, CardBody, Row, Col, Table } from 'reactstrap'
 
 const styles = {
   width: {
@@ -10,6 +9,9 @@ const styles = {
   },
   description: {
     maxWidth: '38rem'
+  },
+  icon: {
+    right: '2rem'
   }
 }
 
@@ -19,6 +21,7 @@ export default class Details extends React.Component {
     this.state = {}
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
+    this.removeListItem = this.removeListItem.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
@@ -33,6 +36,9 @@ export default class Details extends React.Component {
     })
     const newLodges = Object.assign({}, {lodges: copyLodge})
     this.props.addLike(id, newLodges)
+  }
+  removeListItem() {
+    console.log('hello')
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -87,11 +93,35 @@ export default class Details extends React.Component {
             <Row>
               <Col sm={6}>
                 <CardText tag="h4"><i className="fas fa-utensils mr-2"></i>Food</CardText>
-                <ConfirmationList items={ food } />
+                <Table className="border">
+                  <tbody>
+                    {
+                      food.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="d-flex align-items-center">{ item }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
+                          </tr>
+                        )
+                      })
+                    }
+                  </tbody>
+                </Table>
               </Col>
               <Col sm={6}>
                 <CardText tag="h4"><i className="fas fa-hiking mr-2"></i>Activities</CardText>
-                <ConfirmationList items={ activities } />
+                <Table className="border">
+                  <tbody>
+                    {
+                      activities.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="d-flex align-items-center">{ item }<i style={ styles.icon } className="fas fa-times text-secondary position-absolute"></i></td>
+                          </tr>
+                        )
+                      })
+                    }
+                  </tbody>
+                </Table>
               </Col>
             </Row>
             <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
