@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Card, CardHeader, CardText, CardBody, Row, Col, Table } from 'reactstrap'
+import { Badge, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table } from 'reactstrap'
 
 const styles = {
   width: {
@@ -18,11 +18,14 @@ const styles = {
 export default class Details extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      dropDown: false
+    }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
     this.removeListActivity = this.removeListActivity.bind(this)
     this.removeListFood = this.removeListFood.bind(this)
+    this.removeLodge = this.removeLodge.bind(this)
   }
   removeEvent(e) {
     const id = e.target.id
@@ -36,7 +39,7 @@ export default class Details extends React.Component {
       return lodge.locationAddress === address ? lodge.like++ : lodge
     })
     const newLodges = Object.assign({}, {lodges: copyLodge})
-    this.props.addLike(id, newLodges)
+    this.props.patchEvent(id, newLodges)
   }
   removeListActivity(e) {
     const { id, activities } = this.props.selectedEvent
@@ -44,7 +47,7 @@ export default class Details extends React.Component {
     const listID = parseInt(e.target.id, 10)
     const filteredList = oldList.filter(item => listID !== item.id)
     const newList = Object.assign({}, {activities: filteredList})
-    this.props.updateList(id, newList)
+    this.props.patchEvent(id, newList)
   }
   removeListFood(e) {
     const { id, food } = this.props.selectedEvent
@@ -52,7 +55,15 @@ export default class Details extends React.Component {
     const listID = parseInt(e.target.id, 10)
     const filteredList = oldList.filter(item => listID !== item.id)
     const newList = Object.assign({}, {food: filteredList})
-    this.props.updateList(id, newList)
+    this.props.patchEvent(id, newList)
+  }
+  removeLodge(e) {
+    const { id, lodges } = this.props.selectedEvent
+    const oldLodges = [...lodges]
+    const lodgeID = parseInt(e.target.id, 10)
+    const filteredLodges = oldLodges.filter(lodge => lodgeID !== lodge.id)
+    const newLodges = Object.assign({}, {lodges: filteredLodges})
+    this.props.patchEvent(id, newLodges)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -98,6 +109,9 @@ export default class Details extends React.Component {
                             <CardText className="mb-0">{`Type: ${lodge.locationType}`}</CardText>
                           </Row>
                         </CardBody>
+                        <CardFooter>
+                          <i id={ lodge.id } onClick={ this.removeLodge } className="fas fa-minus-circle text-secondary float-right"></i>
+                        </CardFooter>
                       </Card>
                     </Col>
                   )
@@ -106,14 +120,14 @@ export default class Details extends React.Component {
             </Row>
             <Row>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2"></i>Food</CardText>
+                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food</CardText>
                 <Table className="border">
                   <tbody>
                     {
                       food.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">
+                            <td className="d-flex align-items-center justify-content-center">
                               { item.value }
                               <i
                                 id={ item.id }
@@ -129,14 +143,14 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2"></i>Activities</CardText>
+                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities</CardText>
                 <Table className="border">
                   <tbody>
                     {
                       activities.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td className="d-flex align-items-center">
+                            <td className="d-flex align-items-center justify-content-center">
                               { item.value }
                               <i
                                 id={ item.id }

@@ -7,7 +7,8 @@ export default class Lodging extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lodges: []
+      lodges: [],
+      id: 1
     }
     this.addLodge = this.addLodge.bind(this)
     this.updateApp = this.updateApp.bind(this)
@@ -19,10 +20,11 @@ export default class Lodging extends React.Component {
       locationType: formData.get('event-type'),
       locationAddress: formData.get('event-address'),
       locationCost: formData.get('event-cost'),
-      like: 0
+      like: 0,
+      id: this.state.id
     }
     const lodges = [...this.state.lodges, userInfo]
-    this.setState({ lodges })
+    this.setState({ lodges, id: this.state.id + 1 })
     e.target.reset()
   }
   updateApp() {
