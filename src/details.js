@@ -167,7 +167,7 @@ export default class Details extends React.Component {
             </Row>
             <Row>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food</CardText>
+                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
                 <Table className="border">
                   <tbody>
                     {
@@ -190,7 +190,7 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities</CardText>
+                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
                 <Table className="border">
                   <tbody>
                     {
