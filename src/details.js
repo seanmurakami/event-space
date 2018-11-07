@@ -33,6 +33,7 @@ export default class Details extends React.Component {
     this.toggleActivity = this.toggleActivity.bind(this)
     this.toggleFood = this.toggleFood.bind(this)
     this.addActivity = this.addActivity.bind(this)
+    this.addFood = this.addFood.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -107,6 +108,18 @@ export default class Details extends React.Component {
     const newActivities = Object.assign({}, {activities: [...activities, data]})
     this.props.patchEvent(id, newActivities)
     this.toggleActivity()
+  }
+  addFood(e) {
+    e.preventDefault()
+    const { id, food } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      value: formData.get('food'),
+      id: food.length + 1
+    }
+    const newFoodItems = Object.assign({}, {food: [...food, data]})
+    this.props.patchEvent(id, newFoodItems)
+    this.toggleFood()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -192,8 +205,8 @@ export default class Details extends React.Component {
               <Col sm={6}>
                 <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
                 <Modal isOpen={this.state.foodModal} toggle={this.toggleFood} className="modal-dialog modal-dialog-centered">
-                  <ModalHeader toggle={this.toggleFood}>Add a new lodging option</ModalHeader>
-                  <Form autoComplete="off">
+                  <ModalHeader toggle={this.toggleFood}>Add a New Place To Eat/Dine</ModalHeader>
+                  <Form autoComplete="off" onSubmit={ this.addFood }>
                     <ModalBody>
                       <FormGroup>
                         <Label>Food/Restaurant</Label>
