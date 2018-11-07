@@ -1,6 +1,21 @@
 # EventSpace
 A full stack JavaScript application for millennials who want to crowdsource/organize their outings
 
+### Create an event using the detail wizard (specify the name, location, description, lodging options, activities, and food/restaurants).
+![create-event](https://user-images.githubusercontent.com/38697885/48156922-399d3f80-e283-11e8-906c-dc3aa5504e9f.gif)
+
+### View the details of any event.
+![view-event-details](https://user-images.githubusercontent.com/38697885/48157299-132bd400-e284-11e8-91df-04f0fc56af45.gif)
+
+### Edit the information from the detail window.
+![edit-event](https://user-images.githubusercontent.com/38697885/48157402-5a19c980-e284-11e8-9bbd-14fc6ac31aa1.gif)
+
+### "Like" a lodging option to specify which option you prefer.
+![like-lodging-option](https://user-images.githubusercontent.com/38697885/48157526-b5e45280-e284-11e8-8f89-f5fa958f59a2.gif)
+
+### Remove an event if you no longer need it.
+![delete-event](https://user-images.githubusercontent.com/38697885/48157642-0c519100-e285-11e8-8454-3799ba2686e0.gif)
+
 ## Technologies
 - React.js
 - Node.js
