@@ -25,7 +25,7 @@ export default function Homepage(props) {
                 <CardBody>
                   <div className="bg bg-light border rounded py-3 px-2 mb-3">
                     <h3 className="font-weight-light">{item.eventName}</h3>
-                    <CardText className="font-weight-light"><i className="fas fa-location-arrow mr-2"></i>{item.eventLocation}</CardText>
+                    <CardText className="font-weight-light"><i className="fas fa-location-arrow fa-sm mr-2"></i>{item.eventLocation}</CardText>
                   </div>
                   <CardText style={ styles.width } className="mx-auto">{item.eventDescription}</CardText>
                   <Row className="d-flex justify-content-center mx-auto mb-3">

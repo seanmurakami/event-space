@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 
 const styles = {
   width: {
@@ -19,13 +19,18 @@ export default class Details extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      dropDown: false
+      modal: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
     this.removeListActivity = this.removeListActivity.bind(this)
     this.removeListFood = this.removeListFood.bind(this)
     this.removeLodge = this.removeLodge.bind(this)
+    this.addLodge = this.addLodge.bind(this)
+    this.toggle = this.toggle.bind(this)
+  }
+  toggle() {
+    this.setState({modal: !this.state.modal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -65,6 +70,21 @@ export default class Details extends React.Component {
     const newLodges = Object.assign({}, {lodges: filteredLodges})
     this.props.patchEvent(id, newLodges)
   }
+  addLodge(e) {
+    const { id, lodges } = this.props.selectedEvent
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const data = {
+      locationType: formData.get('type'),
+      locationAddress: formData.get('address'),
+      locationCost: formData.get('cost'),
+      like: 0,
+      id: lodges.length + 1
+    }
+    const newLodges = Object.assign({}, {lodges: [...lodges, data]})
+    this.props.patchEvent(id, newLodges)
+    this.toggle()
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -72,9 +92,9 @@ export default class Details extends React.Component {
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
           <CardHeader>
             <CardText className="font-weight-light" tag="h1">{ eventName }</CardText>
-            <CardText><i className="fas fa-location-arrow mr-2"></i>{ eventLocation }</CardText>
+            <CardText><i className="fas fa-location-arrow mr-2 fa-sm"></i>{ eventLocation }</CardText>
           </CardHeader>
-          <CardBody>
+          <CardBody className="pb-3">
             <CardText className="mx-auto" style={ styles.description }>{ eventDescription }</CardText>
             <CardText tag="h4"><i className="fas fa-calendar-alt mr-2"></i>When</CardText>
             <Row className="d-flex justify-content-center mx-auto mb-3">
@@ -87,8 +107,35 @@ export default class Details extends React.Component {
                 <CardText className="border rounded p-2 bg bg-light">{ endDate }</CardText>
               </Col>
             </Row>
-            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging</CardText>
-            <Row className="mb-2">
+            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i onClick={ this.toggle } className="far fa-plus-square fa-xs text-secondary ml-2"></i>
+              <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog modal-dialog-centered">
+                <ModalHeader toggle={this.toggle}>Add a new lodging option</ModalHeader>
+                <Form autoComplete="off" onSubmit={ this.addLodge }>
+                  <ModalBody>
+                    <FormGroup>
+                      <Label>Location Type</Label>
+                      <Input name="type" placeholder="e.g. AirBnb, Hotel, etc." />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Address</Label>
+                      <Input name="address" placeholder="e.g. 123 Address Drive" />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Cost</Label>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+                        <Input name="cost" placeholder="e.g. $489" />
+                      </InputGroup>
+                    </FormGroup>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="info">Add</Button>{' '}
+                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                  </ModalFooter>
+                </Form>
+              </Modal>
+            </CardText>
+            <Row className="d-flex justify-content-center mb-2">
               {
                 lodges.map((lodge, index) => {
                   const likeStatus = lodge.like === 0 ? 'text-secondary' : 'text-info'
@@ -166,7 +213,10 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
             </Row>
-            <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
+            <Row className="d-flex align-items-center justify-content-between">
+              <Button href="#" className="ml-2">Back</Button>
+              <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
+            </Row>
           </CardBody>
         </Card>
       </div>
