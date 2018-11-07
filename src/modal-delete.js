@@ -14,7 +14,7 @@ export default class DeleteEvent extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="mr-2">
         <i onClick={ this.toggle } className="fas fa-trash-alt fa-lg float-right mt-2 text-secondary"></i>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Delete Event</ModalHeader>

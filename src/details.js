@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table } from 'reactstrap'
 
 const styles = {
   width: {
@@ -18,9 +18,7 @@ const styles = {
 export default class Details extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      dropDown: false
-    }
+    this.state = {}
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
     this.removeListActivity = this.removeListActivity.bind(this)
@@ -72,9 +70,9 @@ export default class Details extends React.Component {
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
           <CardHeader>
             <CardText className="font-weight-light" tag="h1">{ eventName }</CardText>
-            <CardText><i className="fas fa-location-arrow mr-2"></i>{ eventLocation }</CardText>
+            <CardText><i className="fas fa-location-arrow mr-2 fa-sm"></i>{ eventLocation }</CardText>
           </CardHeader>
-          <CardBody>
+          <CardBody className="pb-3">
             <CardText className="mx-auto" style={ styles.description }>{ eventDescription }</CardText>
             <CardText tag="h4"><i className="fas fa-calendar-alt mr-2"></i>When</CardText>
             <Row className="d-flex justify-content-center mx-auto mb-3">
@@ -87,8 +85,8 @@ export default class Details extends React.Component {
                 <CardText className="border rounded p-2 bg bg-light">{ endDate }</CardText>
               </Col>
             </Row>
-            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging</CardText>
-            <Row className="mb-2">
+            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+            <Row className="d-flex justify-content-center mb-2">
               {
                 lodges.map((lodge, index) => {
                   const likeStatus = lodge.like === 0 ? 'text-secondary' : 'text-info'
@@ -166,7 +164,10 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
             </Row>
-            <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
+            <Row className="d-flex align-items-center justify-content-between">
+              <Button href="#" className="ml-2">Back</Button>
+              <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
+            </Row>
           </CardBody>
         </Card>
       </div>
