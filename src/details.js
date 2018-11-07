@@ -19,7 +19,9 @@ export default class Details extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      modal: false
+      modal: false,
+      activityModal: false,
+      foodModal: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -28,9 +30,17 @@ export default class Details extends React.Component {
     this.removeLodge = this.removeLodge.bind(this)
     this.addLodge = this.addLodge.bind(this)
     this.toggle = this.toggle.bind(this)
+    this.toggleActivity = this.toggleActivity.bind(this)
+    this.toggleFood = this.toggleFood.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
+  }
+  toggleActivity() {
+    this.setState({activityModal: !this.state.activityModal})
+  }
+  toggleFood() {
+    this.setState({foodModal: !this.state.foodModal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -167,7 +177,22 @@ export default class Details extends React.Component {
             </Row>
             <Row>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+                <Modal isOpen={this.state.foodModal} toggle={this.toggleFood} className="modal-dialog modal-dialog-centered">
+                  <ModalHeader toggle={this.toggleFood}>Add a new lodging option</ModalHeader>
+                  <Form autoComplete="off">
+                    <ModalBody>
+                      <FormGroup>
+                        <Label>Food/Restaurant</Label>
+                        <Input name="food" placeholder="e.g. Shake Shack" />
+                      </FormGroup>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="info">Add</Button>{' '}
+                      <Button color="secondary" onClick={this.toggleFood}>Cancel</Button>
+                    </ModalFooter>
+                  </Form>
+                </Modal>
                 <Table className="border">
                   <tbody>
                     {
@@ -190,7 +215,22 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i onClick={ this.toggleActivity } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+                <Modal isOpen={this.state.activityModal} toggle={this.toggleActivity} className="modal-dialog modal-dialog-centered">
+                  <ModalHeader toggle={this.toggleActivity}>Add a new lodging option</ModalHeader>
+                  <Form autoComplete="off">
+                    <ModalBody>
+                      <FormGroup>
+                        <Label>Activity</Label>
+                        <Input name="activity" placeholder="e.g. Visit the capital" />
+                      </FormGroup>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="info">Add</Button>{' '}
+                      <Button color="secondary" onClick={this.toggleActivity}>Cancel</Button>
+                    </ModalFooter>
+                  </Form>
+                </Modal>
                 <Table className="border">
                   <tbody>
                     {
