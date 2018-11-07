@@ -26,6 +26,7 @@ export default class Details extends React.Component {
     this.removeListActivity = this.removeListActivity.bind(this)
     this.removeListFood = this.removeListFood.bind(this)
     this.removeLodge = this.removeLodge.bind(this)
+    this.addLodge = this.addLodge.bind(this)
     this.toggle = this.toggle.bind(this)
   }
   toggle() {
@@ -69,6 +70,21 @@ export default class Details extends React.Component {
     const newLodges = Object.assign({}, {lodges: filteredLodges})
     this.props.patchEvent(id, newLodges)
   }
+  addLodge(e) {
+    const { id, lodges } = this.props.selectedEvent
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const data = {
+      locationType: formData.get('type'),
+      locationAddress: formData.get('address'),
+      locationCost: formData.get('cost'),
+      like: 0,
+      id: lodges.length + 1
+    }
+    const newLodges = Object.assign({}, {lodges: [...lodges, data]})
+    this.props.patchEvent(id, newLodges)
+    this.toggle()
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -94,7 +110,7 @@ export default class Details extends React.Component {
             <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i onClick={ this.toggle } className="far fa-plus-square fa-xs text-secondary ml-2"></i>
               <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog modal-dialog-centered">
                 <ModalHeader toggle={this.toggle}>Add a new lodging option</ModalHeader>
-                <Form autoComplete="off" onSubmit={ this.userInput }>
+                <Form autoComplete="off" onSubmit={ this.addLodge }>
                   <ModalBody>
                     <FormGroup>
                       <Label>Location Type</Label>
@@ -108,12 +124,12 @@ export default class Details extends React.Component {
                       <Label>Cost</Label>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-                        <Input name="event-cost" placeholder="e.g. $489" />
+                        <Input name="cost" placeholder="e.g. $489" />
                       </InputGroup>
                     </FormGroup>
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="info" onClick={this.toggle}>Create Lodge</Button>{' '}
+                    <Button color="info">Add</Button>{' '}
                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                   </ModalFooter>
                 </Form>
