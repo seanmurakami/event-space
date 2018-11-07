@@ -19,7 +19,9 @@ export default class Details extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      modal: false
+      modal: false,
+      activityModal: false,
+      foodModal: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -28,9 +30,19 @@ export default class Details extends React.Component {
     this.removeLodge = this.removeLodge.bind(this)
     this.addLodge = this.addLodge.bind(this)
     this.toggle = this.toggle.bind(this)
+    this.toggleActivity = this.toggleActivity.bind(this)
+    this.toggleFood = this.toggleFood.bind(this)
+    this.addActivity = this.addActivity.bind(this)
+    this.addFood = this.addFood.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
+  }
+  toggleActivity() {
+    this.setState({activityModal: !this.state.activityModal})
+  }
+  toggleFood() {
+    this.setState({foodModal: !this.state.foodModal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -84,6 +96,30 @@ export default class Details extends React.Component {
     const newLodges = Object.assign({}, {lodges: [...lodges, data]})
     this.props.patchEvent(id, newLodges)
     this.toggle()
+  }
+  addActivity(e) {
+    e.preventDefault()
+    const { id, activities } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      value: formData.get('activity'),
+      id: activities.length + 1
+    }
+    const newActivities = Object.assign({}, {activities: [...activities, data]})
+    this.props.patchEvent(id, newActivities)
+    this.toggleActivity()
+  }
+  addFood(e) {
+    e.preventDefault()
+    const { id, food } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      value: formData.get('food'),
+      id: food.length + 1
+    }
+    const newFoodItems = Object.assign({}, {food: [...food, data]})
+    this.props.patchEvent(id, newFoodItems)
+    this.toggleFood()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -167,7 +203,22 @@ export default class Details extends React.Component {
             </Row>
             <Row>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food</CardText>
+                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+                <Modal isOpen={this.state.foodModal} toggle={this.toggleFood} className="modal-dialog modal-dialog-centered">
+                  <ModalHeader toggle={this.toggleFood}>Add a New Place To Eat/Dine</ModalHeader>
+                  <Form autoComplete="off" onSubmit={ this.addFood }>
+                    <ModalBody>
+                      <FormGroup>
+                        <Label>Food/Restaurant</Label>
+                        <Input name="food" placeholder="e.g. Shake Shack" />
+                      </FormGroup>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="info">Add</Button>{' '}
+                      <Button color="secondary" onClick={this.toggleFood}>Cancel</Button>
+                    </ModalFooter>
+                  </Form>
+                </Modal>
                 <Table className="border">
                   <tbody>
                     {
@@ -190,7 +241,22 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
               <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities</CardText>
+                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i onClick={ this.toggleActivity } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+                <Modal isOpen={this.state.activityModal} toggle={this.toggleActivity} className="modal-dialog modal-dialog-centered">
+                  <ModalHeader toggle={this.toggleActivity}>Add a New Activity</ModalHeader>
+                  <Form autoComplete="off" onSubmit={ this.addActivity }>
+                    <ModalBody>
+                      <FormGroup>
+                        <Label>Activity</Label>
+                        <Input name="activity" placeholder="e.g. Visit the capital" />
+                      </FormGroup>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="info">Add</Button>{' '}
+                      <Button color="secondary" onClick={this.toggleActivity}>Cancel</Button>
+                    </ModalFooter>
+                  </Form>
+                </Modal>
                 <Table className="border">
                   <tbody>
                     {
