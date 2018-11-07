@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 
 const styles = {
   width: {
@@ -18,12 +18,18 @@ const styles = {
 export default class Details extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      modal: false
+    }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
     this.removeListActivity = this.removeListActivity.bind(this)
     this.removeListFood = this.removeListFood.bind(this)
     this.removeLodge = this.removeLodge.bind(this)
+    this.toggle = this.toggle.bind(this)
+  }
+  toggle() {
+    this.setState({modal: !this.state.modal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -85,7 +91,34 @@ export default class Details extends React.Component {
                 <CardText className="border rounded p-2 bg bg-light">{ endDate }</CardText>
               </Col>
             </Row>
-            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+            <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i onClick={ this.toggle } className="far fa-plus-square fa-xs text-secondary ml-2"></i>
+              <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog modal-dialog-centered">
+                <ModalHeader toggle={this.toggle}>Add a new lodging option</ModalHeader>
+                <Form autoComplete="off" onSubmit={ this.userInput }>
+                  <ModalBody>
+                    <FormGroup>
+                      <Label>Location Type</Label>
+                      <Input name="type" placeholder="e.g. AirBnb, Hotel, etc." />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Address</Label>
+                      <Input name="address" placeholder="e.g. 123 Address Drive" />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Cost</Label>
+                      <InputGroup>
+                        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+                        <Input name="event-cost" placeholder="e.g. $489" />
+                      </InputGroup>
+                    </FormGroup>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="info" onClick={this.toggle}>Create Lodge</Button>{' '}
+                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                  </ModalFooter>
+                </Form>
+              </Modal>
+            </CardText>
             <Row className="d-flex justify-content-center mb-2">
               {
                 lodges.map((lodge, index) => {
