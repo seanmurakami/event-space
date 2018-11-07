@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, Row, Col, CardHeader, CardBody, CardText } from 'reactstrap'
+import React, { Fragment } from 'react'
+import { Button, Row, Col, Card, CardHeader, CardBody, CardText } from 'reactstrap'
 import ConfirmationList from '../util/confirmation-list'
 
 export default class Confirmation extends React.Component {
@@ -16,12 +16,12 @@ export default class Confirmation extends React.Component {
   render() {
     const { eventLocation, eventName, eventDescription, startDate, endDate, lodges, activities, food } = this.props.eventInformation
     return (
-      <div className="text-center">
-        <CardHeader className="font-weight-light mb-2">
+      <Fragment>
+        <CardHeader className="text-center font-weight-light">
           <CardText tag="h1">{ eventName }</CardText>
           <CardText>{ eventLocation }</CardText>
         </CardHeader>
-        <CardBody>
+        <CardBody className="text-center px-0">
           <CardText tag="h5">Description:</CardText>
           <CardText>{!!eventDescription !== false && eventDescription }</CardText>
           <CardText tag="h5">When:</CardText>
@@ -36,20 +36,29 @@ export default class Confirmation extends React.Component {
             </Col>
           </Row>
           <CardText tag="h5">Lodging</CardText>
-          <Row className="mb-2">
+          <Row className="d-flex justify-content-center mb-2">
             {
               Object.keys(lodges).length !== 0 &&
-            lodges.map((lodge, index) => {
-              return (
-                <Col md={6} key={index}>
-                  <div className="border rounded pt-3 pl-3 mb-2">
-                    <p><strong>Type: </strong>{lodge.locationType}</p>
-                    <p><strong>Address: </strong>{lodge.locationAddress}</p>
-                    <p><strong>Cost: $</strong>{lodge.locationCost}</p>
-                  </div>
-                </Col>
-              )
-            })
+              lodges.map((lodge, index) => {
+                return (
+                  <Col key={index} className="mb-2" sm={6}>
+                    <Card>
+                      <CardHeader className="text-center">
+                        { lodge.locationAddress }
+                      </CardHeader>
+                      <CardBody>
+                        <Row className="d-flex justify-content-around">
+                          <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}
+                          </CardText>
+                          <CardText className="mb-0">
+                            {`Type: ${lodge.locationType}`}
+                          </CardText>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                )
+              })
             }
           </Row>
           <Row className="mb-2">
@@ -64,7 +73,7 @@ export default class Confirmation extends React.Component {
           </Row>
           <Button onClick={ this.submitEvent } color="info">Submit Event!</Button>
         </CardBody>
-      </div>
+      </Fragment>
     )
   }
 }
