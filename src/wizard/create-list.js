@@ -29,7 +29,7 @@ export default class CreateList extends React.Component {
     const userData = {}
     userData[userInput] = this.state.activities
     this.props.update(userData, nextScreen)
-    this.setState({activities: []})
+    this.setState({activities: [], id: 1})
   }
   render() {
     const { header, label, placeholder } = this.props

@@ -32,6 +32,7 @@ export default class Details extends React.Component {
     this.toggle = this.toggle.bind(this)
     this.toggleActivity = this.toggleActivity.bind(this)
     this.toggleFood = this.toggleFood.bind(this)
+    this.addActivity = this.addActivity.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -94,6 +95,18 @@ export default class Details extends React.Component {
     const newLodges = Object.assign({}, {lodges: [...lodges, data]})
     this.props.patchEvent(id, newLodges)
     this.toggle()
+  }
+  addActivity(e) {
+    e.preventDefault()
+    const { id, activities } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      value: formData.get('activity'),
+      id: activities.length + 1
+    }
+    const newActivities = Object.assign({}, {activities: [...activities, data]})
+    this.props.patchEvent(id, newActivities)
+    this.toggleActivity()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
@@ -217,8 +230,8 @@ export default class Details extends React.Component {
               <Col sm={6}>
                 <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i onClick={ this.toggleActivity } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
                 <Modal isOpen={this.state.activityModal} toggle={this.toggleActivity} className="modal-dialog modal-dialog-centered">
-                  <ModalHeader toggle={this.toggleActivity}>Add a new lodging option</ModalHeader>
-                  <Form autoComplete="off">
+                  <ModalHeader toggle={this.toggleActivity}>Add a New Activity</ModalHeader>
+                  <Form autoComplete="off" onSubmit={ this.addActivity }>
                     <ModalBody>
                       <FormGroup>
                         <Label>Activity</Label>
