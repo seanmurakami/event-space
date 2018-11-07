@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Button, Row, Col, CardHeader, CardBody, CardText } from 'reactstrap'
 import ConfirmationList from '../util/confirmation-list'
 
@@ -16,12 +16,12 @@ export default class Confirmation extends React.Component {
   render() {
     const { eventLocation, eventName, eventDescription, startDate, endDate, lodges, activities, food } = this.props.eventInformation
     return (
-      <div className="text-center">
-        <CardHeader className="font-weight-light mb-2">
+      <Fragment>
+        <CardHeader className="text-center font-weight-light">
           <CardText tag="h1">{ eventName }</CardText>
           <CardText>{ eventLocation }</CardText>
         </CardHeader>
-        <CardBody>
+        <CardBody className="text-center px-0">
           <CardText tag="h5">Description:</CardText>
           <CardText>{!!eventDescription !== false && eventDescription }</CardText>
           <CardText tag="h5">When:</CardText>
@@ -64,7 +64,7 @@ export default class Confirmation extends React.Component {
           </Row>
           <Button onClick={ this.submitEvent } color="info">Submit Event!</Button>
         </CardBody>
-      </div>
+      </Fragment>
     )
   }
 }
