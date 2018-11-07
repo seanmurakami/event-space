@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Button, Row, Col, CardHeader, CardBody, CardText } from 'reactstrap'
+import { Button, Row, Col, Card, CardHeader, CardBody, CardText } from 'reactstrap'
 import ConfirmationList from '../util/confirmation-list'
 
 export default class Confirmation extends React.Component {
@@ -36,20 +36,29 @@ export default class Confirmation extends React.Component {
             </Col>
           </Row>
           <CardText tag="h5">Lodging</CardText>
-          <Row className="mb-2">
+          <Row className="d-flex justify-content-center mb-2">
             {
               Object.keys(lodges).length !== 0 &&
-            lodges.map((lodge, index) => {
-              return (
-                <Col md={6} key={index}>
-                  <div className="border rounded pt-3 pl-3 mb-2">
-                    <p><strong>Type: </strong>{lodge.locationType}</p>
-                    <p><strong>Address: </strong>{lodge.locationAddress}</p>
-                    <p><strong>Cost: $</strong>{lodge.locationCost}</p>
-                  </div>
-                </Col>
-              )
-            })
+              lodges.map((lodge, index) => {
+                return (
+                  <Col key={index} className="mb-2" sm={6}>
+                    <Card>
+                      <CardHeader className="text-center">
+                        { lodge.locationAddress }
+                      </CardHeader>
+                      <CardBody>
+                        <Row className="d-flex justify-content-around">
+                          <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}
+                          </CardText>
+                          <CardText className="mb-0">
+                            {`Type: ${lodge.locationType}`}
+                          </CardText>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                )
+              })
             }
           </Row>
           <Row className="mb-2">
