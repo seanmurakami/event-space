@@ -41,6 +41,7 @@ export default class Details extends React.Component {
     this.addFood = this.addFood.bind(this)
     this.toggleDropdown = this.toggleDropdown.bind(this)
     this.toggleEventName = this.toggleEventName.bind(this)
+    this.updateEventName = this.updateEventName.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -134,6 +135,16 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, newFoodItems)
     this.toggleFood()
   }
+  updateEventName(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      eventName: formData.get('event-name')
+    }
+    this.props.patchEvent(id, data)
+    this.toggleEventName()
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -151,11 +162,11 @@ export default class Details extends React.Component {
                   <DropdownItem onClick={this.toggleEventName}>Edit event name</DropdownItem>
                   <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
                     <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
-                    <Form>
+                    <Form onSubmit={ this.updateEventName }>
                       <ModalBody>
                         <FormGroup>
                           <Label>Event Name</Label>
-                          <Input name="food" defaultValue={eventName} />
+                          <Input name="event-name" defaultValue={eventName} />
                         </FormGroup>
                       </ModalBody>
                       <ModalFooter>
