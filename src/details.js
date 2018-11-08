@@ -26,7 +26,8 @@ export default class Details extends React.Component {
       activityModal: false,
       foodModal: false,
       dropDownOpen: false,
-      editName: false
+      editName: false,
+      editLocation: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -41,7 +42,9 @@ export default class Details extends React.Component {
     this.addFood = this.addFood.bind(this)
     this.toggleDropdown = this.toggleDropdown.bind(this)
     this.toggleEventName = this.toggleEventName.bind(this)
+    this.toggleEventLocation = this.toggleEventLocation.bind(this)
     this.updateEventName = this.updateEventName.bind(this)
+    this.updateEventLocation = this.updateEventLocation.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -57,6 +60,9 @@ export default class Details extends React.Component {
   }
   toggleEventName() {
     this.setState({editName: !this.state.editName})
+  }
+  toggleEventLocation() {
+    this.setState({editLocation: !this.state.editLocation})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -145,6 +151,16 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, data)
     this.toggleEventName()
   }
+  updateEventLocation(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      eventLocation: formData.get('event-location')
+    }
+    this.props.patchEvent(id, data)
+    this.toggleEventLocation()
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -175,7 +191,22 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem>Edit event location</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventLocation}>Edit event location</DropdownItem>
+                  <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
+                    <ModalHeader toggle={this.toggleEventLocation}>Edit Event Name</ModalHeader>
+                    <Form onSubmit={ this.updateEventLocation }>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Location</Label>
+                          <Input name="event-location" defaultValue={eventLocation} />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventLocation}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
                 </DropdownMenu>
               </Dropdown>
             </Row>
