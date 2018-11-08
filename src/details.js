@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 const styles = {
   width: {
@@ -12,6 +12,9 @@ const styles = {
   },
   icon: {
     right: '2rem'
+  },
+  dropdown: {
+    right: '1rem'
   }
 }
 
@@ -21,7 +24,8 @@ export default class Details extends React.Component {
     this.state = {
       modal: false,
       activityModal: false,
-      foodModal: false
+      foodModal: false,
+      dropDownOpen: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -34,6 +38,7 @@ export default class Details extends React.Component {
     this.toggleFood = this.toggleFood.bind(this)
     this.addActivity = this.addActivity.bind(this)
     this.addFood = this.addFood.bind(this)
+    this.toggleDropdown = this.toggleDropdown.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -43,6 +48,9 @@ export default class Details extends React.Component {
   }
   toggleFood() {
     this.setState({foodModal: !this.state.foodModal})
+  }
+  toggleDropdown() {
+    this.setState(prevState => ({dropDownOpen: !prevState.dropDownOpen}))
   }
   removeEvent(e) {
     const id = e.target.id
@@ -128,7 +136,18 @@ export default class Details extends React.Component {
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
           <CardHeader>
             <CardText className="font-weight-light" tag="h1">{ eventName }</CardText>
-            <CardText><i className="fas fa-location-arrow mr-2 fa-sm"></i>{ eventLocation }</CardText>
+            <Row className="d-flex justify-content-center">
+              <CardText className="mb-0"><i className="fas fa-location-arrow mr-2 fa-sm"></i>{ eventLocation }</CardText>
+              <Dropdown isOpen={this.state.dropDownOpen} toggle={this.toggleDropdown} size="sm" className="position-absolute" style={ styles.dropdown }>
+                <DropdownToggle data-toggle="dropdown" tag="span">
+                  <i className="fas fa-ellipsis-h"></i>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>Edit event name</DropdownItem>
+                  <DropdownItem>Edit event location</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </Row>
           </CardHeader>
           <CardBody className="pb-3">
             <CardText className="mx-auto" style={ styles.description }>{ eventDescription }</CardText>
