@@ -175,7 +175,7 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem onClick={this.toggleEventName}>Edit event name</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventName}>Edit Event Name</DropdownItem>
                   <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
                     <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
                     <Form onSubmit={ this.updateEventName }>
@@ -191,9 +191,9 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem onClick={this.toggleEventLocation}>Edit event location</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventLocation}>Edit Event Location</DropdownItem>
                   <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
-                    <ModalHeader toggle={this.toggleEventLocation}>Edit Event Name</ModalHeader>
+                    <ModalHeader toggle={this.toggleEventLocation}>Edit Event Location</ModalHeader>
                     <Form onSubmit={ this.updateEventLocation }>
                       <ModalBody>
                         <FormGroup>
