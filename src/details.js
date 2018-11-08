@@ -62,7 +62,7 @@ export default class Details extends React.Component {
     const { id, activities } = this.props.selectedEvent
     const oldList = [...activities]
     const listID = parseInt(e.target.id, 10)
-    const filteredList = oldList.filter(item => listID !== item.id)
+    const filteredList = oldList.filter(item => listID !== item.lookup)
     const newList = Object.assign({}, {activities: filteredList})
     this.props.patchEvent(id, newList)
   }
@@ -70,7 +70,7 @@ export default class Details extends React.Component {
     const { id, food } = this.props.selectedEvent
     const oldList = [...food]
     const listID = parseInt(e.target.id, 10)
-    const filteredList = oldList.filter(item => listID !== item.id)
+    const filteredList = oldList.filter(item => listID !== item.lookup)
     const newList = Object.assign({}, {food: filteredList})
     this.props.patchEvent(id, newList)
   }
@@ -78,7 +78,7 @@ export default class Details extends React.Component {
     const { id, lodges } = this.props.selectedEvent
     const oldLodges = [...lodges]
     const lodgeID = parseInt(e.target.id, 10)
-    const filteredLodges = oldLodges.filter(lodge => lodgeID !== lodge.id)
+    const filteredLodges = oldLodges.filter(lodge => lodgeID !== lodge.lookup)
     const newLodges = Object.assign({}, {lodges: filteredLodges})
     this.props.patchEvent(id, newLodges)
   }
@@ -91,7 +91,7 @@ export default class Details extends React.Component {
       locationAddress: formData.get('address'),
       locationCost: formData.get('cost'),
       like: 0,
-      id: lodges.length + 1
+      lookup: lodges.length + 1
     }
     const newLodges = Object.assign({}, {lodges: [...lodges, data]})
     this.props.patchEvent(id, newLodges)
@@ -103,7 +103,7 @@ export default class Details extends React.Component {
     const formData = new FormData(e.target)
     const data = {
       value: formData.get('activity'),
-      id: activities.length + 1
+      lookup: activities.length + 1
     }
     const newActivities = Object.assign({}, {activities: [...activities, data]})
     this.props.patchEvent(id, newActivities)
@@ -115,7 +115,7 @@ export default class Details extends React.Component {
     const formData = new FormData(e.target)
     const data = {
       value: formData.get('food'),
-      id: food.length + 1
+      lookup: food.length + 1
     }
     const newFoodItems = Object.assign({}, {food: [...food, data]})
     this.props.patchEvent(id, newFoodItems)
@@ -193,7 +193,7 @@ export default class Details extends React.Component {
                           </Row>
                         </CardBody>
                         <CardFooter>
-                          <i id={ lodge.id } onClick={ this.removeLodge } className="fas fa-minus-circle text-secondary float-right"></i>
+                          <i id={ lodge.lookup } onClick={ this.removeLodge } className="fas fa-minus-circle text-secondary float-right"></i>
                         </CardFooter>
                       </Card>
                     </Col>
@@ -228,7 +228,7 @@ export default class Details extends React.Component {
                             <td className="d-flex align-items-center justify-content-center">
                               { item.value }
                               <i
-                                id={ item.id }
+                                id={ item.lookup }
                                 style={ styles.icon }
                                 onClick={ this.removeListFood }
                                 className="fas fa-times text-secondary position-absolute"></i>
@@ -266,7 +266,7 @@ export default class Details extends React.Component {
                             <td className="d-flex align-items-center justify-content-center">
                               { item.value }
                               <i
-                                id={ item.id }
+                                id={ item.lookup }
                                 style={ styles.icon }
                                 onClick={ this.removeListActivity }
                                 className="fas fa-times text-secondary position-absolute"></i>

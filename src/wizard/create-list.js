@@ -7,7 +7,7 @@ export default class CreateList extends React.Component {
     super(props)
     this.state = {
       activities: [],
-      id: 1
+      lookup: 1
     }
     this.updateActivities = this.updateActivities.bind(this)
     this.updateApp = this.updateApp.bind(this)
@@ -17,10 +17,10 @@ export default class CreateList extends React.Component {
     const formData = new FormData(e.target)
     const activity = {
       value: formData.get('activity'),
-      id: this.state.id
+      lookup: this.state.lookup
     }
     const activities = [...this.state.activities, activity]
-    this.setState({ activities, id: this.state.id + 1 })
+    this.setState({ activities, lookup: this.state.lookup + 1 })
     e.target.reset()
   }
   updateApp() {
@@ -29,7 +29,7 @@ export default class CreateList extends React.Component {
     const userData = {}
     userData[userInput] = this.state.activities
     this.props.update(userData, nextScreen)
-    this.setState({activities: [], id: 1})
+    this.setState({activities: [], lookup: 1})
   }
   render() {
     const { header, label, placeholder } = this.props

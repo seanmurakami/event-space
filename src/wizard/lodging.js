@@ -8,7 +8,7 @@ export default class Lodging extends React.Component {
     super(props)
     this.state = {
       lodges: [],
-      id: 1
+      lookup: 1
     }
     this.addLodge = this.addLodge.bind(this)
     this.updateApp = this.updateApp.bind(this)
@@ -21,14 +21,15 @@ export default class Lodging extends React.Component {
       locationAddress: formData.get('event-address'),
       locationCost: formData.get('event-cost'),
       like: 0,
-      id: this.state.id
+      lookup: this.state.lookup
     }
     const lodges = [...this.state.lodges, userInfo]
-    this.setState({ lodges, id: this.state.id + 1 })
+    this.setState({ lodges, lookup: this.state.lookup + 1 })
     e.target.reset()
   }
   updateApp() {
-    this.props.update(this.state, 'activities')
+    const lodging = Object.assign({}, {lodges: this.state.lodges})
+    this.props.update(lodging, 'activities')
   }
   render() {
     return (
