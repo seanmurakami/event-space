@@ -25,7 +25,8 @@ export default class Details extends React.Component {
       modal: false,
       activityModal: false,
       foodModal: false,
-      dropDownOpen: false
+      dropDownOpen: false,
+      editName: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -39,6 +40,7 @@ export default class Details extends React.Component {
     this.addActivity = this.addActivity.bind(this)
     this.addFood = this.addFood.bind(this)
     this.toggleDropdown = this.toggleDropdown.bind(this)
+    this.toggleEventName = this.toggleEventName.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -51,6 +53,9 @@ export default class Details extends React.Component {
   }
   toggleDropdown() {
     this.setState(prevState => ({dropDownOpen: !prevState.dropDownOpen}))
+  }
+  toggleEventName() {
+    this.setState({editName: !this.state.editName})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -143,7 +148,22 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Edit event name</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventName}>Edit event name</DropdownItem>
+                  <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
+                    <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
+                    <Form>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Name</Label>
+                          <Input name="food" defaultValue={eventName} />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventName}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
                   <DropdownItem>Edit event location</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
