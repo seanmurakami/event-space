@@ -1,6 +1,6 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 const styles = {
   width: {
@@ -12,6 +12,9 @@ const styles = {
   },
   icon: {
     right: '2rem'
+  },
+  dropdown: {
+    right: '1rem'
   }
 }
 
@@ -21,7 +24,10 @@ export default class Details extends React.Component {
     this.state = {
       modal: false,
       activityModal: false,
-      foodModal: false
+      foodModal: false,
+      dropDownOpen: false,
+      editName: false,
+      editLocation: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -34,6 +40,11 @@ export default class Details extends React.Component {
     this.toggleFood = this.toggleFood.bind(this)
     this.addActivity = this.addActivity.bind(this)
     this.addFood = this.addFood.bind(this)
+    this.toggleDropdown = this.toggleDropdown.bind(this)
+    this.toggleEventName = this.toggleEventName.bind(this)
+    this.toggleEventLocation = this.toggleEventLocation.bind(this)
+    this.updateEventName = this.updateEventName.bind(this)
+    this.updateEventLocation = this.updateEventLocation.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -43,6 +54,15 @@ export default class Details extends React.Component {
   }
   toggleFood() {
     this.setState({foodModal: !this.state.foodModal})
+  }
+  toggleDropdown() {
+    this.setState(prevState => ({dropDownOpen: !prevState.dropDownOpen}))
+  }
+  toggleEventName() {
+    this.setState({editName: !this.state.editName})
+  }
+  toggleEventLocation() {
+    this.setState({editLocation: !this.state.editLocation})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -121,6 +141,26 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, newFoodItems)
     this.toggleFood()
   }
+  updateEventName(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      eventName: formData.get('event-name')
+    }
+    this.props.patchEvent(id, data)
+    this.toggleEventName()
+  }
+  updateEventLocation(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      eventLocation: formData.get('event-location')
+    }
+    this.props.patchEvent(id, data)
+    this.toggleEventLocation()
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -128,7 +168,48 @@ export default class Details extends React.Component {
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
           <CardHeader>
             <CardText className="font-weight-light" tag="h1">{ eventName }</CardText>
-            <CardText><i className="fas fa-location-arrow mr-2 fa-sm"></i>{ eventLocation }</CardText>
+            <Row className="d-flex justify-content-center">
+              <CardText className="mb-0"><i className="fas fa-location-arrow mr-2 fa-sm"></i>{ eventLocation }</CardText>
+              <Dropdown isOpen={this.state.dropDownOpen} toggle={this.toggleDropdown} size="sm" className="position-absolute" style={ styles.dropdown }>
+                <DropdownToggle data-toggle="dropdown" tag="span">
+                  <i className="fas fa-ellipsis-h"></i>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={this.toggleEventName}>Edit Event Name</DropdownItem>
+                  <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
+                    <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
+                    <Form onSubmit={ this.updateEventName }>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Name</Label>
+                          <Input name="event-name" defaultValue={eventName} />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventName}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
+                  <DropdownItem onClick={this.toggleEventLocation}>Edit Event Location</DropdownItem>
+                  <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
+                    <ModalHeader toggle={this.toggleEventLocation}>Edit Event Location</ModalHeader>
+                    <Form onSubmit={ this.updateEventLocation }>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Location</Label>
+                          <Input name="event-location" defaultValue={eventLocation} />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventLocation}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
+                </DropdownMenu>
+              </Dropdown>
+            </Row>
           </CardHeader>
           <CardBody className="pb-3">
             <CardText className="mx-auto" style={ styles.description }>{ eventDescription }</CardText>
