@@ -47,6 +47,7 @@ export default class Details extends React.Component {
     this.updateEventName = this.updateEventName.bind(this)
     this.updateEventLocation = this.updateEventLocation.bind(this)
     this.toggleEventDescription = this.toggleEventDescription.bind(this)
+    this.updateEventDescription = this.updateEventDescription.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -165,6 +166,16 @@ export default class Details extends React.Component {
     }
     this.props.patchEvent(id, data)
     this.toggleEventLocation()
+  }
+  updateEventDescription(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      eventDescription: formData.get('event-description')
+    }
+    this.props.patchEvent(id, data)
+    this.toggleEventDescription()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
