@@ -230,7 +230,7 @@ export default class Details extends React.Component {
                       <ModalBody>
                         <FormGroup>
                           <Label>Event Description</Label>
-                          <Input name="event-description" defaultValue={eventDescription} />
+                          <textarea name="event-description" rows="4" defaultValue={eventDescription} className="form-control" />
                         </FormGroup>
                       </ModalBody>
                       <ModalFooter>
