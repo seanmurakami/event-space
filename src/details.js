@@ -207,6 +207,22 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
+                  <DropdownItem onClick={this.toggleEventDescription}>Edit Event Description</DropdownItem>
+                  <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
+                    <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
+                    <Form onSubmit={ this.updateEventDescription }>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Description</Label>
+                          <Input name="event-description" defaultValue={eventDescription} />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventDescription}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
                 </DropdownMenu>
               </Dropdown>
             </Row>
