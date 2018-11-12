@@ -27,7 +27,8 @@ export default class Details extends React.Component {
       foodModal: false,
       dropDownOpen: false,
       editName: false,
-      editLocation: false
+      editLocation: false,
+      editDescription: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -45,6 +46,7 @@ export default class Details extends React.Component {
     this.toggleEventLocation = this.toggleEventLocation.bind(this)
     this.updateEventName = this.updateEventName.bind(this)
     this.updateEventLocation = this.updateEventLocation.bind(this)
+    this.toggleEventDescription = this.toggleEventDescription.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -63,6 +65,9 @@ export default class Details extends React.Component {
   }
   toggleEventLocation() {
     this.setState({editLocation: !this.state.editLocation})
+  }
+  toggleEventDescription() {
+    this.setState({editDescription: !this.state.editDescription})
   }
   removeEvent(e) {
     const id = e.target.id
