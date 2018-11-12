@@ -27,7 +27,8 @@ export default class Details extends React.Component {
       foodModal: false,
       dropDownOpen: false,
       editName: false,
-      editLocation: false
+      editLocation: false,
+      editDescription: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -45,6 +46,8 @@ export default class Details extends React.Component {
     this.toggleEventLocation = this.toggleEventLocation.bind(this)
     this.updateEventName = this.updateEventName.bind(this)
     this.updateEventLocation = this.updateEventLocation.bind(this)
+    this.toggleEventDescription = this.toggleEventDescription.bind(this)
+    this.updateEventDescription = this.updateEventDescription.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -63,6 +66,9 @@ export default class Details extends React.Component {
   }
   toggleEventLocation() {
     this.setState({editLocation: !this.state.editLocation})
+  }
+  toggleEventDescription() {
+    this.setState({editDescription: !this.state.editDescription})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -161,6 +167,16 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, data)
     this.toggleEventLocation()
   }
+  updateEventDescription(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const formData = new FormData(e.target)
+    const data = {
+      eventDescription: formData.get('event-description')
+    }
+    this.props.patchEvent(id, data)
+    this.toggleEventDescription()
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -204,6 +220,22 @@ export default class Details extends React.Component {
                       <ModalFooter>
                         <Button color="info">Update</Button>{' '}
                         <Button color="secondary" onClick={this.toggleEventLocation}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
+                  <DropdownItem onClick={this.toggleEventDescription}>Edit Event Description</DropdownItem>
+                  <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
+                    <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
+                    <Form onSubmit={ this.updateEventDescription }>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Description</Label>
+                          <textarea name="event-description" rows="4" defaultValue={eventDescription} className="form-control" />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventDescription}>Cancel</Button>
                       </ModalFooter>
                     </Form>
                   </Modal>
