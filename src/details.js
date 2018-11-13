@@ -28,7 +28,8 @@ export default class Details extends React.Component {
       dropDownOpen: false,
       editName: false,
       editLocation: false,
-      editDescription: false
+      editDescription: false,
+      editDates: false
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -47,6 +48,7 @@ export default class Details extends React.Component {
     this.updateEventName = this.updateEventName.bind(this)
     this.updateEventLocation = this.updateEventLocation.bind(this)
     this.toggleEventDescription = this.toggleEventDescription.bind(this)
+    this.toggleEventDates = this.toggleEventDates.bind(this)
     this.updateEventDescription = this.updateEventDescription.bind(this)
   }
   toggle() {
@@ -69,6 +71,9 @@ export default class Details extends React.Component {
   }
   toggleEventDescription() {
     this.setState({editDescription: !this.state.editDescription})
+  }
+  toggleEventDates() {
+    this.setState({editDates: !this.state.editDates})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -239,7 +244,22 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem>Edit Dates</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
+                  <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
+                    <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
+                    <Form>
+                      <ModalBody>
+                        <FormGroup>
+                          <Label>Event Dates</Label>
+                          <Input name="event-dates" />
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventDates}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
                 </DropdownMenu>
               </Dropdown>
             </Row>
