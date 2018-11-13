@@ -1,6 +1,9 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
 import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import moment from 'moment'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const styles = {
   width: {
@@ -29,7 +32,9 @@ export default class Details extends React.Component {
       editName: false,
       editLocation: false,
       editDescription: false,
-      editDates: false
+      editDates: false,
+      startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
+      endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY')
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -249,9 +254,17 @@ export default class Details extends React.Component {
                     <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
                     <Form>
                       <ModalBody>
-                        <FormGroup>
-                          <Label>Event Dates</Label>
-                          <Input name="event-dates" />
+                        <FormGroup className="text-center">
+                          <Row>
+                            <Col>
+                              <Label>Start Date</Label>
+                              <DatePicker className="text-center" selected={this.state.startDate}/>
+                            </Col>
+                            <Col>
+                              <Label>End Date</Label>
+                              <DatePicker className="text-center" selected={this.state.endDate}/>
+                            </Col>
+                          </Row>
                         </FormGroup>
                       </ModalBody>
                       <ModalFooter>
