@@ -1,6 +1,9 @@
 import React from 'react'
 import DeleteEvent from './modal-delete'
 import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import moment from 'moment'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const styles = {
   width: {
@@ -28,7 +31,10 @@ export default class Details extends React.Component {
       dropDownOpen: false,
       editName: false,
       editLocation: false,
-      editDescription: false
+      editDescription: false,
+      editDates: false,
+      startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
+      endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY')
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -47,7 +53,11 @@ export default class Details extends React.Component {
     this.updateEventName = this.updateEventName.bind(this)
     this.updateEventLocation = this.updateEventLocation.bind(this)
     this.toggleEventDescription = this.toggleEventDescription.bind(this)
+    this.toggleEventDates = this.toggleEventDates.bind(this)
     this.updateEventDescription = this.updateEventDescription.bind(this)
+    this.changeStart = this.changeStart.bind(this)
+    this.changeEnd = this.changeEnd.bind(this)
+    this.updateEventDates = this.updateEventDates.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -69,6 +79,9 @@ export default class Details extends React.Component {
   }
   toggleEventDescription() {
     this.setState({editDescription: !this.state.editDescription})
+  }
+  toggleEventDates() {
+    this.setState({editDates: !this.state.editDates})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -177,6 +190,22 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, data)
     this.toggleEventDescription()
   }
+  updateEventDates(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const { startDate, endDate } = this.state
+    const userInfo = Object.assign({}, {startDate}, {endDate})
+    const updateDates = Object.values(userInfo).map(moment => moment.format('MM/DD/YYYY'))
+    this.props.patchEvent(id, {startDate: updateDates[0]})
+    this.props.patchEvent(id, {endDate: updateDates[1]})
+    this.toggleEventDates()
+  }
+  changeStart(date) {
+    this.setState({startDate: date})
+  }
+  changeEnd(date) {
+    this.setState({endDate: date})
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -191,7 +220,7 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem onClick={this.toggleEventName}>Edit Event Name</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventName}>Edit Title</DropdownItem>
                   <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
                     <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
                     <Form onSubmit={ this.updateEventName }>
@@ -207,7 +236,7 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem onClick={this.toggleEventLocation}>Edit Event Location</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
                   <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
                     <ModalHeader toggle={this.toggleEventLocation}>Edit Event Location</ModalHeader>
                     <Form onSubmit={ this.updateEventLocation }>
@@ -223,7 +252,7 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem onClick={this.toggleEventDescription}>Edit Event Description</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventDescription}>Edit Description</DropdownItem>
                   <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
                     <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
                     <Form onSubmit={ this.updateEventDescription }>
@@ -236,6 +265,38 @@ export default class Details extends React.Component {
                       <ModalFooter>
                         <Button color="info">Update</Button>{' '}
                         <Button color="secondary" onClick={this.toggleEventDescription}>Cancel</Button>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
+                  <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
+                  <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
+                    <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
+                    <Form onSubmit={this.updateEventDates}>
+                      <ModalBody>
+                        <FormGroup className="text-center">
+                          <Row>
+                            <Col>
+                              <Label>Start Date</Label>
+                              <DatePicker
+                                className="text-center"
+                                selected={this.state.startDate}
+                                onChange={this.changeStart}
+                              />
+                            </Col>
+                            <Col>
+                              <Label>End Date</Label>
+                              <DatePicker
+                                className="text-center"
+                                selected={this.state.endDate}
+                                onChange={this.changeEnd}
+                              />
+                            </Col>
+                          </Row>
+                        </FormGroup>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="info">Update</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEventDates}>Cancel</Button>
                       </ModalFooter>
                     </Form>
                   </Modal>
