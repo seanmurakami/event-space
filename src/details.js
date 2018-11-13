@@ -55,6 +55,9 @@ export default class Details extends React.Component {
     this.toggleEventDescription = this.toggleEventDescription.bind(this)
     this.toggleEventDates = this.toggleEventDates.bind(this)
     this.updateEventDescription = this.updateEventDescription.bind(this)
+    this.changeStart = this.changeStart.bind(this)
+    this.changeEnd = this.changeEnd.bind(this)
+    this.updateEventDates = this.updateEventDates.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -187,6 +190,22 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, data)
     this.toggleEventDescription()
   }
+  updateEventDates(e) {
+    e.preventDefault()
+    const { id } = this.props.selectedEvent
+    const { startDate, endDate } = this.state
+    const userInfo = Object.assign({}, {startDate}, {endDate})
+    const updateDates = Object.values(userInfo).map(moment => moment.format('MM/DD/YYYY'))
+    this.props.patchEvent(id, {startDate: updateDates[0]})
+    this.props.patchEvent(id, {endDate: updateDates[1]})
+    this.toggleEventDates()
+  }
+  changeStart(date) {
+    this.setState({startDate: date})
+  }
+  changeEnd(date) {
+    this.setState({endDate: date})
+  }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
     return (
@@ -252,17 +271,25 @@ export default class Details extends React.Component {
                   <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
                   <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
                     <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
-                    <Form>
+                    <Form onSubmit={this.updateEventDates}>
                       <ModalBody>
                         <FormGroup className="text-center">
                           <Row>
                             <Col>
                               <Label>Start Date</Label>
-                              <DatePicker className="text-center" selected={this.state.startDate}/>
+                              <DatePicker
+                                className="text-center"
+                                selected={this.state.startDate}
+                                onChange={this.changeStart}
+                              />
                             </Col>
                             <Col>
                               <Label>End Date</Label>
-                              <DatePicker className="text-center" selected={this.state.endDate}/>
+                              <DatePicker
+                                className="text-center"
+                                selected={this.state.endDate}
+                                onChange={this.changeEnd}
+                              />
                             </Col>
                           </Row>
                         </FormGroup>
