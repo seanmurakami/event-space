@@ -191,7 +191,7 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem onClick={this.toggleEventName}>Edit Event Name</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventName}>Edit Title</DropdownItem>
                   <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
                     <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
                     <Form onSubmit={ this.updateEventName }>
@@ -207,7 +207,7 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem onClick={this.toggleEventLocation}>Edit Event Location</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
                   <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
                     <ModalHeader toggle={this.toggleEventLocation}>Edit Event Location</ModalHeader>
                     <Form onSubmit={ this.updateEventLocation }>
@@ -223,7 +223,7 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem onClick={this.toggleEventDescription}>Edit Event Description</DropdownItem>
+                  <DropdownItem onClick={this.toggleEventDescription}>Edit Description</DropdownItem>
                   <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
                     <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
                     <Form onSubmit={ this.updateEventDescription }>
@@ -239,6 +239,7 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
+                  <DropdownItem>Edit Dates</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </Row>
