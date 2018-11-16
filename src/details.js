@@ -62,6 +62,8 @@ export default class Details extends React.Component {
     this.changeEnd = this.changeEnd.bind(this)
     this.updateEventDates = this.updateEventDates.bind(this)
     this.togglePoll = this.togglePoll.bind(this)
+    this.updatePollItems = this.updatePollItems.bind(this)
+    this.submitPoll = this.submitPoll.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -212,6 +214,20 @@ export default class Details extends React.Component {
   }
   changeEnd(date) {
     this.setState({endDate: date})
+  }
+  updatePollItems(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const pollItem = formData.get('poll')
+    this.setState({pollItems: [...this.state.pollItems, pollItem]})
+    e.target.reset()
+  }
+  submitPoll() {
+    const content = {
+      data: this.state.pollItems
+    }
+    this.props.poll(content, this.props.selectedEvent.id)
+    this.togglePoll()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
@@ -466,8 +482,7 @@ export default class Details extends React.Component {
                 <Poll data={ data }/>
               }
             </Row>
-            <Row className="d-flex justify-content-between mx-2">
-              <Button href="#">Exit</Button>
+            <Row className="d-flex justify-content-center mx-2">
               <Button onClick={ this.togglePoll } color="info">Create Poll</Button>
               <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>
                 <ModalHeader toggle={ this.togglePoll }>Create a list of poll items</ModalHeader>

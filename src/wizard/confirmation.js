@@ -11,7 +11,8 @@ export default class Confirmation extends React.Component {
     this.submitEvent = this.submitEvent.bind(this)
   }
   submitEvent() {
-    this.props.update(this.state.userInformation)
+    const newEvent = Object.assign(this.state.userInformation, {data: []})
+    this.props.update(newEvent)
   }
   render() {
     const { eventLocation, eventName, eventDescription, startDate, endDate, lodges, activities, food } = this.props.eventInformation

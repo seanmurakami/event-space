@@ -38,6 +38,7 @@ export default class App extends React.Component {
     this.newEvent = this.newEvent.bind(this)
     this.deleteEvent = this.deleteEvent.bind(this)
     this.patchEvent = this.patchEvent.bind(this)
+    this.updatePollData = this.updatePollData.bind(this)
   }
   renderWizard() {
     const { view } = this.state
@@ -81,6 +82,7 @@ export default class App extends React.Component {
             selectedEvent={ this.state.selectedEvent }
             deleteEvent={ this.deleteEvent }
             patchEvent={ this.patchEvent }
+            poll={ this.updatePollData }
           />)
       default :
         return (
@@ -130,6 +132,21 @@ export default class App extends React.Component {
   }
   newEvent() {
     this.setState({newEvent: true})
+  }
+  updatePollData(pollData, id) {
+    return fetch('/events/' + id, {
+      method: 'PATCH',
+      body: JSON.stringify(pollData),
+      headers: {'Content-Type': 'application/json'}
+    })
+      .then(res => res.json())
+      .then(item => {
+        const { events } = this.state
+        const newEvents = [...events]
+        const eventIndex = newEvents.findIndex(element => element.id === item.id)
+        newEvents.splice(eventIndex, 1, item)
+        return this.setState({events: newEvents, selectedEvent: item})
+      })
   }
   patchEvent(id, updatedLodges) {
     return fetch(`/events/${id}`, {
