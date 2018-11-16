@@ -231,6 +231,7 @@ export default class Details extends React.Component {
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
+    const pollButton = data.length === 0 ? <Button onClick={ this.togglePoll } color="info">Create Poll</Button> : null
     return (
       <div className="mx-2 mb-5">
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
@@ -476,14 +477,14 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
             </Row>
-            <Row className="mb-2">
+            <Row className="d-flex justify-content-center mb-2">
               {
                 data.length !== 0 &&
                 <Poll data={ data }/>
               }
             </Row>
             <Row className="d-flex justify-content-center mx-2">
-              <Button onClick={ this.togglePoll } color="info">Create Poll</Button>
+              {pollButton}
               <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>
                 <ModalHeader toggle={ this.togglePoll }>Create a list of poll items</ModalHeader>
                 <ModalBody>
