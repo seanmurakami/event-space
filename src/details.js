@@ -34,6 +34,7 @@ export default class Details extends React.Component {
       editLocation: false,
       editDescription: false,
       editDates: false,
+      pollModal: false,
       startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
       endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY'),
       pollItems: []
@@ -60,6 +61,7 @@ export default class Details extends React.Component {
     this.changeStart = this.changeStart.bind(this)
     this.changeEnd = this.changeEnd.bind(this)
     this.updateEventDates = this.updateEventDates.bind(this)
+    this.togglePoll = this.togglePoll.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -84,6 +86,9 @@ export default class Details extends React.Component {
   }
   toggleEventDates() {
     this.setState({editDates: !this.state.editDates})
+  }
+  togglePoll() {
+    this.setState({pollModal: !this.state.pollModal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -463,9 +468,9 @@ export default class Details extends React.Component {
             </Row>
             <Row className="d-flex justify-content-between mx-2">
               <Button href="#">Exit</Button>
-              <Button onClick={ this.toggle } color="info">Create Poll</Button>
-              <Modal isOpen={ this.state.modal } toggle={ this.toggle }>
-                <ModalHeader toggle={ this.toggle }>Create a list of poll items</ModalHeader>
+              <Button onClick={ this.togglePoll } color="info">Create Poll</Button>
+              <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>
+                <ModalHeader toggle={ this.togglePoll }>Create a list of poll items</ModalHeader>
                 <ModalBody>
                   <Form onSubmit={ this.updatePollItems } autoComplete="off">
                     <FormGroup>
