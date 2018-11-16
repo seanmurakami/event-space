@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import DeleteEvent from './modal-delete'
 import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import Poll from './poll'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -33,8 +34,10 @@ export default class Details extends React.Component {
       editLocation: false,
       editDescription: false,
       editDates: false,
+      pollModal: false,
       startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
-      endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY')
+      endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY'),
+      pollItems: []
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -58,6 +61,9 @@ export default class Details extends React.Component {
     this.changeStart = this.changeStart.bind(this)
     this.changeEnd = this.changeEnd.bind(this)
     this.updateEventDates = this.updateEventDates.bind(this)
+    this.togglePoll = this.togglePoll.bind(this)
+    this.updatePollItems = this.updatePollItems.bind(this)
+    this.submitPoll = this.submitPoll.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -82,6 +88,9 @@ export default class Details extends React.Component {
   }
   toggleEventDates() {
     this.setState({editDates: !this.state.editDates})
+  }
+  togglePoll() {
+    this.setState({pollModal: !this.state.pollModal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -206,8 +215,23 @@ export default class Details extends React.Component {
   changeEnd(date) {
     this.setState({endDate: date})
   }
+  updatePollItems(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const pollItem = formData.get('poll')
+    this.setState({pollItems: [...this.state.pollItems, pollItem]})
+    e.target.reset()
+  }
+  submitPoll() {
+    const content = {
+      data: this.state.pollItems
+    }
+    this.props.poll(content, this.props.selectedEvent.id)
+    this.togglePoll()
+  }
   render() {
-    const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id } = this.props.selectedEvent
+    const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
+    const pollButton = data.length === 0 ? <Button onClick={ this.togglePoll } color="info">Create Poll</Button> : null
     return (
       <div className="mx-2 mb-5">
         <Card className="container font-weight-light text-center px-0" style={ styles.width }>
@@ -452,6 +476,50 @@ export default class Details extends React.Component {
                   </tbody>
                 </Table>
               </Col>
+            </Row>
+            <Row className="d-flex justify-content-center mb-2">
+              {
+                data.length !== 0 &&
+                <Poll data={ data }/>
+              }
+            </Row>
+            <Row className="d-flex justify-content-center mx-2">
+              {pollButton}
+              <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>
+                <ModalHeader toggle={ this.togglePoll }>Create a list of poll items</ModalHeader>
+                <ModalBody>
+                  <Form onSubmit={ this.updatePollItems } autoComplete="off">
+                    <FormGroup>
+                      <Col>
+                        <div className="input-group">
+                          <Input name="poll" placeholder="What are we voting on?" />
+                          <div className="input-group-append">
+                            <Button color="link">+</Button>
+                          </div>
+                        </div>
+                      </Col>
+                    </FormGroup>
+                    <Fragment>
+                      { this.state.pollItems.length !== 0 &&
+                      <Table style={ styles.width } className="border mx-auto">
+                        <tbody>
+                          { this.state.pollItems.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{ item }</td>
+                              </tr>
+                            )
+                          })}
+                        </tbody>
+                      </Table>
+                      }
+                    </Fragment>
+                  </Form>
+                </ModalBody>
+                <ModalFooter>
+                  <Button onClick={ this.submitPoll } color="info">Submit</Button>
+                </ModalFooter>
+              </Modal>
             </Row>
             <Row className="d-flex align-items-center justify-content-between">
               <Button href="#" className="ml-2">Back</Button>

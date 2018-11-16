@@ -1,3 +1,41 @@
 {
-  "events": []
+  "events": [
+    {
+      "eventName": "Updated Event Name",
+      "eventLocation": "New Location, CA",
+      "eventDescription": "New updated event description!!!",
+      "startDate": "11/22/2018",
+      "endDate": "11/30/2018",
+      "lodges": [
+        {
+          "locationType": "AirBnb",
+          "locationAddress": "199 Address Drive",
+          "locationCost": "100",
+          "like": 7,
+          "lookup": 2
+        }
+      ],
+      "activities": [
+        {
+          "value": "Walk around",
+          "lookup": 1
+        },
+        {
+          "value": "Go to the beach",
+          "lookup": 2
+        }
+      ],
+      "food": [
+        {
+          "value": "Option 1",
+          "lookup": 1
+        },
+        {
+          "value": "Option 2",
+          "lookup": 2
+        }
+      ],
+      "id": 1
+    }
+  ]
 }
