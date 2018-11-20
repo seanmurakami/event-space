@@ -488,7 +488,10 @@ export default class Details extends React.Component {
             <Row className="d-flex justify-content-center mb-2">
               {
                 data.length !== 0 &&
-                <Poll data={ data } votes={this.props.selectedEvent.votes}/>
+                <Poll
+                  data={ data }
+                  toggleVote={ this.toggleVote }
+                  votes={this.props.selectedEvent.votes}/>
               }
             </Row>
             <Row className="d-flex justify-content-center mx-2">
@@ -533,13 +536,12 @@ export default class Details extends React.Component {
                 <Form>
                   <ModalBody>
                     <FormGroup>
-                      <Label>Poll Items</Label>
                       {
                         data.map((item, index) => {
                           return (
-                            <FormGroup key={index}>
+                            <FormGroup check key={index} className="my-2">
                               <Label check>
-                                <Input type="checkbox">{item}</Input>
+                                <Input type="checkbox"/>{item}
                               </Label>
                             </FormGroup>
                           )

@@ -49,7 +49,7 @@ export default class Poll extends React.Component {
       <Col sm={6}>
         <canvas ref={this.ref} width={100} height={100}>Hello
         </canvas>
-        <Button color="info">Vote</Button>
+        <Button color="info" onClick={this.props.toggleVote}>Vote</Button>
       </Col>
     )
   }
