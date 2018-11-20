@@ -488,7 +488,7 @@ export default class Details extends React.Component {
             <Row className="d-flex justify-content-center mb-2">
               {
                 data.length !== 0 &&
-                <Poll data={ data }/>
+                <Poll data={ data } votes={this.props.selectedEvent.votes}/>
               }
             </Row>
             <Row className="d-flex justify-content-center mx-2">
@@ -534,7 +534,7 @@ export default class Details extends React.Component {
                   <ModalBody>
                     <FormGroup>
                       <Label>Poll Items</Label>
-                      <Input name="vote" placeholder="e.g. Visit the capital" />
+                      <Input name="vote"/>
                     </FormGroup>
                   </ModalBody>
                   <ModalFooter>

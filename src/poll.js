@@ -19,7 +19,7 @@ export default class Poll extends React.Component {
         labels: this.props.data,
         datasets: [{
           label: '# of Votes',
-          data: [0, 0, 0, 0, 0, 0],
+          data: this.props.votes,
           backgroundColor: [
             '#17a2b8',
             'rgba(54, 162, 235, 1)',
