@@ -223,8 +223,11 @@ export default class Details extends React.Component {
     e.target.reset()
   }
   submitPoll() {
+    const votes = []
+    this.state.pollItems.forEach(() => votes.push(0))
     const content = {
-      data: this.state.pollItems
+      data: this.state.pollItems,
+      votes
     }
     this.props.poll(content, this.props.selectedEvent.id)
     this.togglePoll()
