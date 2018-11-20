@@ -35,6 +35,7 @@ export default class Details extends React.Component {
       editDescription: false,
       editDates: false,
       pollModal: false,
+      voteModal: false,
       startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
       endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY'),
       pollItems: []
@@ -64,6 +65,7 @@ export default class Details extends React.Component {
     this.togglePoll = this.togglePoll.bind(this)
     this.updatePollItems = this.updatePollItems.bind(this)
     this.submitPoll = this.submitPoll.bind(this)
+    this.toggleVote = this.toggleVote.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -91,6 +93,9 @@ export default class Details extends React.Component {
   }
   togglePoll() {
     this.setState({pollModal: !this.state.pollModal})
+  }
+  toggleVote() {
+    this.setState({voteModal: !this.state.voteModal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -522,6 +527,21 @@ export default class Details extends React.Component {
                 <ModalFooter>
                   <Button onClick={ this.submitPoll } color="info">Submit</Button>
                 </ModalFooter>
+              </Modal>
+              <Modal isOpen={this.state.voteModal} toggle={this.toggleVote} className="modal-dialog modal-dialog-centered">
+                <ModalHeader toggle={this.toggleVote}>Vote on Poll Item</ModalHeader>
+                <Form>
+                  <ModalBody>
+                    <FormGroup>
+                      <Label>Poll Items</Label>
+                      <Input name="vote" placeholder="e.g. Visit the capital" />
+                    </FormGroup>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="info">Vote</Button>{' '}
+                    <Button color="secondary" onClick={this.toggleVote}>Cancel</Button>
+                  </ModalFooter>
+                </Form>
               </Modal>
             </Row>
             <Row className="d-flex align-items-center justify-content-between">
