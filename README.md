@@ -8,7 +8,7 @@ A full stack JavaScript application for millennials who want to crowdsource/orga
 ![view-event-details](https://user-images.githubusercontent.com/38697885/48157767-618da280-e285-11e8-8f3c-0e8d8edf7879.gif)
 
 ### Edit the information from the detail window.
-![edit-event](https://user-images.githubusercontent.com/38697885/48157402-5a19c980-e284-11e8-9bbd-14fc6ac31aa1.gif)
+![edit-event](https://user-images.githubusercontent.com/38697885/48803008-9a863800-ecc5-11e8-8345-86052010516a.gif)
 
 ### "Like" a lodging option to specify which option you prefer.
 ![like-lodging-option](https://user-images.githubusercontent.com/38697885/48157526-b5e45280-e284-11e8-8f89-f5fa958f59a2.gif)
