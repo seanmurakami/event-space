@@ -534,7 +534,17 @@ export default class Details extends React.Component {
                   <ModalBody>
                     <FormGroup>
                       <Label>Poll Items</Label>
-                      <Input name="vote"/>
+                      {
+                        data.map((item, index) => {
+                          return (
+                            <FormGroup key={index}>
+                              <Label check>
+                                <Input type="checkbox">{item}</Input>
+                              </Label>
+                            </FormGroup>
+                          )
+                        })
+                      }
                     </FormGroup>
                   </ModalBody>
                   <ModalFooter>
