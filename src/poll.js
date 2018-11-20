@@ -1,6 +1,6 @@
 import React from 'react'
 import Chart from 'chart.js'
-import { Col } from 'reactstrap'
+import { Col, Button } from 'reactstrap'
 
 export default class Poll extends React.Component {
   constructor(props) {
@@ -49,6 +49,7 @@ export default class Poll extends React.Component {
       <Col sm={6}>
         <canvas ref={this.ref} width={100} height={100}>Hello
         </canvas>
+        <Button color="info">Vote</Button>
       </Col>
     )
   }
