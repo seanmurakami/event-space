@@ -38,7 +38,8 @@ export default class Details extends React.Component {
       voteModal: false,
       startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
       endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY'),
-      pollItems: []
+      pollItems: [],
+      votes: []
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -67,6 +68,7 @@ export default class Details extends React.Component {
     this.submitPoll = this.submitPoll.bind(this)
     this.toggleVote = this.toggleVote.bind(this)
     this.updateVote = this.updateVote.bind(this)
+    this.submitVotes = this.submitVotes.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -227,27 +229,32 @@ export default class Details extends React.Component {
     e.preventDefault()
     const formData = new FormData(e.target)
     const pollItem = formData.get('poll')
-    this.setState({pollItems: [...this.state.pollItems, pollItem]})
+    const data = {
+      item: pollItem,
+      votes: 0
+    }
+    this.setState({pollItems: [...this.state.pollItems, data]})
     e.target.reset()
   }
   submitPoll() {
-    const votes = []
-    this.state.pollItems.forEach(() => votes.push(0))
     const content = {
-      data: this.state.pollItems,
-      votes
+      data: this.state.pollItems
     }
     this.props.poll(content, this.props.selectedEvent.id)
     this.togglePoll()
   }
   updateVote(e) {
+    const votes = [...this.props.selectedEvent.data]
+    votes[e.target.id].votes++
+    this.setState({votes})
+  }
+  submitVotes() {
     const { id } = this.props.selectedEvent
-    const newVotes = [...this.props.selectedEvent.votes]
-    newVotes[e.target.id]++
-    const votes = {
-      votes: newVotes
-    }
-    this.props.patchEvent(id, votes)
+    const updatePollItems = [...this.state.votes]
+    const votes = {data: updatePollItems}
+    const newVotes = Object.assign({}, votes)
+    this.props.patchEvent(id, newVotes)
+    this.toggleVote()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
@@ -315,7 +322,7 @@ export default class Details extends React.Component {
                   <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
                   <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
                     <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
-                    <Form onSubmit={this.updateEventDates}>
+                    <Form onSubmit={() => this.updateEventDates()}>
                       <ModalBody>
                         <FormGroup className="text-center">
                           <Row>
@@ -502,8 +509,7 @@ export default class Details extends React.Component {
                 data.length !== 0 &&
                 <Poll
                   data={ data }
-                  toggleVote={ this.toggleVote }
-                  votes={this.props.selectedEvent.votes}/>
+                  toggleVote={ this.toggleVote }/>
               }
             </Row>
             <Row className="d-flex justify-content-center mx-2">
@@ -526,10 +532,10 @@ export default class Details extends React.Component {
                       { this.state.pollItems.length !== 0 &&
                       <Table style={ styles.width } className="border mx-auto">
                         <tbody>
-                          { this.state.pollItems.map((item, index) => {
+                          { this.state.pollItems.map((pollitem, index) => {
                             return (
                               <tr key={index}>
-                                <td>{ item }</td>
+                                <td>{ pollitem.item }</td>
                               </tr>
                             )
                           })}
@@ -545,15 +551,15 @@ export default class Details extends React.Component {
               </Modal>
               <Modal isOpen={this.state.voteModal} toggle={this.toggleVote} className="modal-dialog modal-dialog-centered">
                 <ModalHeader toggle={this.toggleVote}>Vote on Poll Item</ModalHeader>
-                <Form onSubmit={this.toggleVote}>
+                <Form onSubmit={this.submitVotes}>
                   <ModalBody>
                     <FormGroup>
                       {
-                        data.map((item, index) => {
+                        data.map((pollItem, index) => {
                           return (
                             <FormGroup check key={index} className="my-2">
                               <Label check>
-                                <Input id={index} onClick={this.updateVote} type="checkbox"/>{item}
+                                <Input id={index} onClick={this.updateVote} type="checkbox"/>{pollItem.item}
                               </Label>
                             </FormGroup>
                           )

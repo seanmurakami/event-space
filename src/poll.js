@@ -11,15 +11,18 @@ export default class Poll extends React.Component {
   componentDidMount() {
     this.updateCanvas()
   }
+  componentDidUpdate() {
+    this.updateCanvas()
+  }
   updateCanvas() {
     const ctx = this.ref.current.getContext('2d')
     this.chart = new Chart(ctx, {
       type: 'horizontalBar',
       data: {
-        labels: this.props.data,
+        labels: this.props.data.map(item => item.item),
         datasets: [{
           label: '# of Votes',
-          data: this.props.votes,
+          data: this.props.data.map(item => item.votes),
           backgroundColor: [
             '#17a2b8',
             'rgba(54, 162, 235, 1)',
@@ -47,7 +50,7 @@ export default class Poll extends React.Component {
   render() {
     return (
       <Col sm={6}>
-        <canvas ref={this.ref} width={100} height={100}>Hello
+        <canvas ref={this.ref} width={100} height={60}>Hello
         </canvas>
         <Button color="info" onClick={this.props.toggleVote}>Vote</Button>
       </Col>
