@@ -503,14 +503,17 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
             </Row>
-            <Row className="d-flex justify-content-center mb-2">
-              {
-                data.length !== 0 &&
-                <Poll
-                  data={ data }
-                  toggleVote={ this.toggleVote }/>
-              }
-            </Row>
+            <CardBody>
+              <CardText tag="h4"><i className="fas fa-poll-h mr-2 mb-2"></i>Poll</CardText>
+              <Row className="d-flex justify-content-center mb-2">
+                {
+                  data.length !== 0 &&
+                  <Poll
+                    data={ data }
+                    toggleVote={ this.toggleVote }/>
+                }
+              </Row>
+            </CardBody>
             <Row className="d-flex justify-content-center mx-2">
               {pollButton}
               <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>
