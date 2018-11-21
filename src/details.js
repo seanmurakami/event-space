@@ -35,9 +35,11 @@ export default class Details extends React.Component {
       editDescription: false,
       editDates: false,
       pollModal: false,
+      voteModal: false,
       startDate: moment(this.props.selectedEvent.startDate, 'MM-DD-YYYY'),
       endDate: moment(this.props.selectedEvent.endDate, 'MM-DD-YYYY'),
-      pollItems: []
+      pollItems: [],
+      votes: []
     }
     this.removeEvent = this.removeEvent.bind(this)
     this.addLike = this.addLike.bind(this)
@@ -64,6 +66,9 @@ export default class Details extends React.Component {
     this.togglePoll = this.togglePoll.bind(this)
     this.updatePollItems = this.updatePollItems.bind(this)
     this.submitPoll = this.submitPoll.bind(this)
+    this.toggleVote = this.toggleVote.bind(this)
+    this.updateVote = this.updateVote.bind(this)
+    this.submitVotes = this.submitVotes.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -91,6 +96,9 @@ export default class Details extends React.Component {
   }
   togglePoll() {
     this.setState({pollModal: !this.state.pollModal})
+  }
+  toggleVote() {
+    this.setState({voteModal: !this.state.voteModal})
   }
   removeEvent(e) {
     const id = e.target.id
@@ -205,8 +213,10 @@ export default class Details extends React.Component {
     const { startDate, endDate } = this.state
     const userInfo = Object.assign({}, {startDate}, {endDate})
     const updateDates = Object.values(userInfo).map(moment => moment.format('MM/DD/YYYY'))
-    this.props.patchEvent(id, {startDate: updateDates[0]})
-    this.props.patchEvent(id, {endDate: updateDates[1]})
+    this.props.patchEvent(id, {
+      startDate: updateDates[0],
+      endDate: updateDates[1]
+    })
     this.toggleEventDates()
   }
   changeStart(date) {
@@ -219,7 +229,11 @@ export default class Details extends React.Component {
     e.preventDefault()
     const formData = new FormData(e.target)
     const pollItem = formData.get('poll')
-    this.setState({pollItems: [...this.state.pollItems, pollItem]})
+    const data = {
+      item: pollItem,
+      votes: 0
+    }
+    this.setState({pollItems: [...this.state.pollItems, data]})
     e.target.reset()
   }
   submitPoll() {
@@ -228,6 +242,19 @@ export default class Details extends React.Component {
     }
     this.props.poll(content, this.props.selectedEvent.id)
     this.togglePoll()
+  }
+  updateVote(e) {
+    const votes = [...this.props.selectedEvent.data]
+    votes[e.target.id].votes++
+    this.setState({votes})
+  }
+  submitVotes() {
+    const { id } = this.props.selectedEvent
+    const updatePollItems = [...this.state.votes]
+    const votes = {data: updatePollItems}
+    const newVotes = Object.assign({}, votes)
+    this.props.patchEvent(id, newVotes)
+    this.toggleVote()
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
@@ -295,7 +322,7 @@ export default class Details extends React.Component {
                   <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
                   <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
                     <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
-                    <Form onSubmit={this.updateEventDates}>
+                    <Form onSubmit={() => this.updateEventDates()}>
                       <ModalBody>
                         <FormGroup className="text-center">
                           <Row>
@@ -480,7 +507,9 @@ export default class Details extends React.Component {
             <Row className="d-flex justify-content-center mb-2">
               {
                 data.length !== 0 &&
-                <Poll data={ data }/>
+                <Poll
+                  data={ data }
+                  toggleVote={ this.toggleVote }/>
               }
             </Row>
             <Row className="d-flex justify-content-center mx-2">
@@ -503,10 +532,10 @@ export default class Details extends React.Component {
                       { this.state.pollItems.length !== 0 &&
                       <Table style={ styles.width } className="border mx-auto">
                         <tbody>
-                          { this.state.pollItems.map((item, index) => {
+                          { this.state.pollItems.map((pollitem, index) => {
                             return (
                               <tr key={index}>
-                                <td>{ item }</td>
+                                <td>{ pollitem.item }</td>
                               </tr>
                             )
                           })}
@@ -519,6 +548,30 @@ export default class Details extends React.Component {
                 <ModalFooter>
                   <Button onClick={ this.submitPoll } color="info">Submit</Button>
                 </ModalFooter>
+              </Modal>
+              <Modal isOpen={this.state.voteModal} toggle={this.toggleVote} className="modal-dialog modal-dialog-centered">
+                <ModalHeader toggle={this.toggleVote}>Vote on Poll Item</ModalHeader>
+                <Form onSubmit={this.submitVotes}>
+                  <ModalBody>
+                    <FormGroup>
+                      {
+                        data.map((pollItem, index) => {
+                          return (
+                            <FormGroup check key={index} className="my-2">
+                              <Label check>
+                                <Input id={index} onClick={this.updateVote} type="checkbox"/>{pollItem.item}
+                              </Label>
+                            </FormGroup>
+                          )
+                        })
+                      }
+                    </FormGroup>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="info">Vote</Button>{' '}
+                    <Button color="secondary" onClick={this.toggleVote}>Cancel</Button>
+                  </ModalFooter>
+                </Form>
               </Modal>
             </Row>
             <Row className="d-flex align-items-center justify-content-between">
