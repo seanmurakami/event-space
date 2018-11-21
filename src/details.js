@@ -207,8 +207,7 @@ export default class Details extends React.Component {
     this.props.patchEvent(id, data)
     this.toggleEventDescription()
   }
-  updateEventDates(e) {
-    e.preventDefault()
+  updateEventDates() {
     const { id } = this.props.selectedEvent
     const { startDate, endDate } = this.state
     const userInfo = Object.assign({}, {startDate}, {endDate})
