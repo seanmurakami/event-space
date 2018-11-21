@@ -66,6 +66,7 @@ export default class Details extends React.Component {
     this.updatePollItems = this.updatePollItems.bind(this)
     this.submitPoll = this.submitPoll.bind(this)
     this.toggleVote = this.toggleVote.bind(this)
+    this.updateVote = this.updateVote.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -210,8 +211,10 @@ export default class Details extends React.Component {
     const { startDate, endDate } = this.state
     const userInfo = Object.assign({}, {startDate}, {endDate})
     const updateDates = Object.values(userInfo).map(moment => moment.format('MM/DD/YYYY'))
-    this.props.patchEvent(id, {startDate: updateDates[0]})
-    this.props.patchEvent(id, {endDate: updateDates[1]})
+    this.props.patchEvent(id, {
+      startDate: updateDates[0],
+      endDate: updateDates[1]
+    })
     this.toggleEventDates()
   }
   changeStart(date) {
@@ -236,6 +239,15 @@ export default class Details extends React.Component {
     }
     this.props.poll(content, this.props.selectedEvent.id)
     this.togglePoll()
+  }
+  updateVote(e) {
+    const { id } = this.props.selectedEvent
+    const newVotes = [...this.props.selectedEvent.votes]
+    newVotes[e.target.id]++
+    const votes = {
+      votes: newVotes
+    }
+    this.props.patchEvent(id, votes)
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
@@ -533,7 +545,7 @@ export default class Details extends React.Component {
               </Modal>
               <Modal isOpen={this.state.voteModal} toggle={this.toggleVote} className="modal-dialog modal-dialog-centered">
                 <ModalHeader toggle={this.toggleVote}>Vote on Poll Item</ModalHeader>
-                <Form>
+                <Form onSubmit={this.toggleVote}>
                   <ModalBody>
                     <FormGroup>
                       {
@@ -541,7 +553,7 @@ export default class Details extends React.Component {
                           return (
                             <FormGroup check key={index} className="my-2">
                               <Label check>
-                                <Input type="checkbox"/>{item}
+                                <Input id={index} onClick={this.updateVote} type="checkbox"/>{item}
                               </Label>
                             </FormGroup>
                           )
