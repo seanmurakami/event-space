@@ -1,6 +1,12 @@
 import React from 'react'
 import Chart from 'chart.js'
-import { Col, Button } from 'reactstrap'
+import { Col, Button, Row } from 'reactstrap'
+
+const styles = {
+  position: {
+    right: '0'
+  }
+}
 
 export default class Poll extends React.Component {
   constructor(props) {
@@ -52,7 +58,10 @@ export default class Poll extends React.Component {
       <Col sm={6}>
         <canvas ref={this.ref} width={100} height={60}>Hello
         </canvas>
-        <Button color="info" onClick={this.props.toggleVote}>Vote</Button>
+        <Row className="d-flex align-items-center justify-content-center">
+          <Button color="info" onClick={this.props.toggleVote}>Vote</Button>
+          <i onClick={ this.props.removePoll } style={ styles.position } className="fas fa-minus-circle text-secondary position-absolute"></i>
+        </Row>
       </Col>
     )
   }
