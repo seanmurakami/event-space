@@ -13,6 +13,13 @@ A full stack JavaScript application for millennials who want to crowdsource/orga
 ### "Like" a lodging option to specify which option you prefer.
 ![like-lodging-option](https://user-images.githubusercontent.com/38697885/48157526-b5e45280-e284-11e8-8f89-f5fa958f59a2.gif)
 
+
+### Create a poll that users can vote on.
+![create-poll](https://user-images.githubusercontent.com/38697885/48875104-c2e86200-edab-11e8-9e4f-9b92b3671f53.gif)
+
+### Remove a poll.
+![remove-poll](https://user-images.githubusercontent.com/38697885/48875101-bd8b1780-edab-11e8-8509-be394c7af802.gif)
+
 ### Remove an event if you no longer need it.
 ![delete-event](https://user-images.githubusercontent.com/38697885/48157642-0c519100-e285-11e8-8454-3799ba2686e0.gif)
 
