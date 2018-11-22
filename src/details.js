@@ -69,6 +69,7 @@ export default class Details extends React.Component {
     this.toggleVote = this.toggleVote.bind(this)
     this.updateVote = this.updateVote.bind(this)
     this.submitVotes = this.submitVotes.bind(this)
+    this.removePoll = this.removePoll.bind(this)
   }
   toggle() {
     this.setState({modal: !this.state.modal})
@@ -254,6 +255,10 @@ export default class Details extends React.Component {
     const newVotes = Object.assign({}, votes)
     this.props.patchEvent(id, newVotes)
     this.toggleVote()
+  }
+  removePoll() {
+    const { id } = this.props.selectedEvent
+    this.props.patchEvent(id, {data: []})
   }
   render() {
     const { eventName, eventLocation, eventDescription, startDate, endDate, lodges, activities, food, id, data } = this.props.selectedEvent
@@ -503,17 +508,20 @@ export default class Details extends React.Component {
                 </Table>
               </Col>
             </Row>
-            <CardBody>
-              <CardText tag="h4"><i className="fas fa-poll-h mr-2 mb-2"></i>Poll</CardText>
-              <Row className="d-flex justify-content-center mb-2">
-                {
-                  data.length !== 0 &&
-                  <Poll
-                    data={ data }
-                    toggleVote={ this.toggleVote }/>
-                }
-              </Row>
-            </CardBody>
+            {
+              data.length !== 0 &&
+                  <Fragment>
+                    <CardBody>
+                      <CardText tag="h4"><i className="fas fa-poll-h mr-2 mb-2"></i>Poll</CardText>
+                      <Row className="d-flex justify-content-center mb-2">
+                        <Poll
+                          data={ data }
+                          toggleVote={ this.toggleVote }
+                          removePoll={ this.removePoll } />
+                      </Row>
+                    </CardBody>
+                  </Fragment>
+            }
             <Row className="d-flex justify-content-center mx-2">
               {pollButton}
               <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>

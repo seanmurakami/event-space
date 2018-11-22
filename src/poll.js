@@ -60,7 +60,7 @@ export default class Poll extends React.Component {
         </canvas>
         <Row className="d-flex align-items-center justify-content-center">
           <Button color="info" onClick={this.props.toggleVote}>Vote</Button>
-          <i style={ styles.position } className="fas fa-minus-circle text-secondary position-absolute"></i>
+          <i onClick={ this.props.removePoll } style={ styles.position } className="fas fa-minus-circle text-secondary position-absolute"></i>
         </Row>
       </Col>
     )
