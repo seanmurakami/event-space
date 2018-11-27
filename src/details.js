@@ -3,10 +3,10 @@ import DeleteEvent from './modal-delete'
 import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Poll from './poll'
 import moment from 'moment'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import LocationModal from './location-modal'
 import DescriptionModal from './description-modal'
+import DatesModal from './dates-modal'
 
 const styles = {
   width: {
@@ -308,37 +308,15 @@ export default class Details extends React.Component {
                     eventDescription={ eventDescription }
                   />
                   <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
-                  <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
-                    <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
-                    <Form onSubmit={() => this.updateEventDates()}>
-                      <ModalBody>
-                        <FormGroup className="text-center">
-                          <Row>
-                            <Col>
-                              <Label>Start Date</Label>
-                              <DatePicker
-                                className="text-center"
-                                selected={this.state.startDate}
-                                onChange={this.changeStart}
-                              />
-                            </Col>
-                            <Col>
-                              <Label>End Date</Label>
-                              <DatePicker
-                                className="text-center"
-                                selected={this.state.endDate}
-                                onChange={this.changeEnd}
-                              />
-                            </Col>
-                          </Row>
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventDates}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <DatesModal
+                    editDates={ this.state.editDates }
+                    toggleEventDates={ this.toggleEventDates }
+                    updateEventDates={ this.updateEventDates }
+                    startDate={ this.state.startDate }
+                    changeStart={ this.changeStart }
+                    endDate={ this.state.endDate }
+                    changeEnd={ this.changeEnd }
+                  />
                 </DropdownMenu>
               </Dropdown>
             </Row>
