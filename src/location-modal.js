@@ -2,10 +2,6 @@ import React from 'react'
 import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input } from 'reactstrap'
 
 export default class LocationModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
   render() {
     return (
       <Modal isOpen={this.props.editLocation} toggle={this.props.toggleEventLocation}>
