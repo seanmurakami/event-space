@@ -6,6 +6,7 @@ import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import LocationModal from './location-modal'
+import DescriptionModal from './description-modal'
 
 const styles = {
   width: {
@@ -300,21 +301,12 @@ export default class Details extends React.Component {
                     eventLocation={ eventLocation }
                   />
                   <DropdownItem onClick={this.toggleEventDescription}>Edit Description</DropdownItem>
-                  <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
-                    <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
-                    <Form onSubmit={ this.updateEventDescription }>
-                      <ModalBody>
-                        <FormGroup>
-                          <Label>Event Description</Label>
-                          <textarea name="event-description" rows="4" defaultValue={eventDescription} className="form-control" />
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventDescription}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <DescriptionModal
+                    editDescription={ this.state.editDescription }
+                    toggleEventDescription={ this.toggleEventDescription }
+                    updateEventDescription={ this.updateEventDescription }
+                    eventDescription={ eventDescription }
+                  />
                   <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
                   <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
                     <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
