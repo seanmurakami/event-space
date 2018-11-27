@@ -5,6 +5,7 @@ import Poll from './poll'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import LocationModal from './location-modal'
 
 const styles = {
   width: {
@@ -291,22 +292,13 @@ export default class Details extends React.Component {
                       </ModalFooter>
                     </Form>
                   </Modal>
-                  <DropdownItem onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
-                  <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
-                    <ModalHeader toggle={this.toggleEventLocation}>Edit Event Location</ModalHeader>
-                    <Form onSubmit={ this.updateEventLocation }>
-                      <ModalBody>
-                        <FormGroup>
-                          <Label>Event Location</Label>
-                          <Input name="event-location" defaultValue={eventLocation} />
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventLocation}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <DropdownItem id="location" onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
+                  <LocationModal
+                    editLocation={ this.state.editLocation }
+                    toggleEventLocation={ this.toggleEventLocation }
+                    updateEventLocation={ this.updateEventLocation }
+                    eventLocation={ eventLocation }
+                  />
                   <DropdownItem onClick={this.toggleEventDescription}>Edit Description</DropdownItem>
                   <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
                     <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
