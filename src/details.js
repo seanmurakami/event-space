@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Button, Card, CardHeader, CardText, CardBody, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Poll from './poll'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -9,6 +9,7 @@ import DescriptionModal from './description-modal'
 import DatesModal from './dates-modal'
 import NameModal from './name-modal'
 import AddLodge from './add-lodging-modal'
+import RenderLodges from './render-lodges'
 
 const styles = {
   width: {
@@ -335,34 +336,11 @@ export default class Details extends React.Component {
               />
             </CardText>
             <Row className="d-flex justify-content-center mb-2">
-              {
-                lodges.map((lodge, index) => {
-                  const likeStatus = lodge.like === 0 ? 'text-secondary' : 'text-info'
-                  return (
-                    <Col key={index} className="mb-2" sm={6}>
-                      <Card>
-                        <CardHeader className="d-flex align-items-center justify-content-between">
-                          <Badge color="secondary">{ lodge.like }</Badge>
-                          { lodge.locationAddress }
-                          <i id={lodge.locationAddress}
-                            className={`fas fa-thumbs-up ${likeStatus}`}
-                            onClick={ this.addLike }>
-                          </i>
-                        </CardHeader>
-                        <CardBody>
-                          <Row className="d-flex justify-content-around">
-                            <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}</CardText>
-                            <CardText className="mb-0">{`Type: ${lodge.locationType}`}</CardText>
-                          </Row>
-                        </CardBody>
-                        <CardFooter>
-                          <i id={ lodge.lookup } onClick={ this.removeLodge } className="fas fa-minus-circle text-secondary float-right"></i>
-                        </CardFooter>
-                      </Card>
-                    </Col>
-                  )
-                })
-              }
+              <RenderLodges
+                lodges={ lodges }
+                addLike={ this.addLike }
+                removeLodge={ this.removeLodge }
+              />
             </Row>
             <Row>
               <Col sm={6}>
