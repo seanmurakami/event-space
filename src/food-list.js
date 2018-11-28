@@ -1,14 +1,20 @@
 import React from 'react'
 import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, Label, Col, CardText, Input, Table } from 'reactstrap'
 
+const styles = {
+  icon: {
+    right: '2rem'
+  }
+}
+
 export default class FoodList extends React.Component {
   render() {
     return (
       <Col sm={6}>
-        <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
-        <Modal isOpen={this.state.foodModal} toggle={this.toggleFood} className="modal-dialog modal-dialog-centered">
-          <ModalHeader toggle={this.toggleFood}>Add a New Place To Eat/Dine</ModalHeader>
-          <Form autoComplete="off" onSubmit={ this.addFood }>
+        <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.props.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
+        <Modal isOpen={ this.props.foodModal } toggle={ this.props.toggleFood } className="modal-dialog modal-dialog-centered">
+          <ModalHeader toggle={ this.props.toggleFood }>Add a New Place To Eat/Dine</ModalHeader>
+          <Form autoComplete="off" onSubmit={ this.props.addFood }>
             <ModalBody>
               <FormGroup>
                 <Label>Food/Restaurant</Label>
@@ -17,7 +23,7 @@ export default class FoodList extends React.Component {
             </ModalBody>
             <ModalFooter>
               <Button color="info">Add</Button>{' '}
-              <Button color="secondary" onClick={this.toggleFood}>Cancel</Button>
+              <Button color="secondary" onClick={ this.props.toggleFood }>Cancel</Button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -31,8 +37,8 @@ export default class FoodList extends React.Component {
                       { item.value }
                       <i
                         id={ item.lookup }
-                        style={ this.prop.styles.icon }
-                        onClick={ this.removeListFood }
+                        style={ styles.icon }
+                        onClick={ this.props.removeListFood }
                         className="fas fa-times text-secondary position-absolute"></i>
                     </td>
                   </tr>

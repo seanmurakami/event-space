@@ -10,6 +10,7 @@ import DatesModal from './dates-modal'
 import NameModal from './name-modal'
 import AddLodge from './add-lodging-modal'
 import RenderLodges from './render-lodges'
+import FoodList from './food-list'
 
 const styles = {
   width: {
@@ -343,44 +344,13 @@ export default class Details extends React.Component {
               />
             </Row>
             <Row>
-              <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
-                <Modal isOpen={this.state.foodModal} toggle={this.toggleFood} className="modal-dialog modal-dialog-centered">
-                  <ModalHeader toggle={this.toggleFood}>Add a New Place To Eat/Dine</ModalHeader>
-                  <Form autoComplete="off" onSubmit={ this.addFood }>
-                    <ModalBody>
-                      <FormGroup>
-                        <Label>Food/Restaurant</Label>
-                        <Input name="food" placeholder="e.g. Shake Shack" />
-                      </FormGroup>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="info">Add</Button>{' '}
-                      <Button color="secondary" onClick={this.toggleFood}>Cancel</Button>
-                    </ModalFooter>
-                  </Form>
-                </Modal>
-                <Table className="border">
-                  <tbody>
-                    {
-                      food.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="d-flex align-items-center justify-content-center">
-                              { item.value }
-                              <i
-                                id={ item.lookup }
-                                style={ styles.icon }
-                                onClick={ this.removeListFood }
-                                className="fas fa-times text-secondary position-absolute"></i>
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </Table>
-              </Col>
+              <FoodList
+                toggleFood={ this.toggleFood }
+                foodModal={ this.state.foodModal }
+                addFood={ this.addFood }
+                food={ food }
+                removeListFood={ this.removeListFood }
+              />
               <Col sm={6}>
                 <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i onClick={ this.toggleActivity } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
                 <Modal isOpen={this.state.activityModal} toggle={this.toggleActivity} className="modal-dialog modal-dialog-centered">
