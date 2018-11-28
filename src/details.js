@@ -11,6 +11,7 @@ import NameModal from './name-modal'
 import AddLodge from './add-lodging-modal'
 import RenderLodges from './render-lodges'
 import FoodList from './food-list'
+import ActivitiesList from './activities-list'
 
 const styles = {
   width: {
@@ -19,9 +20,6 @@ const styles = {
   },
   description: {
     maxWidth: '38rem'
-  },
-  icon: {
-    right: '2rem'
   },
   dropdown: {
     right: '1rem'
@@ -351,44 +349,13 @@ export default class Details extends React.Component {
                 food={ food }
                 removeListFood={ this.removeListFood }
               />
-              <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i onClick={ this.toggleActivity } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
-                <Modal isOpen={this.state.activityModal} toggle={this.toggleActivity} className="modal-dialog modal-dialog-centered">
-                  <ModalHeader toggle={this.toggleActivity}>Add a New Activity</ModalHeader>
-                  <Form autoComplete="off" onSubmit={ this.addActivity }>
-                    <ModalBody>
-                      <FormGroup>
-                        <Label>Activity</Label>
-                        <Input name="activity" placeholder="e.g. Visit the capital" />
-                      </FormGroup>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="info">Add</Button>{' '}
-                      <Button color="secondary" onClick={this.toggleActivity}>Cancel</Button>
-                    </ModalFooter>
-                  </Form>
-                </Modal>
-                <Table className="border">
-                  <tbody>
-                    {
-                      activities.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="d-flex align-items-center justify-content-center">
-                              { item.value }
-                              <i
-                                id={ item.lookup }
-                                style={ styles.icon }
-                                onClick={ this.removeListActivity }
-                                className="fas fa-times text-secondary position-absolute"></i>
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </Table>
-              </Col>
+              <ActivitiesList
+                toggleActivity={ this.toggleActivity }
+                activityModal={ this.state.activityModal }
+                addActivity={ this.addActivity }
+                activities={ activities }
+                removeListActivity={ this.removeListActivity }
+              />
             </Row>
             {
               data.length !== 0 &&
