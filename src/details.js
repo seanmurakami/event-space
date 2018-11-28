@@ -4,16 +4,16 @@ import { Button, Card, CardHeader, CardText, CardBody, Row, Col, Dropdown, Dropd
 import Poll from './poll'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
-import LocationModal from './location-modal'
-import DescriptionModal from './description-modal'
-import DatesModal from './dates-modal'
-import NameModal from './name-modal'
-import AddLodge from './add-lodging-modal'
+import LocationModal from './details-modal/location-modal'
+import DescriptionModal from './details-modal/description-modal'
+import DatesModal from './details-modal/dates-modal'
+import NameModal from './details-modal/name-modal'
+import AddLodge from './details-modal/add-lodging-modal'
 import RenderLodges from './render-lodges'
-import FoodList from './food-list'
-import ActivitiesList from './activities-list'
-import PollModal from './poll-modal'
-import VoteModal from './vote-modal'
+import FoodList from './details-modal/food-list'
+import ActivitiesList from './details-modal/activities-list'
+import PollModal from './details-modal/poll-modal'
+import VoteModal from './details-modal/vote-modal'
 
 const styles = {
   width: {
@@ -281,7 +281,7 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem onClick={this.toggleEventName}>Edit Title</DropdownItem>
+                  <DropdownItem id="editName" onClick={this.toggleEventName}>Edit Title</DropdownItem>
                   <NameModal
                     editName={ this.state.editName }
                     toggleEventName={ this.toggleEventName }
