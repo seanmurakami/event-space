@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, La
 export default class NameModal extends React.Component {
   render() {
     return (
-      <Modal isOpen={ this.props.state.editName } toggle={ this.props.toggleEventName }>
+      <Modal isOpen={ this.props.editName } toggle={ this.props.toggleEventName }>
         <ModalHeader toggle={ this.props.toggleEventName }>Edit Event Name</ModalHeader>
         <Form onSubmit={ this.props.updateEventName }>
           <ModalBody>

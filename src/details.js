@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import LocationModal from './location-modal'
 import DescriptionModal from './description-modal'
 import DatesModal from './dates-modal'
+import NameModal from './name-modal'
 
 const styles = {
   width: {
@@ -278,21 +279,12 @@ export default class Details extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={this.toggleEventName}>Edit Title</DropdownItem>
-                  <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
-                    <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
-                    <Form onSubmit={ this.updateEventName }>
-                      <ModalBody>
-                        <FormGroup>
-                          <Label>Event Name</Label>
-                          <Input name="event-name" defaultValue={eventName} />
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventName}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <NameModal
+                    editName={ this.state.editName }
+                    toggleEventName={ this.toggleEventName }
+                    updateEventName={ this.updateEventName }
+                    eventName={ eventName }
+                  />
                   <DropdownItem id="location" onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
                   <LocationModal
                     editLocation={ this.state.editLocation }
