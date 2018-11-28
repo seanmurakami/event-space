@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Poll from './poll'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -8,6 +8,7 @@ import LocationModal from './location-modal'
 import DescriptionModal from './description-modal'
 import DatesModal from './dates-modal'
 import NameModal from './name-modal'
+import AddLodging from './add-lodging-modal'
 
 const styles = {
   width: {
@@ -327,32 +328,11 @@ export default class Details extends React.Component {
               </Col>
             </Row>
             <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i onClick={ this.toggle } className="far fa-plus-square fa-xs text-secondary ml-2"></i>
-              <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog modal-dialog-centered">
-                <ModalHeader toggle={this.toggle}>Add a new lodging option</ModalHeader>
-                <Form autoComplete="off" onSubmit={ this.addLodge }>
-                  <ModalBody>
-                    <FormGroup>
-                      <Label>Location Type</Label>
-                      <Input name="type" placeholder="e.g. AirBnb, Hotel, etc." />
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>Address</Label>
-                      <Input name="address" placeholder="e.g. 123 Address Drive" />
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>Cost</Label>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-                        <Input name="cost" placeholder="e.g. $489" />
-                      </InputGroup>
-                    </FormGroup>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="info">Add</Button>{' '}
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                  </ModalFooter>
-                </Form>
-              </Modal>
+              <AddLodging
+                modal={ this.state.modal }
+                toggle={ this.toggle }
+                addLodge={ this.addLodge }
+              />
             </CardText>
             <Row className="d-flex justify-content-center mb-2">
               {
