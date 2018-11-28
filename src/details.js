@@ -1,10 +1,19 @@
 import React, { Fragment } from 'react'
 import DeleteEvent from './modal-delete'
-import { Badge, Button, Card, CardHeader, CardText, CardBody, CardFooter, Row, Col, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Button, Card, CardHeader, CardText, CardBody, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Poll from './poll'
 import moment from 'moment'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import LocationModal from './details-modal/location-modal'
+import DescriptionModal from './details-modal/description-modal'
+import DatesModal from './details-modal/dates-modal'
+import NameModal from './details-modal/name-modal'
+import AddLodge from './details-modal/add-lodging-modal'
+import RenderLodges from './render-lodges'
+import FoodList from './details-modal/food-list'
+import ActivitiesList from './details-modal/activities-list'
+import PollModal from './details-modal/poll-modal'
+import VoteModal from './details-modal/vote-modal'
 
 const styles = {
   width: {
@@ -13,9 +22,6 @@ const styles = {
   },
   description: {
     maxWidth: '38rem'
-  },
-  icon: {
-    right: '2rem'
   },
   dropdown: {
     right: '1rem'
@@ -275,86 +281,37 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem onClick={this.toggleEventName}>Edit Title</DropdownItem>
-                  <Modal isOpen={this.state.editName} toggle={this.toggleEventName}>
-                    <ModalHeader toggle={this.toggleEventName}>Edit Event Name</ModalHeader>
-                    <Form onSubmit={ this.updateEventName }>
-                      <ModalBody>
-                        <FormGroup>
-                          <Label>Event Name</Label>
-                          <Input name="event-name" defaultValue={eventName} />
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventName}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
-                  <DropdownItem onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
-                  <Modal isOpen={this.state.editLocation} toggle={this.toggleEventLocation}>
-                    <ModalHeader toggle={this.toggleEventLocation}>Edit Event Location</ModalHeader>
-                    <Form onSubmit={ this.updateEventLocation }>
-                      <ModalBody>
-                        <FormGroup>
-                          <Label>Event Location</Label>
-                          <Input name="event-location" defaultValue={eventLocation} />
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventLocation}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <DropdownItem id="editName" onClick={this.toggleEventName}>Edit Title</DropdownItem>
+                  <NameModal
+                    editName={ this.state.editName }
+                    toggleEventName={ this.toggleEventName }
+                    updateEventName={ this.updateEventName }
+                    eventName={ eventName }
+                  />
+                  <DropdownItem id="location" onClick={this.toggleEventLocation}>Edit Location</DropdownItem>
+                  <LocationModal
+                    editLocation={ this.state.editLocation }
+                    toggleEventLocation={ this.toggleEventLocation }
+                    updateEventLocation={ this.updateEventLocation }
+                    eventLocation={ eventLocation }
+                  />
                   <DropdownItem onClick={this.toggleEventDescription}>Edit Description</DropdownItem>
-                  <Modal isOpen={this.state.editDescription} toggle={this.toggleEventDescription}>
-                    <ModalHeader toggle={this.toggleEventDescription}>Edit Event Description</ModalHeader>
-                    <Form onSubmit={ this.updateEventDescription }>
-                      <ModalBody>
-                        <FormGroup>
-                          <Label>Event Description</Label>
-                          <textarea name="event-description" rows="4" defaultValue={eventDescription} className="form-control" />
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventDescription}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <DescriptionModal
+                    editDescription={ this.state.editDescription }
+                    toggleEventDescription={ this.toggleEventDescription }
+                    updateEventDescription={ this.updateEventDescription }
+                    eventDescription={ eventDescription }
+                  />
                   <DropdownItem onClick={this.toggleEventDates}>Edit Dates</DropdownItem>
-                  <Modal isOpen={this.state.editDates} toggle={this.toggleEventDates}>
-                    <ModalHeader toggle={this.toggleEventDates}>Edit Event Dates</ModalHeader>
-                    <Form onSubmit={() => this.updateEventDates()}>
-                      <ModalBody>
-                        <FormGroup className="text-center">
-                          <Row>
-                            <Col>
-                              <Label>Start Date</Label>
-                              <DatePicker
-                                className="text-center"
-                                selected={this.state.startDate}
-                                onChange={this.changeStart}
-                              />
-                            </Col>
-                            <Col>
-                              <Label>End Date</Label>
-                              <DatePicker
-                                className="text-center"
-                                selected={this.state.endDate}
-                                onChange={this.changeEnd}
-                              />
-                            </Col>
-                          </Row>
-                        </FormGroup>
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button color="info">Update</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEventDates}>Cancel</Button>
-                      </ModalFooter>
-                    </Form>
-                  </Modal>
+                  <DatesModal
+                    editDates={ this.state.editDates }
+                    toggleEventDates={ this.toggleEventDates }
+                    updateEventDates={ this.updateEventDates }
+                    startDate={ this.state.startDate }
+                    changeStart={ this.changeStart }
+                    endDate={ this.state.endDate }
+                    changeEnd={ this.changeEnd }
+                  />
                 </DropdownMenu>
               </Dropdown>
             </Row>
@@ -373,140 +330,34 @@ export default class Details extends React.Component {
               </Col>
             </Row>
             <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i onClick={ this.toggle } className="far fa-plus-square fa-xs text-secondary ml-2"></i>
-              <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog modal-dialog-centered">
-                <ModalHeader toggle={this.toggle}>Add a new lodging option</ModalHeader>
-                <Form autoComplete="off" onSubmit={ this.addLodge }>
-                  <ModalBody>
-                    <FormGroup>
-                      <Label>Location Type</Label>
-                      <Input name="type" placeholder="e.g. AirBnb, Hotel, etc." />
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>Address</Label>
-                      <Input name="address" placeholder="e.g. 123 Address Drive" />
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>Cost</Label>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-                        <Input name="cost" placeholder="e.g. $489" />
-                      </InputGroup>
-                    </FormGroup>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="info">Add</Button>{' '}
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                  </ModalFooter>
-                </Form>
-              </Modal>
+              <AddLodge
+                modal={ this.state.modal }
+                toggle={ this.toggle }
+                addLodge={ this.addLodge }
+              />
             </CardText>
             <Row className="d-flex justify-content-center mb-2">
-              {
-                lodges.map((lodge, index) => {
-                  const likeStatus = lodge.like === 0 ? 'text-secondary' : 'text-info'
-                  return (
-                    <Col key={index} className="mb-2" sm={6}>
-                      <Card>
-                        <CardHeader className="d-flex align-items-center justify-content-between">
-                          <Badge color="secondary">{ lodge.like }</Badge>
-                          { lodge.locationAddress }
-                          <i id={lodge.locationAddress}
-                            className={`fas fa-thumbs-up ${likeStatus}`}
-                            onClick={ this.addLike }>
-                          </i>
-                        </CardHeader>
-                        <CardBody>
-                          <Row className="d-flex justify-content-around">
-                            <CardText className="text-success mb-0">{`Cost: $${lodge.locationCost}`}</CardText>
-                            <CardText className="mb-0">{`Type: ${lodge.locationType}`}</CardText>
-                          </Row>
-                        </CardBody>
-                        <CardFooter>
-                          <i id={ lodge.lookup } onClick={ this.removeLodge } className="fas fa-minus-circle text-secondary float-right"></i>
-                        </CardFooter>
-                      </Card>
-                    </Col>
-                  )
-                })
-              }
+              <RenderLodges
+                lodges={ lodges }
+                addLike={ this.addLike }
+                removeLodge={ this.removeLodge }
+              />
             </Row>
             <Row>
-              <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-utensils mr-2 mb-2"></i>Food<i onClick={ this.toggleFood } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
-                <Modal isOpen={this.state.foodModal} toggle={this.toggleFood} className="modal-dialog modal-dialog-centered">
-                  <ModalHeader toggle={this.toggleFood}>Add a New Place To Eat/Dine</ModalHeader>
-                  <Form autoComplete="off" onSubmit={ this.addFood }>
-                    <ModalBody>
-                      <FormGroup>
-                        <Label>Food/Restaurant</Label>
-                        <Input name="food" placeholder="e.g. Shake Shack" />
-                      </FormGroup>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="info">Add</Button>{' '}
-                      <Button color="secondary" onClick={this.toggleFood}>Cancel</Button>
-                    </ModalFooter>
-                  </Form>
-                </Modal>
-                <Table className="border">
-                  <tbody>
-                    {
-                      food.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="d-flex align-items-center justify-content-center">
-                              { item.value }
-                              <i
-                                id={ item.lookup }
-                                style={ styles.icon }
-                                onClick={ this.removeListFood }
-                                className="fas fa-times text-secondary position-absolute"></i>
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </Table>
-              </Col>
-              <Col sm={6}>
-                <CardText tag="h4"><i className="fas fa-hiking mr-2 mb-2"></i>Activities<i onClick={ this.toggleActivity } className="far fa-plus-square fa-xs text-secondary ml-2"></i></CardText>
-                <Modal isOpen={this.state.activityModal} toggle={this.toggleActivity} className="modal-dialog modal-dialog-centered">
-                  <ModalHeader toggle={this.toggleActivity}>Add a New Activity</ModalHeader>
-                  <Form autoComplete="off" onSubmit={ this.addActivity }>
-                    <ModalBody>
-                      <FormGroup>
-                        <Label>Activity</Label>
-                        <Input name="activity" placeholder="e.g. Visit the capital" />
-                      </FormGroup>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="info">Add</Button>{' '}
-                      <Button color="secondary" onClick={this.toggleActivity}>Cancel</Button>
-                    </ModalFooter>
-                  </Form>
-                </Modal>
-                <Table className="border">
-                  <tbody>
-                    {
-                      activities.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="d-flex align-items-center justify-content-center">
-                              { item.value }
-                              <i
-                                id={ item.lookup }
-                                style={ styles.icon }
-                                onClick={ this.removeListActivity }
-                                className="fas fa-times text-secondary position-absolute"></i>
-                            </td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </Table>
-              </Col>
+              <FoodList
+                toggleFood={ this.toggleFood }
+                foodModal={ this.state.foodModal }
+                addFood={ this.addFood }
+                food={ food }
+                removeListFood={ this.removeListFood }
+              />
+              <ActivitiesList
+                toggleActivity={ this.toggleActivity }
+                activityModal={ this.state.activityModal }
+                addActivity={ this.addActivity }
+                activities={ activities }
+                removeListActivity={ this.removeListActivity }
+              />
             </Row>
             {
               data.length !== 0 &&
@@ -524,65 +375,20 @@ export default class Details extends React.Component {
             }
             <Row className="d-flex justify-content-center mx-2">
               {pollButton}
-              <Modal isOpen={ this.state.pollModal } toggle={ this.togglePoll }>
-                <ModalHeader toggle={ this.togglePoll }>Create a list of poll items</ModalHeader>
-                <ModalBody>
-                  <Form onSubmit={ this.updatePollItems } autoComplete="off">
-                    <FormGroup>
-                      <Col>
-                        <div className="input-group">
-                          <Input name="poll" placeholder="What are we voting on?" />
-                          <div className="input-group-append">
-                            <Button color="link">+</Button>
-                          </div>
-                        </div>
-                      </Col>
-                    </FormGroup>
-                    <Fragment>
-                      { this.state.pollItems.length !== 0 &&
-                      <Table style={ styles.width } className="border mx-auto">
-                        <tbody>
-                          { this.state.pollItems.map((pollitem, index) => {
-                            return (
-                              <tr key={index}>
-                                <td>{ pollitem.item }</td>
-                              </tr>
-                            )
-                          })}
-                        </tbody>
-                      </Table>
-                      }
-                    </Fragment>
-                  </Form>
-                </ModalBody>
-                <ModalFooter>
-                  <Button onClick={ this.submitPoll } color="info">Submit</Button>
-                </ModalFooter>
-              </Modal>
-              <Modal isOpen={this.state.voteModal} toggle={this.toggleVote} className="modal-dialog modal-dialog-centered">
-                <ModalHeader toggle={this.toggleVote}>Vote on Poll Item</ModalHeader>
-                <Form onSubmit={this.submitVotes}>
-                  <ModalBody>
-                    <FormGroup>
-                      {
-                        data.map((pollItem, index) => {
-                          return (
-                            <FormGroup check key={index} className="my-2">
-                              <Label check>
-                                <Input id={index} onClick={this.updateVote} type="checkbox"/>{pollItem.item}
-                              </Label>
-                            </FormGroup>
-                          )
-                        })
-                      }
-                    </FormGroup>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="info">Vote</Button>{' '}
-                    <Button color="secondary" onClick={this.toggleVote}>Cancel</Button>
-                  </ModalFooter>
-                </Form>
-              </Modal>
+              <PollModal
+                pollModal={ this.state.pollModal }
+                togglePoll={ this.togglePoll }
+                updatePollItems={ this.updatePollItems }
+                pollItems={ this.state.pollItems }
+                submitPoll={ this.submitPoll }
+              />
+              <VoteModal
+                voteModal={ this.state.voteModal }
+                toggleVote={ this.toggleVote }
+                submitVotes={ this.submitVotes }
+                updateVote={ this.updateVote }
+                data={ data }
+              />
             </Row>
             <Row className="d-flex align-items-center justify-content-between">
               <Button href="#" className="ml-2">Back</Button>
