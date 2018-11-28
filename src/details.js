@@ -8,7 +8,7 @@ import LocationModal from './location-modal'
 import DescriptionModal from './description-modal'
 import DatesModal from './dates-modal'
 import NameModal from './name-modal'
-import AddLodging from './add-lodging-modal'
+import AddLodge from './add-lodging-modal'
 
 const styles = {
   width: {
@@ -328,7 +328,7 @@ export default class Details extends React.Component {
               </Col>
             </Row>
             <CardText tag="h4" className="mb-3"><i className="fas fa-home mr-2"></i>Lodging<i onClick={ this.toggle } className="far fa-plus-square fa-xs text-secondary ml-2"></i>
-              <AddLodging
+              <AddLodge
                 modal={ this.state.modal }
                 toggle={ this.toggle }
                 addLodge={ this.addLodge }

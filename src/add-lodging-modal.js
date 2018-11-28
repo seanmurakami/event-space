@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 
-export default class AddLodging extends React.Component {
+export default class AddLodge extends React.Component {
   render() {
     return (
       <Modal isOpen={this.props.modal} toggle={this.props.toggle} className="modal-dialog modal-dialog-centered">
