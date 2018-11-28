@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import DeleteEvent from './modal-delete'
-import { Button, Card, CardHeader, CardText, CardBody, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Button, Card, CardHeader, CardText, CardBody, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Poll from './poll'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -13,6 +13,7 @@ import RenderLodges from './render-lodges'
 import FoodList from './food-list'
 import ActivitiesList from './activities-list'
 import PollModal from './poll-modal'
+import VoteModal from './vote-modal'
 
 const styles = {
   width: {
@@ -381,30 +382,13 @@ export default class Details extends React.Component {
                 pollItems={ this.state.pollItems }
                 submitPoll={ this.submitPoll }
               />
-              <Modal isOpen={this.state.voteModal} toggle={this.toggleVote} className="modal-dialog modal-dialog-centered">
-                <ModalHeader toggle={this.toggleVote}>Vote on Poll Item</ModalHeader>
-                <Form onSubmit={this.submitVotes}>
-                  <ModalBody>
-                    <FormGroup>
-                      {
-                        data.map((pollItem, index) => {
-                          return (
-                            <FormGroup check key={index} className="my-2">
-                              <Label check>
-                                <Input id={index} onClick={this.updateVote} type="checkbox"/>{pollItem.item}
-                              </Label>
-                            </FormGroup>
-                          )
-                        })
-                      }
-                    </FormGroup>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="info">Vote</Button>{' '}
-                    <Button color="secondary" onClick={this.toggleVote}>Cancel</Button>
-                  </ModalFooter>
-                </Form>
-              </Modal>
+              <VoteModal
+                voteModal={ this.state.voteModal }
+                toggleVote={ this.toggleVote }
+                submitVotes={ this.submitVotes }
+                updateVote={ this.updateVote }
+                data={ data }
+              />
             </Row>
             <Row className="d-flex align-items-center justify-content-between">
               <Button href="#" className="ml-2">Back</Button>
