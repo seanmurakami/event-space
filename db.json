@@ -1,3 +1,101 @@
 {
-  "events": []
+  "events": [
+    {
+      "eventName": "Trip to San Diego!!!",
+      "eventLocation": "Irvine, CA",
+      "eventDescription": "Here is a sample description for a sample event to San Diego! I hope everyone can attend!",
+      "startDate": "11/22/2018",
+      "endDate": "11/29/2018",
+      "lodges": [
+        {
+          "locationType": "Hotel",
+          "locationAddress": "123 Suite Drive",
+          "locationCost": "199",
+          "like": 3,
+          "lookup": 2
+        },
+        {
+          "locationType": "AirBnb",
+          "locationAddress": "190 Elk Grove Blvd",
+          "locationCost": "100",
+          "like": 1,
+          "lookup": 2
+        }
+      ],
+      "activities": [
+        {
+          "value": "new stuff",
+          "lookup": 1
+        },
+        {
+          "value": "more new stuff",
+          "lookup": 2
+        }
+      ],
+      "food": [
+        {
+          "value": "Burgers",
+          "lookup": 1
+        },
+        {
+          "value": "Brews",
+          "lookup": 2
+        }
+      ],
+      "data": [],
+      "id": 1
+    },
+    {
+      "eventName": "My Random Event!",
+      "eventLocation": "Los Angeles, CA",
+      "eventDescription": "Here is a sample description for my event! I hope everyone will be able to attend!",
+      "startDate": "12/25/2018",
+      "endDate": "12/30/2018",
+      "lodges": [
+        {
+          "locationType": "Hotel",
+          "locationAddress": "10090 Place Drive",
+          "locationCost": "190",
+          "like": 0,
+          "lookup": 1
+        },
+        {
+          "locationType": "AirBnb",
+          "locationAddress": "2334 Avenue Way",
+          "locationCost": "89",
+          "like": 0,
+          "lookup": 2
+        },
+        {
+          "locationType": "Home",
+          "locationAddress": "199 Park Vista Circle",
+          "locationCost": "",
+          "like": 0,
+          "lookup": 3
+        }
+      ],
+      "activities": [
+        {
+          "value": "Walk around downtown",
+          "lookup": 1
+        },
+        {
+          "value": "Visit the largest park",
+          "lookup": 2
+        }
+      ],
+      "food": [
+        {
+          "value": "Philz Coffee",
+          "lookup": 1
+        },
+        {
+          "value": "Ike's Sandwiches",
+          "lookup": 2
+        }
+      ],
+      "data": [],
+      "id": 2
+    }
+  ]
 }
