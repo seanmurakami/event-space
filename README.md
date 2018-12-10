@@ -24,14 +24,14 @@ A full stack JavaScript application for millennials who want to crowdsource/orga
 ![delete-event](https://user-images.githubusercontent.com/38697885/48157642-0c519100-e285-11e8-8454-3799ba2686e0.gif)
 
 ## Technologies
-- React.js
+- HTML5
+- CSS3
+- JavaScript
+- React
 - Node.js
 - Express.js
 - JSON.server
 - Webpack
-- HTML5
-- CSS3
-- JavaScript
 - Bootstrap
 
 ## Usage
