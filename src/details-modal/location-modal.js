@@ -35,9 +35,6 @@ export default class LocationModal extends React.Component {
                     <div className="autocomplete-dropdown-container">
                       {loading && <div>Loading...</div>}
                       {suggestions.map((suggestion, index) => {
-                        const className = suggestion.active
-                          ? 'suggestion-item--active'
-                          : 'suggestion-item'
                         const style = suggestion.active
                           ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                           : { backgroundColor: '#ffffff', cursor: 'pointer' }
@@ -45,7 +42,6 @@ export default class LocationModal extends React.Component {
                           <div
                             key = { index }
                             {...getSuggestionItemProps(suggestion, {
-                              className,
                               style
                             })}
                           >
