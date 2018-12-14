@@ -10,13 +10,9 @@ export default class CreateEvent extends React.Component {
     }
     this.userInput = this.userInput.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
   }
   handleChange(address) {
     return this.setState({ address })
-  }
-  handleSelect(address) {
-    return this.setState({address})
   }
   userInput(e) {
     e.preventDefault()
@@ -46,14 +42,14 @@ export default class CreateEvent extends React.Component {
             <PlacesAutocomplete
               value={this.state.address}
               onChange={this.handleChange}
-              onSelect={this.handleSelect}
+              onSelect={this.handleChange}
             >
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
                   <Input
                     name="event-location"
                     {...getInputProps({
-                      placeholder: 'Search Places ...',
+                      placeholder: 'Input event location',
                       className: 'location-search-input'
                     })}
                   />
