@@ -18,7 +18,7 @@ export default function Homepage(props) {
         props.events.map((item, index) => {
           return (
             <Col key={index} md={6}>
-              <Card className="mb-3 text-center font-weight-light">
+              <Card className="mb-3 text-center font-weight-light shadow">
                 <CardBody>
                   <div className="bg bg-light border rounded py-3 px-2 mb-3">
                     <h3 className="font-weight-light">{item.eventName}</h3>

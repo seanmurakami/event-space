@@ -26,10 +26,11 @@ export default class Restaurants extends React.Component {
       .then(data => this.setState({restaurants: data.businesses, loading: false}))
   }
   render() {
+    const { selectedEvent } = this.props
     if (!this.state.loading) {
       return (
         <Card className="mb-3 mx-auto" style={ styles.width }>
-          <CardHeader tag='h3' className="text-center">Restaurants in the area:</CardHeader>
+          <CardHeader tag='h3' className="text-center">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
           <CardBody className="pb-0">
             {this.state.restaurants.map((item, index) => {
               const { name, url } = item
