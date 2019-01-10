@@ -17,8 +17,7 @@ import VoteModal from './details-modal/vote-modal'
 
 const styles = {
   width: {
-    maxWidth: '50rem',
-    opacity: '0.9'
+    maxWidth: '50rem'
   },
   description: {
     maxWidth: '38rem'

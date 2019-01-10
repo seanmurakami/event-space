@@ -14,11 +14,12 @@ const settings = {
 }
 
 rp.get(settings)
-  .then(data => console.log(data))
+  .then(data => console.log(data.businesses[0].location))
 
 app.use(bodyParser.json())
 app.use(middleware)
 app.use(router)
+
 app.listen(process.env.PORT, () => {
   console.log('Listening on port', process.env.PORT)
 })
