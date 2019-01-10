@@ -8,7 +8,7 @@ const router = server.router('db.json')
 
 app.get('/restaurants', (req, res, next) => {
   const query = {
-    url: `https://api.yelp.com/v3/businesses/search?location=${req.query.location}&term=Starbucks`,
+    url: `https://api.yelp.com/v3/businesses/search?location=${req.query.location}`,
     headers: {Authorization: `Bearer ${process.env.KEY}`},
     json: true
   }
