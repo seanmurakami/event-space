@@ -281,6 +281,7 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
+                  <DropdownItem id="restaurants" href={`#details?event=${id}&lookup=${eventLocation}`}>Look Up Restaurants</DropdownItem>
                   <DropdownItem id="editName" onClick={this.toggleEventName}>Edit Title</DropdownItem>
                   <NameModal
                     editName={ this.state.editName }
@@ -390,7 +391,7 @@ export default class Details extends React.Component {
                 data={ data }
               />
             </Row>
-            <Row className="d-flex align-items-center justify-content-between">
+            <Row className="d-flex align-items-center justify-content-between mt-2">
               <Button href="#" className="ml-2">Back</Button>
               <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
             </Row>
