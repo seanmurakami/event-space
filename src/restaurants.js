@@ -44,7 +44,14 @@ const sample = {
 export default class Restaurants extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      restaurants: []
+    }
+  }
+  componentDidMount() {
+    fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
+      .then(res => res.json())
+      .then(data => console.log(data))
   }
   render() {
     return (

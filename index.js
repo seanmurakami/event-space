@@ -7,14 +7,15 @@ const app = server.create()
 const middleware = server.defaults()
 const router = server.router('db.json')
 
-const settings = {
-  url: 'https://api.yelp.com/v3/businesses/search?location=California&term=Starbucks',
-  headers: {Authorization: `Bearer ${process.env.KEY}`},
-  json: true
-}
-
-rp.get(settings)
-  .then(data => console.log(data.businesses[0].location))
+app.get('/restaurants', (req, res, next) => {
+  const query = {
+    url: `https://api.yelp.com/v3/businesses/search?location=${req.query.location}&term=Starbucks`,
+    headers: {Authorization: `Bearer ${process.env.KEY}`},
+    json: true
+  }
+  rp.get(query)
+    .then(data => res.send(data))
+})
 
 app.use(bodyParser.json())
 app.use(middleware)

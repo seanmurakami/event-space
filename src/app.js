@@ -88,7 +88,7 @@ export default class App extends React.Component {
             />)
         }
         return (
-          <Restaurants />
+          <Restaurants selectedEvent={ this.state.selectedEvent }/>
         )
       default :
         return (
