@@ -17,8 +17,7 @@ import VoteModal from './details-modal/vote-modal'
 
 const styles = {
   width: {
-    maxWidth: '50rem',
-    opacity: '0.9'
+    maxWidth: '54rem'
   },
   description: {
     maxWidth: '38rem'
@@ -271,7 +270,7 @@ export default class Details extends React.Component {
     const pollButton = data.length === 0 ? <Button onClick={ this.togglePoll } color="info">Create Poll</Button> : null
     return (
       <div className="mx-2 mb-5">
-        <Card className="container font-weight-light text-center px-0" style={ styles.width }>
+        <Card className="container font-weight-light text-center px-0 shadow" style={ styles.width }>
           <CardHeader>
             <CardText className="font-weight-light" tag="h1">{ eventName }</CardText>
             <Row className="d-flex justify-content-center">
@@ -281,6 +280,7 @@ export default class Details extends React.Component {
                   <i className="fas fa-ellipsis-h"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
+                  <DropdownItem id="restaurants" href={`#details?event=${id}&lookup=${eventLocation}`}>{`What's in the area`}</DropdownItem>
                   <DropdownItem id="editName" onClick={this.toggleEventName}>Edit Title</DropdownItem>
                   <NameModal
                     editName={ this.state.editName }
@@ -390,7 +390,7 @@ export default class Details extends React.Component {
                 data={ data }
               />
             </Row>
-            <Row className="d-flex align-items-center justify-content-between">
+            <Row className="d-flex align-items-center justify-content-between mt-2">
               <Button href="#" className="ml-2">Back</Button>
               <DeleteEvent id={id} removeEvent={ this.removeEvent }/>
             </Row>

@@ -10,6 +10,7 @@ import Confirmation from './wizard/confirmation'
 import Homepage from './homepage'
 import Loading from './util/loading'
 import Details from './details'
+import Restaurants from './restaurants'
 import { Card, Row } from 'reactstrap'
 
 const styles = {
@@ -77,13 +78,18 @@ export default class App extends React.Component {
     const { view } = this.state
     switch (view.path) {
       case 'details' :
+        if (Object.keys(view.params).length === 1) {
+          return (
+            <Details
+              selectedEvent={ this.state.selectedEvent }
+              deleteEvent={ this.deleteEvent }
+              patchEvent={ this.patchEvent }
+              poll={ this.updatePollData }
+            />)
+        }
         return (
-          <Details
-            selectedEvent={ this.state.selectedEvent }
-            deleteEvent={ this.deleteEvent }
-            patchEvent={ this.patchEvent }
-            poll={ this.updatePollData }
-          />)
+          <Restaurants selectedEvent={ this.state.selectedEvent }/>
+        )
       default :
         return (
           <Row className="d-flex justify-content-center mx-auto">
