@@ -1,7 +1,6 @@
 require('dotenv/config')
 const server = require('json-server')
 const rp = require('request-promise')
-const bodyParser = require('body-parser')
 
 const app = server.create()
 const middleware = server.defaults()
@@ -17,7 +16,6 @@ app.get('/restaurants', (req, res, next) => {
     .then(data => res.send(data))
 })
 
-app.use(bodyParser.json())
 app.use(middleware)
 app.use(router)
 

@@ -12,71 +12,51 @@ const styles = {
   }
 }
 
-const sample = {
-  businesses: [
-    {
-      name: 'Starbucks',
-      image: 'https://s3-media2.fl.yelpcdn.com/bphoto/ztgBy47sZt0Q3nZRzUOvvw/o.jpg',
-      url: 'https://www.yelp.com/biz/starbucks-oakhurst?adjust_creative=h6DDCY108zjS_mkHXAFZIw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=h6DDCY108zjS_mkHXAFZIw',
-      price: '$',
-      phone: '(559) 658-8101',
-      reviewCount: 29
-    },
-    {
-      name: 'Starbucks',
-      image: 'https://s3-media2.fl.yelpcdn.com/bphoto/ztgBy47sZt0Q3nZRzUOvvw/o.jpg',
-      url: 'https://www.yelp.com/biz/starbucks-oakhurst?adjust_creative=h6DDCY108zjS_mkHXAFZIw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=h6DDCY108zjS_mkHXAFZIw',
-      price: '$',
-      phone: '(559) 658-8101',
-      reviewCount: 29
-    },
-    {
-      name: 'Starbucks',
-      image: 'https://s3-media2.fl.yelpcdn.com/bphoto/ztgBy47sZt0Q3nZRzUOvvw/o.jpg',
-      url: 'https://www.yelp.com/biz/starbucks-oakhurst?adjust_creative=h6DDCY108zjS_mkHXAFZIw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=h6DDCY108zjS_mkHXAFZIw',
-      price: '$',
-      phone: '(559) 658-8101',
-      reviewCount: 29
-    }
-  ]
-}
-
 export default class Restaurants extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      restaurants: []
+      restaurants: null,
+      loading: true
     }
   }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => this.setState({restaurants: data.businesses, loading: false}))
   }
   render() {
+    if (!this.state.loading) {
+      return (
+        <Card className="mb-3 mx-auto" style={ styles.width }>
+          <CardHeader tag='h3' className="text-center">Restaurants in the area:</CardHeader>
+          <CardBody className="pb-0">
+            {this.state.restaurants.map((item, index) => {
+              const { name, url } = item
+              return (
+                <Card key={index} className="mb-3 p-2">
+                  <Row>
+                    <Col sm={3}>
+                      <img src={item.image_url} style={ styles.image }/>
+                    </Col>
+                    <Col className="align-self-center">
+                      <CardText tag='h4'>{name}</CardText>
+                      <CardText>Reviews: {item.review_count}</CardText>
+                      <CardText>Number: {item.display_phone}</CardText>
+                      <CardLink href={ url }>Link</CardLink>
+                    </Col>
+                  </Row>
+                </Card>
+              )
+            })}
+          </CardBody>
+        </Card>
+      )
+    }
     return (
-      <Card className="mb-3 mx-auto" style={ styles.width }>
-        <CardHeader tag='h3' className="text-center">Restaurants in the area:</CardHeader>
-        <CardBody className="pb-0">
-          {sample.businesses.map((item, index) => {
-            return (
-              <Card key={index} className="mb-3 p-2">
-                <Row>
-                  <Col sm={3}>
-                    <img src={item.image} style={ styles.image }/>
-                  </Col>
-                  <Col className="align-self-center">
-                    <CardText tag='h4'>{item.name}</CardText>
-                    <CardText>Reviews: {item.reviewCount}</CardText>
-                    <CardText>Number: {item.phone}</CardText>
-                    <CardLink href={ item.url }>Link</CardLink>
-                  </Col>
-                </Row>
-              </Card>
-            )
-          })}
-        </CardBody>
-      </Card>
+      <div>
+        <h1 className='text-center'>loading...</h1>
+      </div>
     )
   }
 }
