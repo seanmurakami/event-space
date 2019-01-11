@@ -12,13 +12,13 @@ export default class PollModal extends React.Component {
   render() {
     return (
       <Modal isOpen={ this.props.pollModal } toggle={ this.props.togglePoll }>
-        <ModalHeader toggle={ this.props.togglePoll }>Create a list of poll items</ModalHeader>
+        <ModalHeader toggle={ this.props.togglePoll }>Create a list of poll items that you can vote on!</ModalHeader>
         <ModalBody>
           <Form onSubmit={ this.props.updatePollItems } autoComplete="off">
             <FormGroup>
               <Col>
                 <div className="input-group">
-                  <Input name="poll" placeholder="What are we voting on?" />
+                  <Input name="poll" placeholder="Create items to vote on" />
                   <div className="input-group-append">
                     <Button color="link">+</Button>
                   </div>

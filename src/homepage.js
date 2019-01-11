@@ -4,6 +4,10 @@ import { Button, Card, CardBody, CardText, Row, Col } from 'reactstrap'
 const styles = {
   width: {
     maxWidth: '29em'
+  },
+  locationDetails: {
+    right: '1rem',
+    bottom: '1rem'
   }
 }
 
@@ -36,6 +40,15 @@ export default function Homepage(props) {
                     </Col>
                   </Row>
                   <Button href={`#details?event=${item.id}`} id={item.id} onClick={updateState} color="info px-5">Details</Button>
+                  <Button
+                    className="position-absolute btn btn-link btn-sm"
+                    style={ styles.locationDetails }
+                    id={item.id}
+                    href={`#details?event=${item.id}&lookup=${item.eventLocation}`}
+                    onClick={updateState}
+                  >
+                    <i className="fas fa-list-ul text-secondary" id={item.id}></i>
+                  </Button>
                 </CardBody>
               </Card>
             </Col>
