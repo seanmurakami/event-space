@@ -24,11 +24,11 @@
       ],
       "activities": [
         {
-          "value": "new stuff",
+          "value": "Visit Downtown",
           "lookup": 1
         },
         {
-          "value": "more new stuff",
+          "value": "Go Hiking",
           "lookup": 2
         }
       ],
@@ -42,12 +42,25 @@
           "lookup": 2
         }
       ],
-      "data": [],
+      "data": [
+        {
+          "item": "Burgers",
+          "votes": 1
+        },
+        {
+          "item": "Chicken",
+          "votes": 1
+        },
+        {
+          "item": "Pasta",
+          "votes": 3
+        }
+      ],
       "id": 1
     },
     {
-      "eventName": "My Random Event!",
-      "eventLocation": "Los Angeles, CA",
+      "eventName": "Trip to Lake Tahoe",
+      "eventLocation": "Lake Tahoe, United States",
       "eventDescription": "Here is a sample description for my event! I hope everyone will be able to attend!",
       "startDate": "12/25/2018",
       "endDate": "12/30/2018",
@@ -94,8 +107,70 @@
           "lookup": 2
         }
       ],
-      "data": [],
+      "data": [
+        {
+          "item": "Snowboarding",
+          "votes": 1
+        },
+        {
+          "item": "Hiking",
+          "votes": 4
+        },
+        {
+          "item": "Ice Climbing",
+          "votes": 3
+        }
+      ],
       "id": 2
+    },
+    {
+      "eventName": "Bachelor Party in Colorado",
+      "eventLocation": "Colorado, USA",
+      "eventDescription": "Organizing an event for a fake bachelor party!",
+      "startDate": "02/11/2019",
+      "endDate": "02/22/2019",
+      "lodges": [
+        {
+          "locationType": "Airbnb",
+          "locationAddress": "199 Address Place",
+          "locationCost": "100",
+          "like": 0,
+          "lookup": 1
+        },
+        {
+          "locationType": "Phils House",
+          "locationAddress": "1903 Phils Ave",
+          "locationCost": "000",
+          "like": 2,
+          "lookup": 2
+        }
+      ],
+      "activities": [
+        {
+          "value": "Hike",
+          "lookup": 1
+        },
+        {
+          "value": "Go kayaking",
+          "lookup": 2
+        }
+      ],
+      "food": [
+        {
+          "value": "Burgers",
+          "lookup": 1
+        },
+        {
+          "value": "Steak",
+          "lookup": 2
+        },
+        {
+          "value": "Chicken",
+          "lookup": 3
+        }
+      ],
+      "data": [],
+      "id": 3
     }
   ]
 }
