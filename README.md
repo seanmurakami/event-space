@@ -26,6 +26,8 @@ A full stack JavaScript application for millennials who want to crowdsource/orga
 - React
 - Node.js
 - Express.js
+- Chart.js
+- Yelp Fusion API
 - JSON.server
 - Webpack
 - Bootstrap
