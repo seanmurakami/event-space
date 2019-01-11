@@ -50,6 +50,7 @@ export default class Restaurants extends React.Component {
           <CardBody className="pb-0">
             {this.state.restaurants.map((item, index) => {
               const { name, url, price, location, rating } = item
+              const updatePrice = price !== undefined ? `(${price})` : ''
               return (
                 <Card key={index} className="mb-3 p-2 text-secondary">
                   <Row>
@@ -58,7 +59,7 @@ export default class Restaurants extends React.Component {
                     </Col>
                     <Col className="align-self-center">
                       <Row>
-                        <Col><CardText tag='h5' className="text-dark">{`${index + 1}.  ${name}  (${price})`}</CardText></Col>
+                        <Col><CardText tag='h5' className="text-dark">{`${index + 1}.  ${name}  ${updatePrice}`}</CardText></Col>
                         <Col sm="auto" className="mr-2"><CardText>{location.address1}</CardText></Col>
                       </Row>
                       <CardText className="mb-0">{this.starRating(rating)}</CardText>
