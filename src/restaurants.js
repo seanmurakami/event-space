@@ -29,8 +29,8 @@ export default class Restaurants extends React.Component {
     const { selectedEvent } = this.props
     if (!this.state.loading) {
       return (
-        <Card className="mb-3 mx-auto" style={ styles.width }>
-          <CardHeader tag='h3' className="text-center">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
+        <Card className="mb-3 mx-auto shadow" style={ styles.width }>
+          <CardHeader tag='h3' className="text-center font-weight-light">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
           <CardBody className="pb-0">
             {this.state.restaurants.map((item, index) => {
               const { name, url } = item
@@ -44,7 +44,7 @@ export default class Restaurants extends React.Component {
                       <CardText tag='h4'>{name}</CardText>
                       <CardText>Reviews: {item.review_count}</CardText>
                       <CardText>Number: {item.display_phone}</CardText>
-                      <CardLink href={ url }>Link</CardLink>
+                      <CardLink href={ url } target="_blank">Link</CardLink>
                     </Col>
                   </Row>
                 </Card>
