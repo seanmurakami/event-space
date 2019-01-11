@@ -51,14 +51,14 @@ export default class Restaurants extends React.Component {
             {this.state.restaurants.map((item, index) => {
               const { name, url, price, location, rating } = item
               return (
-                <Card key={index} className="mb-3 p-2">
+                <Card key={index} className="mb-3 p-2 text-secondary">
                   <Row>
                     <Col sm={3}>
                       <img src={item.image_url} style={ styles.image }/>
                     </Col>
                     <Col className="align-self-center">
                       <Row>
-                        <Col><CardText tag='h5'>{`${index + 1}.  ${name}  (${price})`}</CardText></Col>
+                        <Col><CardText tag='h5' className="text-dark">{`${index + 1}.  ${name}  (${price})`}</CardText></Col>
                         <Col sm="auto" className="mr-2"><CardText>{location.address1}</CardText></Col>
                       </Row>
                       <CardText className="mb-0">{this.starRating(rating)}</CardText>
