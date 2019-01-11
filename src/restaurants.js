@@ -20,20 +20,36 @@ export default class Restaurants extends React.Component {
       loading: true
     }
   }
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+  starRating(rating) {
+    const result = []
+    for (let i = 1; i <= rating; i++) {
+      result.push(<i className="fas fa-star text-info" key={i}></i>)
+    }
+    if (Math.ceil(rating) !== rating) {
+      result.push(<i className="fas fa-star-half-alt text-info" key={rating}></i>)
+    }
+    return result
+  }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
-      .then(data => this.setState({restaurants: data.businesses, loading: false}))
+      .then(data => {
+        console.log(data)
+        this.setState({restaurants: data.businesses, loading: false})
+      })
   }
   render() {
     const { selectedEvent } = this.props
     if (!this.state.loading) {
       return (
-        <Card className="mb-3 mx-auto shadow" style={ styles.width }>
+        <Card className="mb-3 container p-0 shadow" style={ styles.width }>
           <CardHeader tag='h3' className="text-center font-weight-light">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
           <CardBody className="pb-0">
             {this.state.restaurants.map((item, index) => {
-              const { name, url } = item
+              const { name, url, price, location, rating } = item
               return (
                 <Card key={index} className="mb-3 p-2">
                   <Row>
@@ -41,9 +57,13 @@ export default class Restaurants extends React.Component {
                       <img src={item.image_url} style={ styles.image }/>
                     </Col>
                     <Col className="align-self-center">
-                      <CardText tag='h4'>{name}</CardText>
-                      <CardText>Reviews: {item.review_count}</CardText>
-                      <CardText>Number: {item.display_phone}</CardText>
+                      <Row>
+                        <Col><CardText tag='h5'>{`${index + 1}.  ${name}  (${price})`}</CardText></Col>
+                        <Col sm="auto" className="mr-2"><CardText>{location.address1}</CardText></Col>
+                      </Row>
+                      <CardText className="mb-0">{this.starRating(rating)}</CardText>
+                      <CardText className="mb-0">{this.numberWithCommas(item.review_count)} Reviews</CardText>
+                      <CardText>{item.display_phone}</CardText>
                       <CardLink href={ url } target="_blank">Link</CardLink>
                     </Col>
                   </Row>
