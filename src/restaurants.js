@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
 
 const styles = {
   width: {
@@ -17,8 +17,10 @@ export default class Restaurants extends React.Component {
     super(props)
     this.state = {
       restaurants: null,
-      loading: true
+      loading: true,
+      dropdown: false
     }
+    this.toggle = this.toggle.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -33,11 +35,13 @@ export default class Restaurants extends React.Component {
     }
     return result
   }
+  toggle() {
+    this.setState({dropdown: !this.state.dropdown})
+  }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         this.setState({restaurants: data.businesses, loading: false})
       })
   }
@@ -46,8 +50,18 @@ export default class Restaurants extends React.Component {
     if (!this.state.loading) {
       return (
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
-          <CardHeader tag='h3' className="text-center font-weight-light">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
-          <CardBody className="pb-0">
+          <CardHeader tag='h3' className="text-center font-weight-light mb-2">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
+          <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
+            <DropdownToggle caret size="lg" className="text-info ml-2 mb-2" color="none">
+              Filter
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem header>Sort By</DropdownItem>
+              <DropdownItem>Number of Reviews</DropdownItem>
+              <DropdownItem>Price $$$</DropdownItem>
+            </DropdownMenu>
+          </ButtonDropdown>
+          <CardBody className="py-0">
             {this.state.restaurants.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
