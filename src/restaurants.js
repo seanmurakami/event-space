@@ -22,7 +22,7 @@ export default class Restaurants extends React.Component {
     }
     this.toggle = this.toggle.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
-    this.updateCost = this.updateCost.bind(this)
+    this.updateRating = this.updateRating.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -30,10 +30,10 @@ export default class Restaurants extends React.Component {
   starRating(rating) {
     const result = []
     for (let i = 1; i <= rating; i++) {
-      result.push(<i className="fas fa-star text-info" key={i}></i>)
+      result.push(<i className="fas fa-star text-warning" key={i}></i>)
     }
     if (Math.ceil(rating) !== rating) {
-      result.push(<i className="fas fa-star-half-alt text-info" key={rating}></i>)
+      result.push(<i className="fas fa-star-half-alt text-warning" key={rating}></i>)
     }
     return result
   }
@@ -44,7 +44,7 @@ export default class Restaurants extends React.Component {
     return a.review_count - b.review_count
   }
   compareCost(a, b) {
-    return a.price.length - b.price.length
+    return a.rating - b.rating
   }
   updateFilter(myItems) {
     const restaurants = myItems
@@ -53,7 +53,7 @@ export default class Restaurants extends React.Component {
       .reverse()
     this.setState({restaurants})
   }
-  updateCost(myItems) {
+  updateRating(myItems = {}) {
     const restaurants = myItems
       .map(num => num)
       .sort(this.compareCost)
@@ -80,7 +80,7 @@ export default class Restaurants extends React.Component {
             <DropdownMenu>
               <DropdownItem header>Sort By</DropdownItem>
               <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
-              <DropdownItem onClick={() => this.updateCost(this.state.restaurants)}>Price $$$</DropdownItem>
+              <DropdownItem onClick={() => this.updateRating(this.state.restaurants)}>Rating</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
           <CardBody className="py-0 font-weight-light">
