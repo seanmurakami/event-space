@@ -39,13 +39,23 @@ export default class Restaurants extends React.Component {
   toggle() {
     this.setState({dropdown: !this.state.dropdown})
   }
-  compareNumbers(a, b) {
+  compareReviews(a, b) {
     return a.review_count - b.review_count
+  }
+  compareCost(a, b) {
+    return a.price.length - b.price.length
   }
   updateFilter(myItems) {
     const restaurants = myItems
       .map(num => num)
       .sort(this.compareNumbers)
+      .reverse()
+    this.setState({restaurants})
+  }
+  updateCost(myItems) {
+    const restaurants = myItems
+      .map(num => num)
+      .sort(this.compareCost)
       .reverse()
     this.setState({restaurants})
   }
@@ -69,7 +79,7 @@ export default class Restaurants extends React.Component {
             <DropdownMenu>
               <DropdownItem header>Sort By</DropdownItem>
               <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
-              <DropdownItem>Price $$$</DropdownItem>
+              <DropdownItem onClick={() => this.updateCost(this.state.restaurants)}>Price $$$</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
           <CardBody className="py-0">
