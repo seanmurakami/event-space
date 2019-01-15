@@ -22,6 +22,7 @@ export default class Restaurants extends React.Component {
     }
     this.toggle = this.toggle.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
+    this.updateCost = this.updateCost.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -48,7 +49,7 @@ export default class Restaurants extends React.Component {
   updateFilter(myItems) {
     const restaurants = myItems
       .map(num => num)
-      .sort(this.compareNumbers)
+      .sort(this.compareReviews)
       .reverse()
     this.setState({restaurants})
   }
