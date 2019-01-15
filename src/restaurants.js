@@ -83,7 +83,7 @@ export default class Restaurants extends React.Component {
               <DropdownItem onClick={() => this.updateCost(this.state.restaurants)}>Price $$$</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
-          <CardBody className="py-0">
+          <CardBody className="py-0 font-weight-light">
             {this.state.restaurants.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
