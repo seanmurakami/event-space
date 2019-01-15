@@ -21,6 +21,7 @@ export default class Restaurants extends React.Component {
       dropdown: false
     }
     this.toggle = this.toggle.bind(this)
+    this.updateFilter = this.updateFilter.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -38,6 +39,16 @@ export default class Restaurants extends React.Component {
   toggle() {
     this.setState({dropdown: !this.state.dropdown})
   }
+  compareNumbers(a, b) {
+    return a.review_count - b.review_count
+  }
+  updateFilter(myItems) {
+    const restaurants = myItems
+      .map(num => num)
+      .sort(this.compareNumbers)
+      .reverse()
+    this.setState({restaurants})
+  }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
@@ -52,12 +63,12 @@ export default class Restaurants extends React.Component {
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
           <CardHeader tag='h3' className="text-center font-weight-light mb-2">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
           <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
-            <DropdownToggle caret size="lg" className="text-info ml-2 mb-2" color="none">
+            <DropdownToggle caret className="text-info ml-2 mb-2" color="none">
               Filter
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem header>Sort By</DropdownItem>
-              <DropdownItem>Number of Reviews</DropdownItem>
+              <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
               <DropdownItem>Price $$$</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
