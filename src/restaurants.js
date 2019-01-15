@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
 
 const styles = {
   width: {
@@ -17,8 +17,12 @@ export default class Restaurants extends React.Component {
     super(props)
     this.state = {
       restaurants: null,
-      loading: true
+      loading: true,
+      dropdown: false
     }
+    this.toggle = this.toggle.bind(this)
+    this.updateFilter = this.updateFilter.bind(this)
+    this.updateRating = this.updateRating.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -26,18 +30,40 @@ export default class Restaurants extends React.Component {
   starRating(rating) {
     const result = []
     for (let i = 1; i <= rating; i++) {
-      result.push(<i className="fas fa-star text-info" key={i}></i>)
+      result.push(<i className="fas fa-star text-warning" key={i}></i>)
     }
     if (Math.ceil(rating) !== rating) {
-      result.push(<i className="fas fa-star-half-alt text-info" key={rating}></i>)
+      result.push(<i className="fas fa-star-half-alt text-warning" key={rating}></i>)
     }
     return result
+  }
+  toggle() {
+    this.setState({dropdown: !this.state.dropdown})
+  }
+  compareReviews(a, b) {
+    return a.review_count - b.review_count
+  }
+  compareCost(a, b) {
+    return a.rating - b.rating
+  }
+  updateFilter(myItems) {
+    const restaurants = myItems
+      .map(num => num)
+      .sort(this.compareReviews)
+      .reverse()
+    this.setState({restaurants})
+  }
+  updateRating(myItems = {}) {
+    const restaurants = myItems
+      .map(num => num)
+      .sort(this.compareCost)
+      .reverse()
+    this.setState({restaurants})
   }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         this.setState({restaurants: data.businesses, loading: false})
       })
   }
@@ -46,8 +72,18 @@ export default class Restaurants extends React.Component {
     if (!this.state.loading) {
       return (
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
-          <CardHeader tag='h3' className="text-center font-weight-light">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
-          <CardBody className="pb-0">
+          <CardHeader tag='h3' className="text-center font-weight-light mb-2">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
+          <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
+            <DropdownToggle caret className="text-info ml-2 mb-2" color="none">
+              Filter
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem header>Sort By</DropdownItem>
+              <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
+              <DropdownItem onClick={() => this.updateRating(this.state.restaurants)}>Rating</DropdownItem>
+            </DropdownMenu>
+          </ButtonDropdown>
+          <CardBody className="py-0 font-weight-light">
             {this.state.restaurants.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
