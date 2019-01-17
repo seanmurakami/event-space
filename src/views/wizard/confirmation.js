@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Button, Row, Col, Card, CardHeader, CardBody, CardText } from 'reactstrap'
-import ConfirmationList from '../util/confirmation-list'
+import ConfirmationList from '../../util/confirmation-list'
 
 export default class Confirmation extends React.Component {
   constructor(props) {

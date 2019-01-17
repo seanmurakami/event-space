@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import UpdateTable from '../util/table'
-import ButtonGroup from '../util/button-group'
+import UpdateTable from '../../components/table'
+import ButtonGroup from '../../components/button-group'
 import { Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Col } from 'reactstrap'
 
 export default class Lodging extends React.Component {

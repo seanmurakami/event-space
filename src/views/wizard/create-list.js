@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import ButtonGroup from '../util/button-group'
+import ButtonGroup from '../../components/button-group'
 import { Form, FormGroup, Label, Input, Button, Table, Col } from 'reactstrap'
 
 export default class CreateList extends React.Component {
