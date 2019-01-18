@@ -26,6 +26,7 @@ export default class Restaurants extends React.Component {
     this.updateFilter = this.updateFilter.bind(this)
     this.updateRating = this.updateRating.bind(this)
     this.filterSelection = this.filterSelection.bind(this)
+    this.clearFilter = this.clearFilter.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -69,6 +70,9 @@ export default class Restaurants extends React.Component {
     const filteredGroup = restaurantCopy.filter(item => item.price === category)
     this.setState({filteredGroup, filter: true})
   }
+  clearFilter() {
+    this.setState({filter: false})
+  }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
@@ -100,6 +104,7 @@ export default class Restaurants extends React.Component {
                 <Button color="none" className="text-info" onClick={ this.filterSelection }>$$</Button>
                 <Button color="none" className="text-info" onClick={ this.filterSelection }>$$$</Button>
                 <Button color="none" className="text-info" onClick={ this.filterSelection }>$$$$</Button>
+                <Button color="none" className="text-info" onClick={ this.clearFilter }>x</Button>
               </ButtonGroup>
             </Row>
             {filter.map((item, index) => {
