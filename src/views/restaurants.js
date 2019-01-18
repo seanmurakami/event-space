@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
+import { Button, ButtonDropdown, ButtonGroup, DropdownToggle, DropdownMenu, DropdownItem, Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
 
 const styles = {
   width: {
@@ -16,13 +16,17 @@ export default class Restaurants extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      restaurants: null,
+      restaurants: [],
       loading: true,
-      dropdown: false
+      dropdown: false,
+      filteredGroup: [],
+      filter: false
     }
     this.toggle = this.toggle.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
     this.updateRating = this.updateRating.bind(this)
+    this.filterSelection = this.filterSelection.bind(this)
+    this.clearFilter = this.clearFilter.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -60,6 +64,15 @@ export default class Restaurants extends React.Component {
       .reverse()
     this.setState({restaurants})
   }
+  filterSelection(e) {
+    const category = e.target.innerHTML
+    const restaurantCopy = [...this.state.restaurants]
+    const filteredGroup = restaurantCopy.filter(item => item.price === category)
+    this.setState({filteredGroup, filter: true})
+  }
+  clearFilter() {
+    this.setState({filter: false})
+  }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
@@ -69,22 +82,32 @@ export default class Restaurants extends React.Component {
   }
   render() {
     const { selectedEvent } = this.props
+    const filter = this.state.filter ? this.state.filteredGroup : this.state.restaurants
     if (!this.state.loading) {
       return (
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
           <CardHeader tag='h3' className="text-center font-weight-light mb-2">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
-          <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
-            <DropdownToggle caret className="text-info ml-2 mb-2" color="none">
-              Filter
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem header>Sort By</DropdownItem>
-              <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
-              <DropdownItem onClick={() => this.updateRating(this.state.restaurants)}>Rating</DropdownItem>
-            </DropdownMenu>
-          </ButtonDropdown>
           <CardBody className="py-0 font-weight-light">
-            {this.state.restaurants.map((item, index) => {
+            <Row className="d-flex justify-content-between mx-1 mb-2">
+              <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
+                <DropdownToggle caret className="text-info" color="none">
+                  Filter
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem header>Sort By</DropdownItem>
+                  <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
+                  <DropdownItem onClick={() => this.updateRating(this.state.restaurants)}>Rating</DropdownItem>
+                </DropdownMenu>
+              </ButtonDropdown>
+              <ButtonGroup className="border rounded">
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$$$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$$$$</Button>
+                <Button color="none" className="text-info" onClick={ this.clearFilter }>x</Button>
+              </ButtonGroup>
+            </Row>
+            {filter.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
               return (
