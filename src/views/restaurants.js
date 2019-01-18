@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
+import { Button, ButtonDropdown, ButtonGroup, DropdownToggle, DropdownMenu, DropdownItem, Card, CardHeader, CardBody, CardText, CardLink, Col, Row } from 'reactstrap'
 
 const styles = {
   width: {
@@ -73,17 +73,25 @@ export default class Restaurants extends React.Component {
       return (
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
           <CardHeader tag='h3' className="text-center font-weight-light mb-2">{`What to do in ${selectedEvent.eventLocation}`}</CardHeader>
-          <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
-            <DropdownToggle caret className="text-info ml-2 mb-2" color="none">
-              Filter
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem header>Sort By</DropdownItem>
-              <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
-              <DropdownItem onClick={() => this.updateRating(this.state.restaurants)}>Rating</DropdownItem>
-            </DropdownMenu>
-          </ButtonDropdown>
           <CardBody className="py-0 font-weight-light">
+            <Row className="d-flex justify-content-between mx-1 mb-2">
+              <ButtonDropdown isOpen={this.state.dropdown} toggle={this.toggle}>
+                <DropdownToggle caret className="text-info" color="none">
+                  Filter
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem header>Sort By</DropdownItem>
+                  <DropdownItem onClick={() => this.updateFilter(this.state.restaurants)}>Number of Reviews</DropdownItem>
+                  <DropdownItem onClick={() => this.updateRating(this.state.restaurants)}>Rating</DropdownItem>
+                </DropdownMenu>
+              </ButtonDropdown>
+              <ButtonGroup className="border rounded">
+                <Button color="none" className="text-info">$</Button>
+                <Button color="none" className="text-info">$$</Button>
+                <Button color="none" className="text-info">$$$</Button>
+                <Button color="none" className="text-info">$$$$</Button>
+              </ButtonGroup>
+            </Row>
             {this.state.restaurants.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
