@@ -25,6 +25,7 @@ export default class Restaurants extends React.Component {
     this.toggle = this.toggle.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
     this.updateRating = this.updateRating.bind(this)
+    this.filterSelection = this.filterSelection.bind(this)
   }
   numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -62,6 +63,12 @@ export default class Restaurants extends React.Component {
       .reverse()
     this.setState({restaurants})
   }
+  filterSelection(e) {
+    const category = e.target.innerHTML
+    const restaurantCopy = [...this.state.restaurants]
+    const filteredGroup = restaurantCopy.filter(item => item.price === category)
+    this.setState({filteredGroup, filter: true})
+  }
   componentDidMount() {
     fetch(`/restaurants?location=${this.props.selectedEvent.eventLocation}`)
       .then(res => res.json())
@@ -71,7 +78,7 @@ export default class Restaurants extends React.Component {
   }
   render() {
     const { selectedEvent } = this.props
-    const filtered = this.state.filtered ? this.state.filteredGroup : this.state.restaurants
+    const filter = this.state.filter ? this.state.filteredGroup : this.state.restaurants
     if (!this.state.loading) {
       return (
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
@@ -89,13 +96,13 @@ export default class Restaurants extends React.Component {
                 </DropdownMenu>
               </ButtonDropdown>
               <ButtonGroup className="border rounded">
-                <Button color="none" className="text-info">$</Button>
-                <Button color="none" className="text-info">$$</Button>
-                <Button color="none" className="text-info">$$$</Button>
-                <Button color="none" className="text-info">$$$$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$$$</Button>
+                <Button color="none" className="text-info" onClick={ this.filterSelection }>$$$$</Button>
               </ButtonGroup>
             </Row>
-            {filtered.map((item, index) => {
+            {filter.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
               return (
