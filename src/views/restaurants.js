@@ -16,9 +16,11 @@ export default class Restaurants extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      restaurants: null,
+      restaurants: [],
       loading: true,
-      dropdown: false
+      dropdown: false,
+      filteredGroup: [],
+      filter: false
     }
     this.toggle = this.toggle.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
@@ -69,6 +71,7 @@ export default class Restaurants extends React.Component {
   }
   render() {
     const { selectedEvent } = this.props
+    const filtered = this.state.filtered ? this.state.filteredGroup : this.state.restaurants
     if (!this.state.loading) {
       return (
         <Card className="mb-3 container p-0 shadow" style={ styles.width }>
@@ -92,7 +95,7 @@ export default class Restaurants extends React.Component {
                 <Button color="none" className="text-info">$$$$</Button>
               </ButtonGroup>
             </Row>
-            {this.state.restaurants.map((item, index) => {
+            {filtered.map((item, index) => {
               const { name, url, price, location, rating } = item
               const updatePrice = price !== undefined ? `(${price})` : ''
               return (
