@@ -14,6 +14,7 @@ import FoodList from '../components/details-modal/food-list'
 import ActivitiesList from '../components/details-modal/activities-list'
 import PollModal from '../components/details-modal/poll-modal'
 import VoteModal from '../components/details-modal/vote-modal'
+import MyMapComponent from '../components/map'
 
 const styles = {
   width: {
@@ -24,6 +25,12 @@ const styles = {
   },
   dropdown: {
     right: '1rem'
+  },
+  mapHeight: {
+    height: '100%'
+  },
+  containerHeight: {
+    height: '400px'
   }
 }
 
@@ -316,6 +323,12 @@ export default class Details extends React.Component {
               </Dropdown>
             </Row>
           </CardHeader>
+          <MyMapComponent
+            isMarkerShown
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwBNu4sRopxREjKOTKo-4f76wQ2bgUbOA&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={ styles.mapHeight } />}
+            containerElement={<div style={ styles.containerHeight } />}
+            mapElement={<div style={ styles.mapHeight } />}/>
           <CardBody className="pb-3">
             <CardText className="mx-auto" style={ styles.description }>{ eventDescription }</CardText>
             <CardText tag="h4"><i className="fas fa-calendar-alt mr-2"></i>When</CardText>
